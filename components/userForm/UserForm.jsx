@@ -1,12 +1,17 @@
 "use client";
 
+import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const UserForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setusername] = useState("");
+
+  const router = useRouter();
 
   const objData = {
     email,
@@ -14,8 +19,17 @@ const UserForm = () => {
     username,
   };
 
-  const handleLogin = () => {
-    console.log(objData);
+  const handleLogin = async () => {
+    const res = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
+    if (res.error) {
+      setErrors("invalid credentials");
+      return;
+    }
+    router.push("/");
   };
   return (
     <div className="max-w-screen-sm mx-auto p-3">
@@ -29,15 +43,7 @@ const UserForm = () => {
           onChange={(e) => setEmail(e.target.value)}
           id=""
         />
-        <input
-          type="text"
-          className="bg-transparent border p-3 rounded"
-          name=""
-          value={username}
-          placeholder="username"
-          onChange={(e) => setusername(e.target.value)}
-          id=""
-        />
+
         <input
           type="password"
           className="bg-transparent border p-3 rounded"
