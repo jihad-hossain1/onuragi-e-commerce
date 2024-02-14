@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { toast } from "sonner";
 
 const UserForm = () => {
   const [email, setEmail] = useState("");
@@ -20,16 +21,27 @@ const UserForm = () => {
   };
 
   const handleLogin = async () => {
+    if (email == "") {
+      return toast("email are required");
+    } else if (password == "") {
+      return toast("password must be needed");
+    } else if (password?.length < 6) {
+      return toast("password must be 6 character");
+    }
+
     const res = await signIn("credentials", {
       email,
       password,
       redirect: false,
     });
-    if (res.error) {
-      setErrors("invalid credentials");
-      return;
+    if (!res?.ok) {
+      // console.log(res);
+      toast(res?.error);
     }
-    router.push("/");
+    if (res?.ok) {
+      toast("LOGIN SUCCESSFULL");
+      router.push("/");
+    }
   };
   return (
     <div className="max-w-screen-sm mx-auto p-3">
