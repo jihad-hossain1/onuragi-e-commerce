@@ -5,6 +5,14 @@ mongoose.connect(process.env.MONGODB_URI);
 mongoose.Promise = global.Promise;
 console.log("<----*** MONGODB CONNECTION OK ***----->");
 
+const favoriteType = new Schema({
+  productID: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "Product",
+  },
+});
+
 const userSchema = new Schema(
   {
     username: {
@@ -23,6 +31,13 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    favorites: [favoriteType],
+    carts: [
+      {
+        product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+        quantity: Number,
+      },
+    ],
   },
   {
     timestamps: true,
