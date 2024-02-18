@@ -11,7 +11,7 @@ export function validateJSON(jsonObj) {
           invalidType = "null";
           break;
         default:
-          invalidType = "empty";
+          invalidType = "field are empty";
           break;
       }
       invalidFields[key] = invalidType;

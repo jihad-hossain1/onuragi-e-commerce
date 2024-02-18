@@ -5,6 +5,10 @@ const sizeType = new Schema({
     type: Number,
     required: true,
   },
+  quantity: {
+    type: Number,
+    required: true,
+  },
   size: {
     type: String,
     required: true,
