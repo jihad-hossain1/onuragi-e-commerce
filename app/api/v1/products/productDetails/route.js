@@ -12,8 +12,6 @@ export async function POST(req) {
     if (isValid === true) {
       const { productID, about, sizeGuide, sizes } = reqBody;
 
-      // check productID valid or invalid
-
       // check product size with any empty array
       if (sizes?.length == 0) {
         return NextResponse.json(
@@ -23,7 +21,7 @@ export async function POST(req) {
           { status: 400 }
         );
       }
-      //   console.log(mongoose.Schema.Types.ObjectId);
+      // check productID valid or invalid
       if (!mongoose.Types.ObjectId.isValid(productID)) {
         return NextResponse.json(
           {
@@ -60,6 +58,10 @@ export async function POST(req) {
       return NextResponse.json({ message: "inavlid fields: ", isValid });
     }
   } catch (error) {
-    return NextResponse.json(error);
+    return NextResponse.json(
+      { message: "You got an error from server: ", error },
+      { status: 500 }
+    );
   }
 }
+
