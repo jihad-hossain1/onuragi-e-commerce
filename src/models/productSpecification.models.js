@@ -1,5 +1,11 @@
 import mongoose, { Schema, models } from "mongoose";
 
+
+
+mongoose.connect(process.env.MONGODB_URI);
+mongoose.Promise = global.Promise;
+console.log("<----*** MONGODB products specification CONNECTION OK ***----->");
+
 const lengthWithStockType = Schema({
   name: {
     type: String,
@@ -27,9 +33,10 @@ const productSpecificationSchema = new Schema(
 
     lengthWithStock: [lengthWithStockType],
 
-    productDetailsID: {
+    productID: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "ProductDetail",
+      ref: "Product",
+      required: true,
     },
   },
   { timestamps: true }
