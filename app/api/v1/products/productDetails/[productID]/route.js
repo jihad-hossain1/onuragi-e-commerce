@@ -4,22 +4,23 @@ import { NextResponse } from "next/server";
 
 export async function GET(req, { params }) {
   try {
-    console.log(params);
     const { productID } = params;
 
     if (!mongoose.Types.ObjectId.isValid(productID)) {
       return NextResponse.json({ message: "your provide id is not valid" });
     }
 
-    const findDetails = await ProductDetail.findOne({ productID });
-    console.log(findDetails);
+    const findDetails = await ProductDetail.findOne({
+      productID: productID,
+    });
+    console.log("product details here: ", findDetails);
 
     if (findDetails) {
       return NextResponse.json({ productDetail: findDetails }, { status: 201 });
     } else {
       return NextResponse.json(
         { message: "products details are not found " },
-        { status: 201 }
+        { status: 401 }
       );
     }
   } catch (error) {
