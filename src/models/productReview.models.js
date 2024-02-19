@@ -1,5 +1,10 @@
 import mongoose, { Schema, models } from "mongoose";
 
+
+mongoose.connect(process.env.MONGODB_URI);
+mongoose.Promise = global.Promise;
+console.log("<----*** MONGODB review CONNECTION OK ***----->");
+
 const productReviewSchema = new Schema(
   {
     content: {
@@ -16,9 +21,10 @@ const productReviewSchema = new Schema(
         ref: "Reply",
       },
     ],
-    productDetailsID: {
+    productID: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "ProductDetail",
+      ref: "Product",
+      required: [true, "Product id must be required"],
     },
     rating: {
       type: Number,

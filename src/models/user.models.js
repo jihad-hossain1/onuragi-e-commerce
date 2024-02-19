@@ -38,6 +38,24 @@ const userSchema = new Schema(
         quantity: Number,
       },
     ],
+    deliveries: [
+      {
+        products: [
+          {
+            productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+            quantity: Number,
+          },
+        ],
+        transactionId: {
+          type: String,
+        },
+        deliveryAddress: {
+          street: { type: String },
+          city: { type: String },
+          zipCode: { type: String },
+        },
+      },
+    ],
   },
   {
     timestamps: true,
