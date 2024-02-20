@@ -69,3 +69,11 @@ export async function POST(request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+// app.get("/comments", async (req, res) => {
+//   try {
+//     const comments = await Comment.find().populate("replies");
+//     res.json(comments);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// });

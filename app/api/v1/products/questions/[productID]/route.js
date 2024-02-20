@@ -1,32 +1,5 @@
-// export async function GET()
-
-// const getAllReviews = async (req, res) => {
-//   // const id = req.body?.taskId;
-//   const id = req.params?.productId;
-
-//   console.log(id);
-
-//   try {
-//     if (id) {
-//       const reviews = await Review.find({ productId: id }).sort({
-//         createdAt: "desc",
-//       });
-//       res.json(reviews);
-//     } else {
-//       res
-//         .status(404)
-//         .json({ message: "reviewId and productId are not match " });
-//     }
-//   } catch (error) {
-//     res
-//       .status(401)
-//       .json({ message: "problem with product fetch", error: error });
-//   }
-// };
-
 import Product from "@/src/models/product.models";
 import ProductQuestion from "@/src/models/productQuestion.models";
-import { validateJSON } from "@/utils/validateJSON";
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 
