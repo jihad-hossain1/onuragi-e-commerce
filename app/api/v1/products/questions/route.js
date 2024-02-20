@@ -77,3 +77,10 @@ export async function POST(request) {
 //     res.status(500).json({ error: error.message });
 //   }
 // });
+
+// export async function GET() {
+//   try {
+//   } catch (error) {
+//     return NextResponse.json({ error: error.message }, { status: 500 });
+//   }
+// }

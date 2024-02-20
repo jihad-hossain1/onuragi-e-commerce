@@ -38,17 +38,28 @@ export async function PUT(request) {
       const findQuestion = await ProductQuestion.findOne({ _id: questionID });
 
       if (findUser && findQuestion) {
+        const newReply = await ProductQuestion.findByIdAndUpdate(
+          { _id: questionID },
+          {
+            $push: {
+              replies: { questionID, user, content },
+            },
+          },
+          {
+            new: true,
+          }
+        );
         //
-        const newReply = new Reply({ questionID, user, content });
-        const saveReply = await newReply.save();
+        // const newReply = new Reply({ questionID, user, content });
+        // const saveReply = await newReply.save();
 
-        //
-        findQuestion.replies.push(newReply);
-        await findQuestion.save();
+        // //
+        // findQuestion.replies.push(newReply);
+        // await findQuestion.save();
 
-        console.log(newReply);
+        // console.log(newReply);
         return NextResponse.json(
-          { message: "reply added successfull", saveReply },
+          { message: "reply added successfull", newReply },
           { status: 201 }
         );
       } else {

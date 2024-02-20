@@ -17,8 +17,18 @@ const productQuestionSchema = new Schema(
     },
     replies: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Reply",
+        content: {
+          type: String,
+          required: true,
+        },
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+        questionID: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "ProductQuestion",
+        },
       },
     ],
     productID: {
