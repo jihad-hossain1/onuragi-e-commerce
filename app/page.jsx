@@ -1,7 +1,12 @@
+import Slider from "@/components/homeImpoter/Slider";
 import React from "react";
 
 const HomePage = () => {
-  return <div>HomePage</div>;
+  return (
+    <div>
+      <Slider />
+    </div>
+  );
 };
 
 export default HomePage;

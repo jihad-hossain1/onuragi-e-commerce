@@ -1,14 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import React from "react";
-import { signOut, useSession } from "next-auth/react";
-import { SlMagnifier } from "react-icons/sl";
-import { HiOutlineShoppingBag, HiOutlineUserCircle } from "react-icons/hi2";
+import Search from "./search/Search";
+import ShopingCart from "./shopingCart/ShopingCart";
+import UserAccount from "./userAccount/UserAccount";
+import { ThemeButton } from "./themeButton/ThemeButton";
 
 const Navbar = () => {
-  const { status } = useSession();
-
   return (
     <main className="max-w-screen-xl p-1 mx-auto">
       <div className="flex items-center gap-4 justify-between">
@@ -32,22 +30,14 @@ const Navbar = () => {
         </section>
 
         {/* icon section  */}
-        <section>
-          <button>
-            <SlMagnifier />
-          </button>
+        <section className="flex items-center gap-4">
+          <Search />
 
-          <button>
-            <HiOutlineShoppingBag />
-          </button>
-          <button>
-            <HiOutlineUserCircle />
-          </button>
-          {status === "authenticated" ? (
-            <button onClick={() => signOut()}>logOut</button>
-          ) : (
-            <Link href="/login">Login</Link>
-          )}
+          <ShopingCart />
+
+          <UserAccount />
+
+          <ThemeButton />
         </section>
       </div>
     </main>
