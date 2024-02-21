@@ -1,7 +1,6 @@
 "use client";
 
-import React from "react";
-import { HiOutlineShoppingBag } from "react-icons/hi2";
+import { BsBag } from "react-icons/bs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -21,7 +20,7 @@ const ShopingCart = () => {
     <>
       <Sheet>
         <SheetTrigger asChild>
-          <HiOutlineShoppingBag size={30} />
+          <BsBag className="text-[20px] lg:text-[30px]" />
         </SheetTrigger>
         <SheetContent>
           <SheetHeader>

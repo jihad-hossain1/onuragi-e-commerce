@@ -19,7 +19,7 @@ const Search = () => {
     <>
       <Sheet>
         <SheetTrigger asChild>
-          <SlMagnifier size={27} />
+          <SlMagnifier className="text-[18px] lg:text-[27px]" />
         </SheetTrigger>
         <SheetContent>
           <SheetHeader>

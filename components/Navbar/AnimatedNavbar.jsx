@@ -12,12 +12,14 @@ import Search from "./search/Search";
 import ShopingCart from "./shopingCart/ShopingCart";
 import UserAccount from "./userAccount/UserAccount";
 import { ThemeButton } from "./themeButton/ThemeButton";
+import { SiteLogo } from ".";
 
 export function AnimatedNavbar() {
   return (
-    <main className="max-w-screen-xl mx-auto">
-      <div className="relative w-full flex items-center justify-center">
-        <div>Onuragi</div>
+    <main className="max-w-screen-xl mx-auto p-2">
+      <div className="relative w-full flex items-center justify-between">
+        <MobileNav />
+        <SiteLogo />
         <Navbar className="top-2" />
         <section className="flex items-center gap-4">
           <Search />
@@ -33,11 +35,19 @@ export function AnimatedNavbar() {
   );
 }
 
+function MobileNav() {
+  return (
+    <div className="lg:hidden">
+      <button>x</button>
+    </div>
+  );
+}
+
 function Navbar({ className }) {
   const [active, setActive] = useState(null);
   return (
     <div
-      className={cn(" max-w-xl mx-auto z-50", className)}
+      className={cn(" max-w-xl mx-auto z-50 lg:block hidden", className)}
       //   className={cn("fixed top-10 inset-x-0 max-w-2xl mx-auto z-50", className)}
     >
       <Menu setActive={setActive}>
@@ -89,3 +99,4 @@ function Navbar({ className }) {
     </div>
   );
 }
+

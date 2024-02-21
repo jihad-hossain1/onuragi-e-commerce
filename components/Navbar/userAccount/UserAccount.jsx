@@ -7,16 +7,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import React from "react";
-import { HiOutlineUserCircle } from "react-icons/hi2";
+import { PiUserCircleLight } from "react-icons/pi";
 import { signOut, useSession } from "next-auth/react";
 
 const UserAccount = () => {
   const { status } = useSession();
   return (
-    <>
+    <div className="lg:block hidden">
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <HiOutlineUserCircle size={30} />
+          <PiUserCircleLight className="text-[20px] mt-2 lg:text-[32px]" />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           {status === "authenticated" ? (
@@ -39,7 +39,7 @@ const UserAccount = () => {
           )}
         </DropdownMenuContent>
       </DropdownMenu>
-    </>
+    </div>
   );
 };
 
