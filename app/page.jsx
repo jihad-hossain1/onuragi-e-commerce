@@ -5,6 +5,8 @@ const HomePage = () => {
   return (
     <div>
       <Slider />
+      {/* screen size limit  */}
+      <main className="max-w-screen-xl mx-auto p-2"></main>
     </div>
   );
 };

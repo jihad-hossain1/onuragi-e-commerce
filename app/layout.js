@@ -6,6 +6,7 @@ import AuthProvider from "@/src/config/AuthProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AnimatedNavbar } from "@/components/Navbar/AnimatedNavbar";
+import Topbar from "@/components/Navbar/topbar/Topbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,11 +27,10 @@ export default function RootLayout({ children }) {
             disableTransitionOnChange
           >
             <AuthProvider>
+              <Topbar />
               {/* <Navbar /> */}
               <AnimatedNavbar />
-              <section className="min-h-screen max-w-screen-xl mx-auto p-2">
-                {children}
-              </section>
+              <section className="min-h-screen">{children}</section>
               <Toaster />
               <Footer />
             </AuthProvider>
