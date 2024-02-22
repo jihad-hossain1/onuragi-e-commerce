@@ -7,7 +7,7 @@ const ProductManagerpage = async () => {
 
   return (
     <main className="flex flex-col gap-5">
-      <Action />
+      <Action categories={categories} />
       <>
         {/* category section  */}
         <div className="flex flex-col gap-3">

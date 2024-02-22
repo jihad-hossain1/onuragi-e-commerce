@@ -16,7 +16,7 @@ const AddCategory = () => {
 
   const handleAddCategory = async () => {
     if (name == "") {
-      return alert("name is required");
+      return toast.error("name is required");
     }
 
     const res = await axios.post("/api/v1/category", { name: name });
@@ -49,7 +49,7 @@ const AddCategory = () => {
         Add Category
       </Button>
 
-      <Modal open={isOpen} setOpen={setIsOpen} title={"Add Category"}>
+      <Modal open={isOpen} setOpen={setIsOpen} title={"Add SubCategory"}>
         <div className="flex flex-col gap-3">
           <h4 className="text-xs text-pink-600">{error ? error : ""}</h4>
           <Input

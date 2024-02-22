@@ -7,7 +7,7 @@ export async function POST(req, res) {
     // category are validation
     if (reqBody?.name === "") {
       return NextResponse.json({ message: "category name field are requied" });
-    } else if (reqBody?.categoryID === "") {
+    } else if (reqBody?.categoryID === "" || !reqBody?.categoryID) {
       return NextResponse.json({
         message: "categoryId are requied",
       });
