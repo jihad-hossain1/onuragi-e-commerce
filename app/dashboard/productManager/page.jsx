@@ -1,13 +1,19 @@
 import Action from "@/components/Dashboard/productMange/action/Action";
-import { getAllCategory, getSubCategories } from "@/utils/fetch/product";
+import {
+  getAllCategory,
+  getSubCategories,
+  getProducts,
+} from "@/utils/fetch/product";
+import Image from "next/image";
 
 const ProductManagerpage = async () => {
   const categories = await getAllCategory();
   const subcategories = await getSubCategories();
-
+  const products = await getProducts();
+  console.log(products);
   return (
     <main className="flex flex-col gap-5">
-      <Action categories={categories} />
+      <Action categories={categories} subcategories={subcategories} />
       <>
         {/* category section  */}
         <div className="flex flex-col gap-3">
@@ -32,6 +38,29 @@ const ProductManagerpage = async () => {
                 <span>{_ind + 1}.</span>
                 <span>{category?.name}</span>
               </h4>
+            ))}
+          </div>
+        </div>
+      </>
+      <>
+        {/* product section  */}
+        <div className="flex flex-col gap-3">
+          <h4>Total Products: {products?.length || 0} </h4>
+          <div>
+            {products?.map((product, _ind) => (
+              <div key={product?._id} cl>
+                <h4 className="flex items-center gap-2">
+                  <span>{_ind + 1}.</span>
+                  <span>{product?.name}</span>
+                </h4>
+                <Image
+                  src={product?.image}
+                  alt="Proudct image"
+                  width={300}
+                  height={400}
+                  className="w-20 rounded-md"
+                />
+              </div>
             ))}
           </div>
         </div>

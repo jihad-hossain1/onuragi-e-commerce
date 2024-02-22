@@ -50,7 +50,7 @@ export async function POST(req, res) {
 
 export async function GET(req, res) {
   try {
-    const products = await Product.find();
+    const products = await Product.find().populate("subcategories");
     return NextResponse.json(products);
   } catch (error) {
     return NextResponse.json(error);
