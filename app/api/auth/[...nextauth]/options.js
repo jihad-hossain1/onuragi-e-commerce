@@ -28,6 +28,9 @@ export const options = {
         console.log("Profile Google: ", profile);
 
         let userRole = "Google User";
+        if (profile?.email == "jihadkhan934@gmail.com") {
+          userRole = "admin";
+        }
         return {
           ...profile,
           id: profile.sub,
