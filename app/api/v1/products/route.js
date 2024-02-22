@@ -14,6 +14,22 @@ export async function POST(req, res) {
       // if price is 0 then show error
       if (price === 0) {
         return NextResponse.json({ message: "price field are empty" });
+      } else if (!name) {
+        return NextResponse.json({
+          message: "product name is required",
+        });
+      } else if (!image) {
+        return NextResponse.json({
+          message: "image  is required",
+        });
+      } else if (!categoryID) {
+        return NextResponse.json({
+          message: "categoryID  is required",
+        });
+      } else if (!price) {
+        return NextResponse.json({
+          message: "price is required",
+        });
       }
 
       const newProduct = new Product({ name, image, categoryID, price });

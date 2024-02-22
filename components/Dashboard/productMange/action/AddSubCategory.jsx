@@ -30,6 +30,7 @@ const AddSubCategory = ({ categories }) => {
       router.refresh();
       toast.success("Category added Successfull");
       setname("");
+      setCategory("");
       setIsOpen(false);
     } else {
       setError(res?.data?.message);

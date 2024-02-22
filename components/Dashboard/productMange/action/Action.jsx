@@ -5,7 +5,7 @@ import AddSubCategory from "./AddSubCategory";
 const Action = ({ categories }) => {
   return (
     <div className="flex gap-5 items-center">
-      <AddProduct />
+      <AddProduct categories={categories} />
       <AddCategory />
       <AddSubCategory categories={categories} />
     </div>
