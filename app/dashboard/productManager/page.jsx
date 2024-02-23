@@ -5,12 +5,13 @@ import {
   getProducts,
 } from "@/utils/fetch/product";
 import Image from "next/image";
+import { Products } from "./Products";
 
 const ProductManagerpage = async () => {
   const categories = await getAllCategory();
   const subcategories = await getSubCategories();
   const products = await getProducts();
-  console.log(products);
+  // console.log(products);
   return (
     <main className="flex flex-col gap-5">
       <Action categories={categories} subcategories={subcategories} />
@@ -44,26 +45,7 @@ const ProductManagerpage = async () => {
       </>
       <>
         {/* product section  */}
-        <div className="flex flex-col gap-3">
-          <h4>Total Products: {products?.length || 0} </h4>
-          <div>
-            {products?.map((product, _ind) => (
-              <div key={product?._id} cl>
-                <h4 className="flex items-center gap-2">
-                  <span>{_ind + 1}.</span>
-                  <span>{product?.name}</span>
-                </h4>
-                <Image
-                  src={product?.image}
-                  alt="Proudct image"
-                  width={300}
-                  height={400}
-                  className="w-20 rounded-md"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
+        <Products products={products} categories={subcategories} />
       </>
     </main>
   );

@@ -8,14 +8,15 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { HiPencilAlt } from "react-icons/hi";
 
-const AddProduct = ({ categories }) => {
+const EditProduct = ({ product, categories }) => {
   const [btnDisabled, setBtnDisabled] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [name, setname] = useState("");
-  const [categoryID, setCategory] = useState("");
-  const [price, setprice] = useState(0);
-  const [_photo, setPhoto] = useState("");
+  const [name, setname] = useState(product?.name);
+  const [categoryID, setCategory] = useState(product?.categoryID);
+  const [price, setprice] = useState(product?.price);
+  const [_photo, setPhoto] = useState(product?.image);
   const [image, setimage] = useState(null);
   const [error, setError] = useState("");
   const router = useRouter();
@@ -39,26 +40,28 @@ const AddProduct = ({ categories }) => {
   };
 
   const handleAddProduct = async () => {
-    const res = await axios.post("/api/v1/products", {
-      name: name,
-      categoryID: categoryID,
-      price: parseFloat(price),
-      image: _photo,
-    });
-    console.log(res);
+    try {
+      const res = await axios.put(`/api/v1/products/${product?._id}`, {
+        name: name,
+        categoryID: categoryID,
+        price: parseFloat(price),
+        image: _photo,
+      });
+      console.log("response : ", res);
 
-    if (res?.data?.status === 201) {
-      router.refresh();
-      toast.success("product added Successfull");
-      setname("");
-      setCategory("");
-      setimage("");
-      setprice(0);
-      setIsOpen(false);
-    } else {
-      setBtnDisabled(res.data.isValid);
-      setError(res?.data?.message);
-      toast.error(res?.data?.message);
+      if (res?.status === 201) {
+        router.refresh();
+        toast.success("product update Successfull");
+        setIsOpen(false);
+      } else {
+        console.log(res?.response);
+        setBtnDisabled(res.data.isValid);
+        setError(res?.data?.message);
+        toast.error(res?.data?.message);
+      }
+    } catch (error) {
+      setError(error?.response.data.message);
+      console.log(error?.response);
     }
   };
 
@@ -75,16 +78,16 @@ const AddProduct = ({ categories }) => {
 
   return (
     <>
-      <Button
+      <button
         onClick={() => setIsOpen(!isOpen)}
         size="sm"
         varient="outline"
-        className="text-xs bg-pink-600 shadow-sm hover:shadow hover:bg-pink-600/90 my-4"
+        className="text-green-500"
       >
-        Add Product
-      </Button>
+        <HiPencilAlt size={23} />
+      </button>
 
-      <Modal open={isOpen} setOpen={setIsOpen} title={"Add Product"}>
+      <Modal open={isOpen} setOpen={setIsOpen} title={"Update Product"}>
         <div className="flex flex-col gap-3">
           <h4 className="text-xs text-pink-600">{error ? error : ""}</h4>
 
@@ -137,7 +140,7 @@ const AddProduct = ({ categories }) => {
             varient="outline"
             className="text-xs bg-pink-600 shadow-sm hover:shadow hover:bg-pink-600/90 uppercase"
           >
-            create
+            Update
           </Button>
         </div>
       </Modal>
@@ -145,4 +148,4 @@ const AddProduct = ({ categories }) => {
   );
 };
 
-export default AddProduct;
+export default EditProduct;
