@@ -6,6 +6,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { FaAngleDown } from "react-icons/fa6";
 
 const Topbar = () => {
   return (
@@ -15,7 +16,7 @@ const Topbar = () => {
           <h4 className="text-sm lg:block hidden">
             Add anything here or just remove it...
           </h4>
-          <div className="flex gap-10 ">
+          <div className="flex gap-5 ">
             <Language />
             <Currency />
           </div>
@@ -29,7 +30,10 @@ const Language = () => {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className="text-sm">Language</DropdownMenuTrigger>
+        <DropdownMenuTrigger className="text-sm flex gap-1 items-center">
+          <span>English</span>
+          <FaAngleDown />
+        </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem>English</DropdownMenuItem>
           <DropdownMenuItem>Bangla</DropdownMenuItem>
@@ -43,7 +47,9 @@ const Currency = () => {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className="text-sm">Currency</DropdownMenuTrigger>
+        <DropdownMenuTrigger className="text-sm flex gap-1 items-center">
+          <span>BDT</span> <FaAngleDown />
+        </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem>BDT</DropdownMenuItem>
           <DropdownMenuItem>USD</DropdownMenuItem>
