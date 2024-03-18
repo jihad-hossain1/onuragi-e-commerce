@@ -4,7 +4,6 @@ import {
   getSubCategories,
   getProducts,
 } from "@/utils/fetch/product";
-import Image from "next/image";
 import { Products } from "./Products";
 
 const ProductManagerpage = async () => {

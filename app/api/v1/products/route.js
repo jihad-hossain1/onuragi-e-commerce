@@ -1,4 +1,4 @@
-import Product from "@/src/models/product.models";
+import Product from "../../../../src/models/product.models";
 import { validateJSON } from "@/utils/validateJSON";
 import { NextResponse } from "next/server";
 

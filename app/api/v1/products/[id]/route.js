@@ -73,3 +73,13 @@ export async function PUT(req, { params }) {
     return NextResponse.json({ error: error?.message }, { status: 500 });
   }
 }
+
+export async function GET(req, { params }) {
+  try {
+    const id = params.id;
+
+    const singleProdut = await Product.findById(id);
+
+    return NextResponse.json(singleProdut);
+  } catch (error) {}
+}
