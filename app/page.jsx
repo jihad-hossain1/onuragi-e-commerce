@@ -7,7 +7,7 @@ const HomePage = () => {
     <div>
       <Slider />
       {/* screen size limit  */}
-      <main className="max-w-screen-xl mx-auto p-2"></main>
+      {/* <main className="max-w-screen-xl mx-auto p-2"></main> */}
       <CategoryOne />
     </div>
   );
