@@ -1,11 +1,11 @@
 import SingleProduct from "@/components/products/SingleProduct";
 import Container from "@/components/ui/container";
-import { getProducts } from "@/utils/fetch/product";
+// import { getProducts } from "@/utils/fetch/product";
 import Image from "next/image";
 import React from "react";
 
 const CategoryOne = async () => {
-  const products = await getProducts();
+  const products = []
   // console.log(products);
   return (
     <Container>

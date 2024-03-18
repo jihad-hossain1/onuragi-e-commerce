@@ -8,17 +8,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import EditProduct from "@/components/Dashboard/productMange/productAction/EditProduct";
-import AddDetails from "@/components/Dashboard/productMange/productAction/AddDetails";
-import { HiOutlineDotsHorizontal } from "react-icons/hi";
+
 
 export function Products({ products, categories }) {
   return (
