@@ -2,12 +2,11 @@ import SingleProduct from "@/components/products/SingleProduct";
 import Container from "@/components/ui/container";
 import { getProducts } from "@/utils/fetch/product";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 
 const CategoryOne = async () => {
   const products = await getProducts();
-
+  // console.log(products);
   return (
     <Container>
       <div className="grid md:grid-cols-2 gap-4 lg:gap-6">
@@ -26,11 +25,9 @@ const CategoryOne = async () => {
           </h4>
 
           <div className="mt-4 grid grid-cols-2 lg:grid-cols-3 gap-4">
-            {products
-              ? products?.map((product, index) => (
-                  <SingleProduct key={index} product={product} />
-                ))
-              : null}
+            {products?.map((product, index) => (
+              <SingleProduct key={index} product={product} />
+            ))}
           </div>
         </div>
       </div>

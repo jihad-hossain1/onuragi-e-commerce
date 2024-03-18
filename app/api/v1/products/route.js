@@ -1,4 +1,4 @@
-import Product from "../../../../src/models/product.models";
+import Product from "@/src/models/product.models";
 import { validateJSON } from "@/utils/validateJSON";
 import { NextResponse } from "next/server";
 
@@ -50,7 +50,8 @@ export async function POST(req, res) {
 
 export async function GET(req, res) {
   try {
-    const products = await Product.find().populate("categoryID");
+    const products = await Product.find().select("_id name image price");
+    // console.log(products);
     return NextResponse.json(products);
   } catch (error) {
     return NextResponse.json(error);
