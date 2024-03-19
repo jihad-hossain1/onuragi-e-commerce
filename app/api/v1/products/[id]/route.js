@@ -1,5 +1,6 @@
 import Product from "@/src/models/product.models";
-import { validateJSON } from "@/utils/validateJSON";
+import ProductDetail from "@/src/models/productDetails.models";
+import SubCategory from "@/src/models/subCategory.models";
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 
@@ -78,7 +79,19 @@ export async function GET(req, { params }) {
   try {
     const id = params.id;
 
-    const singleProdut = await Product.findById(id);
+    const singleProdut = await Product.findById(id).populate("categoryID");
+
+    // const findCategroy = await SubCategory.findOne({});
+
+    // const details = await ProductDetail.findOne({});
+
+    // const fullProductsDetails = {
+    //   ...singleProdut,
+    //   ...findCategroy,
+    //   ...details,
+    // };
+
+    // console.log(fullProductsDetails);
 
     return NextResponse.json(singleProdut);
   } catch (error) {}

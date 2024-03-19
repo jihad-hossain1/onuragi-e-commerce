@@ -1,10 +1,11 @@
-"use client";
-
+import ProductDetails from "@/components/products/productDetails/ProductDetails";
+import { getProductById } from "@/utils/fetch/product";
 import React from "react";
 
-const SingleProductpage = ({ params }) => {
-  console.log(params);
-  return <div>SingleProductpage</div>;
+const SingleProductpage = async ({ params }) => {
+  const product = await getProductById(params?.id);
+
+  return <ProductDetails product={product} />;
 };
 
 export default SingleProductpage;

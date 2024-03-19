@@ -9,9 +9,10 @@ import {
 import React from "react";
 import { PiUserCircleLight } from "react-icons/pi";
 import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 
 const UserAccount = () => {
-  const { status } = useSession();
+  const { status, data: session } = useSession();
   return (
     <div className="lg:block hidden">
       <DropdownMenu>
@@ -21,8 +22,14 @@ const UserAccount = () => {
         <DropdownMenuContent align="end">
           {status === "authenticated" ? (
             <>
-              <DropdownMenuItem>Dashboard</DropdownMenuItem>
-              <DropdownMenuItem>Adress</DropdownMenuItem>
+              {session?.user?.role == "admin" && (
+                <Link href={"/dashboard"}>
+                  <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                </Link>
+              )}
+              <Link href={"/user-profile"}>
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+              </Link>
               <DropdownMenuItem onClick={() => signOut()}>
                 Logout
               </DropdownMenuItem>

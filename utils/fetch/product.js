@@ -50,3 +50,19 @@ export const getProducts = async () => {
     throw new Error(error.message);
   }
 };
+
+
+export const getProductById = async (id) => {
+  try {
+    const res = await fetch(`${process.env.URL}/products/${id}`, {
+      cache: "no-store",
+    });
+    //
+    if (!res.ok) {
+      throw new Error("failed to fetch blog");
+    }
+    return res.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
