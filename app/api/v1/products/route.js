@@ -51,7 +51,7 @@ export async function POST(req, res) {
 export async function GET(req, res) {
   try {
     const products = await Product.find().select("_id name image price");
-    // console.log(products);
+    console.log(products);
     return NextResponse.json(products);
   } catch (error) {
     return NextResponse.json(error);

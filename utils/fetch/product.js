@@ -1,34 +1,51 @@
-"use server";
-
-import axios from "axios";
-
 export const getAllCategory = async () => {
   try {
-    const res = axios.get(`${process.env.NEXT_BASE_URL}/category`);
-    const result = (await res).data;
-    // console.log(result);
-    return result;
+    if (typeof window == "undefined") {
+      return [];
+    }
+    const res = await fetch(`${process.env.URL}/category`, {
+      cache: "no-store",
+    });
+    if (!res.ok) {
+      console.log(await res.json());
+    }
+
+    return await res.json();
   } catch (error) {
-    throw new Error(error.message);
+    console.log(error);
   }
 };
 
 export const getSubCategories = async () => {
   try {
-    const res = axios.get(`${process.env.NEXT_BASE_URL}/category/subCategory`);
-    const result = (await res).data;
+    if (typeof window == "undefined") {
+      return [];
+    }
+    const res = await fetch(`${process.env.URL}/category/subCategory`, {
+      cache: "no-store",
+    });
+    if (!res.ok) {
+      console.log(await res.json());
+    }
 
-    return result;
+    return await res.json();
   } catch (error) {
     throw new Error(error.message);
   }
 };
 export const getProducts = async () => {
   try {
-    const res = axios.get(`${process.env.NEXT_BASE_URL}/products`);
-    const result = (await res).data;
+    if (typeof window == "undefined") {
+      return [];
+    }
+    const res = await fetch(`${process.env.URL}/products`, {
+      cache: "no-store",
+    });
+    if (!res.ok) {
+      console.log(await res.json());
+    }
 
-    return result;
+    return await res.json();
   } catch (error) {
     throw new Error(error.message);
   }
