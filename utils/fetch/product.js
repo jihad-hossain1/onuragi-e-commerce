@@ -1,9 +1,9 @@
 export const getAllCategory = async () => {
   try {
-    // if (typeof window == "undefined") {
-    //   return [];
-    // }
-    const res = await fetch(`${process.env.URL}/api/v1/category`, {
+    if (typeof window == "undefined") {
+      return [];
+    }
+    const res = await fetch(`http://localhost:3000/api/v1/category`, {
       cache: "no-store",
     });
     if (!res.ok) {
@@ -18,12 +18,15 @@ export const getAllCategory = async () => {
 
 export const getSubCategories = async () => {
   try {
-    // if (typeof window == "undefined") {
-    //   return [];
-    // }
-    const res = await fetch(`${process.env.URL}/api/v1/category/subCategory`, {
-      cache: "no-store",
-    });
+    if (typeof window == "undefined") {
+      return [];
+    }
+    const res = await fetch(
+      `http://localhost:3000/api/v1/category/subCategory`,
+      {
+        cache: "no-store",
+      }
+    );
     console.log(res);
     if (res.ok) {
       return await res.json();
@@ -38,10 +41,10 @@ export const getSubCategories = async () => {
 };
 export const getProducts = async () => {
   try {
-    // if (typeof window == "undefined") {
-    //   return [];
-    // }
-    const res = await fetch(`${process.env.URL}/api/v1/products`, {
+    if (typeof window == "undefined") {
+      return [];
+    }
+    const res = await fetch(`http://localhost:3000/api/v1/products`, {
       cache: "no-store",
     });
     if (res.ok) {
@@ -56,10 +59,10 @@ export const getProducts = async () => {
 
 export const getProductById = async (id) => {
   try {
-    // if (typeof window == "undefined") {
-    //   return {};
-    // }
-    const res = await fetch(`${process.env.URL}/products/${id}`, {
+    if (typeof window == "undefined") {
+      return {};
+    }
+    const res = await fetch(`http://localhost:3000/products/${id}`, {
       cache: "no-store",
     });
     //
