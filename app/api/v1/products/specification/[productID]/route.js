@@ -1,3 +1,4 @@
+import connectDatabase from "@/src/config/mongodbConnection";
 import ProductSpecification from "@/src/models/productSpecification.models";
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
@@ -9,7 +10,7 @@ export async function GET(req, { params }) {
     if (!mongoose.Types.ObjectId.isValid(productID)) {
       return NextResponse.json({ message: "your provide id is not valid" });
     }
-
+    await connectDatabase();
     const findSpecification = await ProductSpecification.findOne({
       productID: productID,
     });

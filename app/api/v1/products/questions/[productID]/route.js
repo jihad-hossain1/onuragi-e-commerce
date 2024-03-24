@@ -1,3 +1,4 @@
+import connectDatabase from "@/src/config/mongodbConnection";
 import Product from "@/src/models/product.models";
 import ProductQuestion from "@/src/models/productQuestion.models";
 import mongoose from "mongoose";
@@ -13,7 +14,7 @@ export async function GET(req, { params }) {
         { status: 400 }
       );
     }
-
+    await connectDatabase();
     const findProduct = await Product.findOne({ _id: productID });
 
     if (findProduct) {

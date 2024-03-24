@@ -3,11 +3,11 @@ export const getAllCategory = async () => {
     // if (typeof window == "undefined") {
     //   return [];
     // }
-    const res = await fetch(`${process.env.URL}/category`, {
+    const res = await fetch(`${process.env.URL}/api/v1/category`, {
       cache: "no-store",
     });
     if (!res.ok) {
-      console.log(await res.json());
+      throw new Error("Failed to fetch categories");
     }
 
     return await res.json();
@@ -21,11 +21,14 @@ export const getSubCategories = async () => {
     // if (typeof window == "undefined") {
     //   return [];
     // }
-    const res = await fetch(`${process.env.URL}/category/subCategory`, {
+    const res = await fetch(`${process.env.URL}/api/v1/category/subCategory`, {
       cache: "no-store",
     });
-    if (!res.ok) {
-      console.log(await res.json());
+    console.log(res);
+    if (res.ok) {
+      return await res.json();
+    } else if (!res.ok) {
+      throw new Error("Failed to fetch subcategories");
     }
 
     return await res.json();
@@ -38,19 +41,18 @@ export const getProducts = async () => {
     // if (typeof window == "undefined") {
     //   return [];
     // }
-    const res = await fetch(`${process.env.URL}/products`, {
+    const res = await fetch(`${process.env.URL}/api/v1/products`, {
       cache: "no-store",
     });
-    if (!res.ok) {
-      console.log(await res.json());
+    if (res.ok) {
+      return await res.json();
+    } else if (!res.ok) {
+      throw new Error("Failed to fetch products");
     }
-
-    return await res.json();
   } catch (error) {
     throw new Error(error.message);
   }
 };
-
 
 export const getProductById = async (id) => {
   try {
@@ -58,10 +60,11 @@ export const getProductById = async (id) => {
       cache: "no-store",
     });
     //
-    if (!res.ok) {
-      throw new Error("failed to fetch blog");
+    if (res.ok) {
+      return await res.json();
+    } else if (!res.ok) {
+      console.log(console.log(res));
     }
-    return res.json();
   } catch (error) {
     console.log(error);
   }

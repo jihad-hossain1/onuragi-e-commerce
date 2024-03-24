@@ -1,9 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 // import connectDatabase from "../config/mongodbConnection";
 
-mongoose.connect(process.env.MONGODB_URI);
-mongoose.Promise = global.Promise;
-console.log("<----*** MONGODB user CONNECTION OK ***----->");
+
 
 const favoriteType = new Schema({
   productID: {

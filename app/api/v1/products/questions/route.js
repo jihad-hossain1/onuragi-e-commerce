@@ -1,3 +1,4 @@
+import connectDatabase from "@/src/config/mongodbConnection";
 import Product from "@/src/models/product.models";
 import ProductQuestion from "@/src/models/productQuestion.models";
 import User from "@/src/models/user.models";
@@ -34,7 +35,7 @@ export async function POST(request) {
           { status: 400 }
         );
       }
-
+      await connectDatabase();
       // verify if user are product bought are not from cart
       const findUser = await User.findOne({ _id: user });
       const findProduct = await Product.findOne({ _id: productID });

@@ -1,3 +1,4 @@
+import connectDatabase from "@/src/config/mongodbConnection";
 import Product from "@/src/models/product.models";
 import ProductDetail from "@/src/models/productDetails.models";
 import SubCategory from "@/src/models/subCategory.models";
@@ -15,7 +16,7 @@ export async function PUT(req, { params }) {
         { status: 400 }
       );
     }
-
+    await connectDatabase();
     // find prouct from params id
     const product = await Product.findOne({
       _id: id,
@@ -78,7 +79,7 @@ export async function PUT(req, { params }) {
 export async function GET(req, { params }) {
   try {
     const id = params.id;
-
+    await connectDatabase();
     const singleProdut = await Product.findById(id).populate("categoryID");
 
     // const findCategroy = await SubCategory.findOne({});

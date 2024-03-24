@@ -1,6 +1,7 @@
 import User from "@/src/models/user.models";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
+import connectDatabase from "@/src/config/mongodbConnection";
 
 export async function GET(req, res) {
   const users = await User.find();
@@ -40,7 +41,7 @@ export async function POST(req, res) {
         { status: 401 }
       );
     }
-
+    await connectDatabase();
     const user = await User.findOne({ email });
 
     if (user?.email == email) {

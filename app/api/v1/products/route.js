@@ -1,8 +1,9 @@
+import connectDatabase from "@/src/config/mongodbConnection";
 import Product from "@/src/models/product.models";
 import { validateJSON } from "@/utils/validateJSON";
 import { NextResponse } from "next/server";
 
-export async function POST(req, res) {
+export async function POST(req) {
   const reqBody = await req.json();
   try {
     // checker for anyone can send undefine or {} or null value in api requiest
@@ -31,7 +32,7 @@ export async function POST(req, res) {
           message: "price is required",
         });
       }
-
+      await connectDatabase();
       const newProduct = new Product({ name, image, categoryID, price });
       const product = await newProduct.save();
 
@@ -48,12 +49,14 @@ export async function POST(req, res) {
   }
 }
 
-export async function GET(req, res) {
+export async function GET() {
   try {
-    const products = await Product.find().select("_id name image price");
-    console.log(products);
+    await connectDatabase();
+    const products = await Product.find({});
+    console.log("products from server-:", products);
     return NextResponse.json(products);
   } catch (error) {
-    return NextResponse.json(error);
+    console.log(error);
+    return NextResponse.json({ error }, { status: 500 });
   }
 }

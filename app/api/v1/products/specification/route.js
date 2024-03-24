@@ -1,3 +1,4 @@
+import connectDatabase from "@/src/config/mongodbConnection";
 import ProductSpecification from "@/src/models/productSpecification.models";
 import { validateJSON } from "@/utils/validateJSON";
 import mongoose from "mongoose";
@@ -24,7 +25,7 @@ export async function POST(request) {
       if (!mongoose.Types.ObjectId.isValid(productID)) {
         return NextResponse.json({ message: "your provide id is not valid" });
       }
-
+      await connectDatabase();
       const alreadySpecification = await ProductSpecification.findOne({
         productID: productID,
       });

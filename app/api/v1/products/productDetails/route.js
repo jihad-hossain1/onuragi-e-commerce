@@ -1,3 +1,4 @@
+import connectDatabase from "@/src/config/mongodbConnection";
 import ProductDetail from "@/src/models/productDetails.models";
 import { validateJSON } from "@/utils/validateJSON";
 import mongoose from "mongoose";
@@ -36,7 +37,7 @@ export async function POST(req) {
         (previous, current) => previous + current?.quantity,
         0
       );
-
+      await connectDatabase();
       //   build new product details
       const newDetails = new ProductDetail({
         productID,
@@ -64,4 +65,3 @@ export async function POST(req) {
     );
   }
 }
-

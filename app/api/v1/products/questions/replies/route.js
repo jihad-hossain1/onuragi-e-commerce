@@ -1,3 +1,4 @@
+import connectDatabase from "@/src/config/mongodbConnection";
 import ProductQuestion from "@/src/models/productQuestion.models";
 import Reply from "@/src/models/reply.models";
 import User from "@/src/models/user.models";
@@ -32,7 +33,7 @@ export async function PUT(request) {
           { status: 400 }
         );
       }
-
+      await connectDatabase();
       // check user and question are found or not
       const findUser = await User.findOne({ _id: user });
       const findQuestion = await ProductQuestion.findOne({ _id: questionID });

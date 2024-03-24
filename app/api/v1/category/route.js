@@ -1,3 +1,4 @@
+import connectDatabase from "@/src/config/mongodbConnection";
 import Category from "@/src/models/category.models";
 import { NextResponse } from "next/server";
 
@@ -12,6 +13,7 @@ export async function POST(req, res) {
     // already category exist
     const namedEmpty = reqBody.name.trim();
     // console.log(`"${namedEmpty}"`);
+    await connectDatabase();
     const categoryExist = await Category.findOne({
       name: reqBody.name,
     });
@@ -36,6 +38,7 @@ export async function POST(req, res) {
 
 export async function GET(req, res) {
   try {
+    await connectDatabase();
     const categories = await Category.find();
     return NextResponse.json(categories);
   } catch (error) {
