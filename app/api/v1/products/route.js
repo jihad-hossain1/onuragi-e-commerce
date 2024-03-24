@@ -52,8 +52,8 @@ export async function POST(req) {
 export async function GET() {
   try {
     await connectDatabase();
-    const products = await Product.find({});
-    console.log("products from server-:", products);
+    const products = await Product.find().select("_id name image price");
+    // console.log("products from server-:", products);
     return NextResponse.json(products);
   } catch (error) {
     console.log(error);

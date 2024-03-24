@@ -1,8 +1,8 @@
 export const getAllCategory = async () => {
   try {
-    // if (typeof window == "undefined") {
-    //   return [];
-    // }
+    if (typeof window == "undefined") {
+      return [];
+    }
     const res = await fetch(`${process.env.URL}/api/v1/category`, {
       cache: "no-store",
     });
@@ -18,9 +18,9 @@ export const getAllCategory = async () => {
 
 export const getSubCategories = async () => {
   try {
-    // if (typeof window == "undefined") {
-    //   return [];
-    // }
+    if (typeof window == "undefined") {
+      return [];
+    }
     const res = await fetch(`${process.env.URL}/api/v1/category/subCategory`, {
       cache: "no-store",
     });
@@ -38,9 +38,9 @@ export const getSubCategories = async () => {
 };
 export const getProducts = async () => {
   try {
-    // if (typeof window == "undefined") {
-    //   return [];
-    // }
+    if (typeof window == "undefined") {
+      return [];
+    }
     const res = await fetch(`${process.env.URL}/api/v1/products`, {
       cache: "no-store",
     });
@@ -56,6 +56,9 @@ export const getProducts = async () => {
 
 export const getProductById = async (id) => {
   try {
+    if (typeof window == "undefined") {
+      return {};
+    }
     const res = await fetch(`${process.env.URL}/products/${id}`, {
       cache: "no-store",
     });
