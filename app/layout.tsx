@@ -1,6 +1,6 @@
+import React from "react";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import AuthProvider from "@/src/config/AuthProvider";
 import { Toaster } from "@/components/ui/sonner";
@@ -15,20 +15,18 @@ export const metadata = {
   description: "Buy original & handicraft products",
 };
 
-export default function RootLayout({ children }) {
+interface RootLayoutProps {
+  children: React.ReactNode;
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body className={inter.className}>
         <main className="">
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+          <ThemeProvider attribute="class" disableTransitionOnChange>
             <AuthProvider>
               <Topbar />
-              {/* <Navbar /> */}
               <AnimatedNavbar />
               <section className="min-h-screen">{children}</section>
               <Toaster />

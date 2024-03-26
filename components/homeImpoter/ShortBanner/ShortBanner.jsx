@@ -25,14 +25,10 @@ const ShortBanner = () => {
             />
           </div>
         </div>
-        <div className="bg-gray-100 p-5 lg:p-7 rounded-sm flex justify-between ">
+        <div className="bg-pink-100 p-5 lg:p-7 rounded-sm flex justify-between ">
           <div className="flex flex-col gap-2">
-            <h4 className="text-xl font-semibold text-gray-800">
-              Mini backpack
-            </h4>
-            <h4 className="text-xl font-semibold text-gray-500">
-              Bags & Accessories
-            </h4>
+            <h4 className="text-2xl font-semibold text-gray-800">Big Sale</h4>
+            <h4 className="text-3xl font-semibold text-gray-800">50% OFF</h4>
           </div>
           <div>
             <Image

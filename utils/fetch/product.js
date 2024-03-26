@@ -24,7 +24,7 @@ export const getSubCategories = async () => {
     const res = await fetch(`${process.env.URL}/api/v1/category/subCategory`, {
       cache: "no-store",
     });
-    console.log(res);
+    // console.log(res);
     if (res.ok) {
       return await res.json();
     } else if (!res.ok) {
@@ -42,13 +42,10 @@ export const getProducts = async () => {
     // if (typeof window == "undefined") {
     //   return [];
     // }
-    const res = await fetch(
-      `https://onuragi-e-commerce.vercel.app/api/v1/products`,
-      {
-        cache: "no-store",
-      }
-    );
-    console.log(res);
+    const res = await fetch(`${process.env.URL}/api/v1/products`, {
+      cache: "no-store",
+    });
+    // console.log(res);
     if (res.ok) {
       return await res.json();
     } else if (!res.ok) {

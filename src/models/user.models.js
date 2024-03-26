@@ -15,19 +15,24 @@ const userSchema = new Schema(
   {
     username: {
       type: String,
-      required: true,
+      // required: true,
     },
     fullname: {
       type: String,
-      required: true,
+      // required: true,
     },
     password: {
       type: String,
-      required: true,
+      // required: true,
     },
     email: {
       type: String,
       required: true,
+    },
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
     },
     favorites: [favoriteType],
     carts: [
