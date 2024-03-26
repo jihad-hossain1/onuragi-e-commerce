@@ -39,6 +39,7 @@ export const getSubCategories = async () => {
     throw new Error(error.message);
   }
 };
+
 export const getProducts = async () => {
   try {
     if (typeof window == "undefined") {
