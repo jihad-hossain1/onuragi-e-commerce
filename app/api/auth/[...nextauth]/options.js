@@ -3,26 +3,10 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import User from "@/src/models/user.models";
 import bcrypt from "bcrypt";
+import connectDatabase from "@/src/config/mongodbConnection";
 
 export const options = {
   providers: [
-    GitHubProvider({
-      profile(profile) {
-        console.log("Profile GitHub: ", profile);
-
-        let userRole = "GitHub User";
-        if (profile?.email == "jihadkhan934@gmail.com") {
-          userRole = "admin";
-        }
-
-        return {
-          ...profile,
-          role: userRole,
-        };
-      },
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_Secret,
-    }),
     GoogleProvider({
       profile(profile) {
         console.log("Profile Google: ", profile);
@@ -56,6 +40,7 @@ export const options = {
       },
       async authorize(credentials) {
         try {
+          await connectDatabase();
           const foundUser = await User.findOne({ email: credentials.email })
             .lean()
             .exec();

@@ -4,6 +4,8 @@ import bcrypt from "bcrypt";
 import connectDatabase from "@/src/config/mongodbConnection";
 
 export async function GET(req, res) {
+  await connectDatabase();
+  
   const users = await User.find();
 
   return NextResponse.json(users);
