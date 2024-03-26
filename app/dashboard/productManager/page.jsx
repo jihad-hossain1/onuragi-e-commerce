@@ -1,19 +1,16 @@
 import Action from "@/components/Dashboard/productMange/action/Action";
-// import {
-//   getAllCategory,
-//   getSubCategories,
-//   getProducts,
-// } from "@/utils/fetch/product";
+import {
+  getAllCategory,
+  getSubCategories,
+  getProducts,
+} from "@/utils/fetch/product";
 import { Products } from "./Products";
 
 const ProductManagerpage = async () => {
-  const categories = []
-  const subcategories = []
-  const products =[]
-  // const categories = await getAllCategory();
-  // const subcategories = await getSubCategories();
-  // const products = await getProducts();
-  // console.log(products);
+  const categories = await getAllCategory();
+  const subcategories = await getSubCategories();
+  const products = await getProducts();
+
   return (
     <main className="flex flex-col gap-5">
       <Action categories={categories} subcategories={subcategories} />
