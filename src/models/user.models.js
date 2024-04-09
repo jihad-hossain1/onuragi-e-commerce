@@ -11,36 +11,62 @@ const favoriteType = new Schema({
   },
 });
 
+const profileType = new Schema({
+  image: {
+    type: String
+  },
+
+  address: {
+          street: { type: String },
+          city: { type: String },
+          zipCode: { type: String },
+  },
+  
+  deliveryAddress: {
+          street: { type: String },
+          city: { type: String },
+          zipCode: { type: String },
+  },
+
+})
+
 const userSchema = new Schema(
   {
     username: {
       type: String,
       // required: true,
     },
+
     fullname: {
       type: String,
       // required: true,
     },
+
     password: {
       type: String,
       // required: true,
     },
+
     email: {
       type: String,
       required: true,
     },
+
     role: {
       type: String,
       enum: ["user", "admin"],
       default: "user",
     },
+
     favorites: [favoriteType],
+
     carts: [
       {
         product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
         quantity: Number,
       },
     ],
+
     deliveries: [
       {
         products: [
@@ -59,6 +85,9 @@ const userSchema = new Schema(
         },
       },
     ],
+
+    profile: profileType
+
   },
   {
     timestamps: true,

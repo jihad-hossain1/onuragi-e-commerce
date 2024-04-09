@@ -4,12 +4,16 @@ import bcrypt from "bcrypt";
 import connectDatabase from "@/src/config/mongodbConnection";
 
 export async function GET(req, res) {
-  await connectDatabase();
+try {
+    await connectDatabase();
+    
+    const users = await User.find().select('fullname _id email')
   
-  const users = await User.find().select('fullname _id email')
+    return NextResponse.json(users);
+} catch (error) {
+  return NextResponse.json({ error: error.message }, { status: 500 });
+}
 
-  return NextResponse.json(users);
-  // return users;
 }
 
 export async function POST(req) {
@@ -86,4 +90,3 @@ export async function POST(req) {
   }
 }
 
-// export { handler as GET };
