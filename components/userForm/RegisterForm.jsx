@@ -1,9 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import axios from "axios";
 
@@ -44,12 +41,11 @@ const RegisterForm = () => {
     }
   };
   return (
-    <div className="max-w-screen-sm mx-auto p-3">
-      RegisterForm
+    <div className="max-w-screen-sm mx-auto p-3 mt-20">
       <form action={handleRegister} className="flex flex-col gap-4 ">
         <input
           type="text"
-          className="border p-3 bg-transparent rounded"
+          className="input"
           name=""
           value={fullname}
           placeholder="fullname"
@@ -58,7 +54,7 @@ const RegisterForm = () => {
         />
         <input
           type="email"
-          className="border p-3 bg-transparent rounded"
+          className="input"
           name=""
           value={email}
           placeholder="email"
@@ -67,7 +63,7 @@ const RegisterForm = () => {
         />
         <input
           type="text"
-          className="border p-3 bg-transparent rounded"
+          className="input"
           name=""
           value={username}
           placeholder="username"
@@ -76,20 +72,16 @@ const RegisterForm = () => {
         />
         <input
           type="password"
-          className="border p-3 bg-transparent rounded"
+          className="input"
           name=""
           value={password}
           placeholder="password"
           onChange={(e) => setPassword(e.target.value)}
           id=""
         />
-        <Button
-          className="hover:bg-zinc-700 hover:text-white"
-          variant="ghost"
-          type="submit"
-        >
+        <button className="btn" type="submit">
           register
-        </Button>
+        </button>
       </form>
     </div>
   );

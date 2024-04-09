@@ -27,7 +27,7 @@ const UserAccount = () => {
                   <DropdownMenuItem>Dashboard</DropdownMenuItem>
                 </Link>
               )}
-              <Link href={"/user-profile"}>
+              <Link href={"/customer-dashboard/user-profile"}>
                 <DropdownMenuItem>Profile</DropdownMenuItem>
               </Link>
               <DropdownMenuItem onClick={() => signOut()}>
