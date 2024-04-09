@@ -6,17 +6,19 @@ import connectDatabase from "@/src/config/mongodbConnection";
 export async function GET(req, res) {
   await connectDatabase();
   
-  const users = await User.find();
+  const users = await User.find().select('fullname _id email')
 
   return NextResponse.json(users);
   // return users;
 }
 
-export async function POST(req, res) {
+export async function POST(req) {
   const _d = await req.json();
-  console.log(_d);
+
   const { username, email, password, fullname } = _d;
+
   try {
+
     if (username == "") {
       return NextResponse.json(
         { message: "username fields is required" },
@@ -43,6 +45,7 @@ export async function POST(req, res) {
         { status: 401 }
       );
     }
+
     await connectDatabase();
     const user = await User.findOne({ email });
 
@@ -55,12 +58,27 @@ export async function POST(req, res) {
 
     const hashedPad = await bcrypt.hash(password, 10);
 
+    const roles = await User.find()
+
+    const findUnique = roles?.find(role => role.role == 'admin');
+
+    console.log("find user role", findUnique);
+
+    // if(user.role !== 'admin')
+
+    if (!findUnique) {
+      
+      await User.create({ fullname, username, password: hashedPad, email, role: "admin" });
+      
+      return NextResponse.json({ message: "user created you are admin now" }, { status: 201 });
+    }
+
     await User.create({ fullname, username, password: hashedPad, email });
 
     return NextResponse.json({ message: "user created" }, { status: 201 });
+
   } catch (error) {
     return NextResponse.json({
-      message: "something wrong from server ",
       status: 500,
       message: error?.message,
       error,
