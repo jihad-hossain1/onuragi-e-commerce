@@ -7,8 +7,8 @@ import { NextAuthOptions, TokenSet } from "next-auth";
 import { UserType } from "@/utils/interface/interface";
 
 enum Role {
-  Admin = "admin",
   User = "user",
+  Admin = "admin",
 }
 
 declare module "next-auth" {
@@ -127,6 +127,7 @@ export const options: NextAuthOptions = {
               id: foundUser._id,
               name: foundUser.fullname,
               image: foundUser.avatar,
+              role: foundUser.role,
             };
 
             return Promise.resolve(user);

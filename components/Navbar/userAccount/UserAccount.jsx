@@ -12,7 +12,10 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 
 const UserAccount = () => {
-  const { status, data: session } = useSession();
+  const { status, data } = useSession();
+
+  const admin = data?.user?.role;
+
   return (
     <div className="lg:block hidden">
       <DropdownMenu>
@@ -22,7 +25,7 @@ const UserAccount = () => {
         <DropdownMenuContent align="end">
           {status === "authenticated" ? (
             <>
-              {session?.user?.role == "admin" && (
+              {admin == "admin" && (
                 <Link href={"/dashboard"}>
                   <DropdownMenuItem>Dashboard</DropdownMenuItem>
                 </Link>

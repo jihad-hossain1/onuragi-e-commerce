@@ -50,7 +50,7 @@ export async function PATCH(req: NextRequest, { params }) {
   const id = params.id as { id: string };
 
   try {
-    const updatedData = await req.json();
+    const { fullname, email, username } = await req.json();
 
     await connectDatabase();
 
@@ -64,11 +64,26 @@ export async function PATCH(req: NextRequest, { params }) {
     }
 
     const updateUser = await User.findByIdAndUpdate(
-      id,
-      { updatedData },
+      { _id: id },
+      {
+        fullname: fullname || undefined,
+        email: email || undefined,
+        username: username || undefined,
+      },
       { new: true }
     );
-    return NextResponse.json(user);
+
+    return NextResponse.json(
+      {
+        user: {
+          fullname: updateUser.fullname,
+          email: updateUser.email,
+          username: updateUser.username,
+        },
+      },
+      { status: 200 }
+    );
+
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
