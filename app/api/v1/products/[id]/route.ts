@@ -1,13 +1,11 @@
 import connectDatabase from "@/src/config/mongodbConnection";
 import Product from "@/src/models/product.models";
-import ProductDetail from "@/src/models/productDetails.models";
-import SubCategory from "@/src/models/subCategory.models";
 import mongoose from "mongoose";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function PUT(req, { params }) {
+export async function PUT(req: NextRequest, { params }) {
   try {
-    const { id } = params;
+    const id = params.id;
 
     // check valid object id or not
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -65,10 +63,7 @@ export async function PUT(req, { params }) {
         }
       );
 
-      return NextResponse.json(
-        { updateProduct: updatedPro, message: "product updated successfull" },
-        { status: 201 }
-      );
+      return NextResponse.json(updatedPro, { status: 201 });
     }
   } catch (error) {
     // console.log(error);
@@ -76,9 +71,9 @@ export async function PUT(req, { params }) {
   }
 }
 
-export async function GET(req, { params }) {
+export async function GET(req: NextRequest, { params }) {
   try {
-    const id = params.id;
+    const id = params.id as { id: string };
     await connectDatabase();
     const singleProdut = await Product.findById(id).populate("categoryID");
 

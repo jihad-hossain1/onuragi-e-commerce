@@ -3,15 +3,17 @@
 import Modal from "@/components/Modal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { validatedTag } from "@/helpers/validated-tag";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-const AddCategory = () => {
+const AddSubCategory = ({ categories }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [name, setname] = useState("");
   const [error, setError] = useState("");
+  const [categoryID, setCategory] = useState("");
   const router = useRouter();
 
   const handleAddCategory = async () => {
@@ -19,13 +21,18 @@ const AddCategory = () => {
       return toast.error("name is required");
     }
 
-    const res = await axios.post("/api/v1/category", { name: name });
+    const res = await axios.post("/api/v1/category/subCategory", {
+      name: name,
+      categoryID: categoryID,
+    });
     console.log(res);
 
     if (res?.data?.status === 201) {
       router.refresh();
+      validatedTag("subCategory");
       toast.success("Category added Successfull");
       setname("");
+      setCategory("");
       setIsOpen(false);
     } else {
       setError(res?.data?.message);
@@ -38,6 +45,7 @@ const AddCategory = () => {
       console.log(error);
     }
   }, [error]);
+
   return (
     <>
       <Button
@@ -46,12 +54,24 @@ const AddCategory = () => {
         varient="outline"
         className="text-xs bg-pink-600 shadow-sm hover:shadow hover:bg-pink-600/90 my-4"
       >
-        Add Category
+        Add SubCategory
       </Button>
 
       <Modal open={isOpen} setOpen={setIsOpen} title={"Add SubCategory"}>
         <div className="flex flex-col gap-3">
           <h4 className="text-xs text-pink-600">{error ? error : ""}</h4>
+          <h4 className="text-xs">Select Category</h4>
+          <select
+            value={categoryID}
+            onChange={(e) => setCategory(e.target.value)}
+            className="p-2 border"
+          >
+            {categories?.map((category, index) => (
+              <option key={index} value={category?._id}>
+                {category?.name}
+              </option>
+            ))}
+          </select>
           <Input
             type="text"
             placeholder="Category name"
@@ -75,5 +95,4 @@ const AddCategory = () => {
   );
 };
 
-export default AddCategory;
-
+export default AddSubCategory;

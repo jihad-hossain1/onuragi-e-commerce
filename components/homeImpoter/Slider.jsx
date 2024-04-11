@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
+import Image from "next/image";
 
 const Slider = () => {
   return (
@@ -40,10 +41,12 @@ const Slider = () => {
                 </Link>
               </div>
             </div>
-            <img
+            <Image
+              height={300}
+              width={300}
               className="rounded-lg object-cover"
               src="https://i.ibb.co/8s3n13s/slider1.webp"
-              alt=""
+              alt="photo"
             />
           </div>
           <div className="rounded-lg relative">
@@ -63,10 +66,12 @@ const Slider = () => {
                 </Link>
               </div>
             </div>
-            <img
+            <Image
+              height={300}
+              width={300}
               className="rounded-lg object-cover"
               src="https://i.ibb.co/jkB2Sgw/slider2.webp"
-              alt=""
+              alt="photo"
             />
           </div>
         </Carousel>

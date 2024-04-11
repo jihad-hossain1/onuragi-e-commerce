@@ -8,11 +8,10 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-const AddSubCategory = ({ categories }) => {
+const AddCategory = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [name, setname] = useState("");
   const [error, setError] = useState("");
-  const [categoryID, setCategory] = useState("");
   const router = useRouter();
 
   const handleAddCategory = async () => {
@@ -20,17 +19,14 @@ const AddSubCategory = ({ categories }) => {
       return toast.error("name is required");
     }
 
-    const res = await axios.post("/api/v1/category/subCategory", {
-      name: name,
-      categoryID: categoryID,
-    });
+    const res = await axios.post("/api/v1/category", { name: name });
     console.log(res);
 
     if (res?.data?.status === 201) {
       router.refresh();
+       validatedTag("category");
       toast.success("Category added Successfull");
       setname("");
-      setCategory("");
       setIsOpen(false);
     } else {
       setError(res?.data?.message);
@@ -43,7 +39,6 @@ const AddSubCategory = ({ categories }) => {
       console.log(error);
     }
   }, [error]);
-
   return (
     <>
       <Button
@@ -52,24 +47,12 @@ const AddSubCategory = ({ categories }) => {
         varient="outline"
         className="text-xs bg-pink-600 shadow-sm hover:shadow hover:bg-pink-600/90 my-4"
       >
-        Add SubCategory
+        Add Category
       </Button>
 
       <Modal open={isOpen} setOpen={setIsOpen} title={"Add SubCategory"}>
         <div className="flex flex-col gap-3">
           <h4 className="text-xs text-pink-600">{error ? error : ""}</h4>
-          <h4 className="text-xs">Select Category</h4>
-          <select
-            value={categoryID}
-            onChange={(e) => setCategory(e.target.value)}
-            className="p-2 border"
-          >
-            {categories?.map((category, index) => (
-              <option key={index} value={category?._id}>
-                {category?.name}
-              </option>
-            ))}
-          </select>
           <Input
             type="text"
             placeholder="Category name"
@@ -93,4 +76,5 @@ const AddSubCategory = ({ categories }) => {
   );
 };
 
-export default AddSubCategory;
+export default AddCategory;
+

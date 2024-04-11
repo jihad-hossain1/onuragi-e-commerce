@@ -3,6 +3,7 @@
 import Modal from "@/components/Modal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { validatedTag } from "@/helpers/validated-tag";
 import FileUploader from "@/utils/FileUploader";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -39,16 +40,22 @@ const AddProduct = ({ categories }) => {
   };
 
   const handleAddProduct = async () => {
-    const res = await axios.post("/api/v1/products", {
-      name: name,
-      categoryID: categoryID,
-      price: parseFloat(price),
-      image: _photo,
+    const res = await fetch("/api/v1/products", {
+      method: "POST",
+      headers: {
+        "Content-Type": "applications/json",
+      },
+      body: JSON.stringify({
+        name: name,
+        categoryID: categoryID,
+        price: parseFloat(price),
+        image: _photo,
+      }),
     });
-    console.log(res);
 
-    if (res?.data?.status === 201) {
+    if (res.ok) {
       router.refresh();
+      validatedTag("products");
       toast.success("product added Successfull");
       setname("");
       setCategory("");
@@ -56,9 +63,7 @@ const AddProduct = ({ categories }) => {
       setprice(0);
       setIsOpen(false);
     } else {
-      setBtnDisabled(res.data.isValid);
-      setError(res?.data?.message);
-      toast.error(res?.data?.message);
+      toast.error("error while adding product");
     }
   };
 

@@ -51,23 +51,6 @@ export function Products({ products, categories }) {
                   {/* edit product  */}
                   <EditProduct product={product} categories={categories} />
                 </div>
-                {/* <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="bg-transparent dark:hover:bg-transparent dark:bg-transparent border-none "
-                    >
-                      <HiOutlineDotsHorizontal size={20} />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem></DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <AddDetails />
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>Delete</DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu> */}
               </TableCell>
             </TableRow>
           ))}

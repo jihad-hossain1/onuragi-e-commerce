@@ -1,6 +1,6 @@
 import SingleProduct from "@/components/products/SingleProduct";
 import Container from "@/components/ui/container";
-import { getProducts } from "@/utils/fetch/product";
+import { getProducts } from "@/app/api/frontend/products/products";
 import Image from "next/image";
 import React from "react";
 

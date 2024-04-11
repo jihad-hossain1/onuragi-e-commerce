@@ -1,5 +1,5 @@
 import React from "react";
-import { getProducts } from "@/utils/fetch/product";
+import { getProducts } from "@/app/api/frontend/products/products";
 import TrandSingleProduct from "./TrandSingleProduct";
 import Container from "@/components/ui/container";
 

@@ -6,16 +6,16 @@ import Slider from "@/components/homeImpoter/Slider";
 import Banner from "@/components/homeImpoter/banner/Banner";
 import Tranding from "@/components/homeImpoter/tranding/Tranding";
 
-const HomePage = async () => {
+const HomePage = () => {
   return (
-    <div>
+    <>
       <Slider />
       <CategoryOne />
       <ShortBanner />
       <CategoryTwo />
       <Banner />
       <Tranding />
-    </div>
+    </>
   );
 };
 
