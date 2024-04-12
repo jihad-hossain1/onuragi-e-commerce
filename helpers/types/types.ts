@@ -66,3 +66,21 @@ export type ImageType = {
   _id: string;
   productID: string;
 };
+
+
+export type SizeType = {
+  price: number;
+  quantity: number;
+  size: string;
+};
+
+export type ProductDetailType = {
+  sizes: SizeType[];
+  sizeGuide: string;
+  productID: string;
+  quantity: number;
+  about: string;
+  _id: string;
+  cretedAt: string;
+  updatedAt: string;
+};

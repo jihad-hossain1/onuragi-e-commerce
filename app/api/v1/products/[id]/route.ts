@@ -1,5 +1,8 @@
 import connectDatabase from "@/src/config/mongodbConnection";
+import Image from "@/src/models/image.models";
 import Product from "@/src/models/product.models";
+import ProductDetail from "@/src/models/productDetails.models";
+import SubCategory from "@/src/models/subCategory.models";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -73,13 +76,36 @@ export async function PUT(req: NextRequest, { params }) {
 
 export async function GET(req: NextRequest, { params }) {
   try {
-    const id = params.id as { id: string };
+    const id = params.id;
 
     await connectDatabase();
 
-    const singleProdut = await Product.findById(id).populate("categoryID");
+    const product = await Product.findById(id);
 
-    return NextResponse.json(singleProdut);
+    if (!product) {
+      return NextResponse.json(
+        { message: "product are not found" },
+        { status: 400 }
+      );
+    }
+
+    const productDetails = await ProductDetail.findOne({ productID: id });
+
+    if (!productDetails) {
+      return NextResponse.json(
+        { message: "product details are not found" },
+        { status: 400 }
+      );
+    }
+
+    const findCategory = await SubCategory.findById(product.categoryID);
+
+    const images = await Image.find({ productID: id });
+
+    return NextResponse.json(
+      { product, productDetails, category: findCategory?.name, images },
+      { status: 201 }
+    );
   } catch (error) {
     return NextResponse.json({ error: error?.message }, { status: 500 });
   }

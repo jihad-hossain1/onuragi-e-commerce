@@ -2,9 +2,9 @@ import connectDatabase from "@/src/config/mongodbConnection";
 import ProductDetail from "@/src/models/productDetails.models";
 import { validateJSON } from "@/utils/validateJSON";
 import mongoose from "mongoose";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req) {
+export async function POST(req: NextRequest) {
   const reqBody = await req.json();
   try {
     // checker for anyone can send undefine or {} or null value in api requiest

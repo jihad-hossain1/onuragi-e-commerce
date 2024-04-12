@@ -1,7 +1,7 @@
 import mongoose, { Schema, models } from "mongoose";
 
 const urlType = Schema({
-  url: {
+  image: {
     type: String,
     required: [true, "url link require"],
   },

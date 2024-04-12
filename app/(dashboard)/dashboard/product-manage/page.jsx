@@ -9,13 +9,21 @@ const ProductManagerpage = async () => {
   const subcategories = await getSubCategories();
   return (
     <>
-      <AddProduct categories={subcategories} />
-      <Link
-        href={"/dashboard/product-manage/addproduct-image"}
-        className="text-sm btn"
-      >
-        Add Product Details
-      </Link>
+      <div className="flex items-center gap-4">
+        <AddProduct categories={subcategories} />
+        <Link
+          href={"/dashboard/product-manage/add-product-details"}
+          className="bg-pink-600 text-white py-2 px-4 rounded-md text-sm"
+        >
+          Add Details
+        </Link>
+        <Link
+          href={"/dashboard/product-manage/addproduct-image"}
+          className="bg-pink-600 text-white py-2 px-4 rounded-md text-sm"
+        >
+          Add Images
+        </Link>
+      </div>
       <Products products={products} categories={subcategories} />
     </>
   );

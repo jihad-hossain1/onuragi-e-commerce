@@ -1,9 +1,9 @@
 import connectDatabase from "@/src/config/mongodbConnection";
 import ProductDetail from "@/src/models/productDetails.models";
 import mongoose from "mongoose";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req, { params }) {
+export async function GET(req: NextRequest, { params }) {
   try {
     const { productID } = params;
 

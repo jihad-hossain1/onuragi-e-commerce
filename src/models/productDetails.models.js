@@ -25,12 +25,6 @@ const productDetailsSchema = new Schema(
       required: true,
     },
 
-    images: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Image",
-      },
-    ],
 
     productID: {
       type: mongoose.Schema.Types.ObjectId,

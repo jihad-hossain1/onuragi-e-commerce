@@ -1,7 +1,9 @@
 'use client'
 
 import { ProductType } from '@/helpers/types/types'
-import React from 'react'
+import MultipleImageUploader from '@/utils/Multiple-Upload'
+import React, { useState } from 'react'
+import { toast } from 'sonner'
 
 type ProductsProps = {
     products: ProductType
@@ -9,19 +11,50 @@ type ProductsProps = {
 
 const AddProductImages: React.FC<ProductsProps> = ({ products }) => {
     const [productID, setProductID] = React.useState<string>('');
+    const [multiImage, setMultiImage] = useState([]);
+    const [multiLink, setmultiLink] = useState([]);
 
+    async function handleSubmit() {
+        try {
+            const response = await fetch(`/api/v1/images`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ productID, urls: multiLink }),
+            })
 
+            const result = await response.json();
+
+            if (response.ok) {
+                toast('success,image added successfully');
+            } else {
+                console.log(result)
+                toast(result.error);
+            }
+
+        } catch (error: any) {
+            console.log(error)
+        }
+    }
     return (
-        <main className='max-w-screen-xl mx-auto p-4'>
+        <main className='max-w-screen-xl mx-auto p-4 flex flex-col gap-6'>
+
             <h4 className='text-2xl text-center py-8'>Add Product Image</h4>
 
-            <select name="productID" id="productID" className='w-full p-2 border border-gray-300 rounded' onChange={(e) => setProductID(e.target.value)} value={productID}>
+            <button className='btn my-5 w-fit' onClick={handleSubmit}>Submit</button>
+
+            <select name="productID" id="productID" className='w-2/4 p-2 border border-gray-300 rounded' onChange={(e) => setProductID(e.target.value)} value={productID}>
                 {products?.map((product: ProductType) => (
                     <option key={product?._id} value={product?._id}>
                         {product?.name}
                     </option>
                 ))}
             </select>
+
+            <MultipleImageUploader multiImage={multiImage} setMultiImage={setMultiImage} setmultiLink={setmultiLink} multiLink={multiLink} />
+
+
         </main>
     )
 }
