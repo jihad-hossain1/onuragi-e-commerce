@@ -1,9 +1,10 @@
+import connectDatabase from "@/src/config/mongodbConnection";
 import Image from "@/src/models/image.models";
 import { validateJSON } from "@/utils/validateJSON";
 import mongoose from "mongoose";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request) {
+export async function POST(request: NextRequest) {
   try {
     const requestFromBody = await request.json();
 

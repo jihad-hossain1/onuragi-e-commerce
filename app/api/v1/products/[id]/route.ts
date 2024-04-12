@@ -74,21 +74,13 @@ export async function PUT(req: NextRequest, { params }) {
 export async function GET(req: NextRequest, { params }) {
   try {
     const id = params.id as { id: string };
+
     await connectDatabase();
+
     const singleProdut = await Product.findById(id).populate("categoryID");
 
-    // const findCategroy = await SubCategory.findOne({});
-
-    // const details = await ProductDetail.findOne({});
-
-    // const fullProductsDetails = {
-    //   ...singleProdut,
-    //   ...findCategroy,
-    //   ...details,
-    // };
-
-    // console.log(fullProductsDetails);
-
     return NextResponse.json(singleProdut);
-  } catch (error) {}
+  } catch (error) {
+    return NextResponse.json({ error: error?.message }, { status: 500 });
+  }
 }

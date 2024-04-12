@@ -50,3 +50,19 @@ export type Profile = {
     zipCode: string;
   };
 };
+
+
+export type ProductType = {
+  [x: string]: any;
+  name: string;
+  image: string;
+  categoryID: string;
+  price: number;
+  _id: string;
+};
+
+export type ImageType = {
+  image: string;
+  _id: string;
+  productID: string;
+};

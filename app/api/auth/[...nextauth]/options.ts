@@ -4,7 +4,7 @@ import User from "@/src/models/user.models";
 import bcrypt from "bcrypt";
 import connectDatabase from "@/src/config/mongodbConnection";
 import { NextAuthOptions, TokenSet } from "next-auth";
-import { UserType } from "@/utils/interface/interface";
+import { UserType } from "@/helpers/interface/interface";
 
 enum Role {
   User = "user",
