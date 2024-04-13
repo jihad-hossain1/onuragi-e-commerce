@@ -4,6 +4,7 @@ import { getProductSpecification } from '@/app/api/frontend/products/specificati
 import Link from 'next/link'
 import React from 'react'
 import { FaAddressBook, FaPhotoFilm, FaServicestack } from 'react-icons/fa6'
+import { HiPencilAlt } from 'react-icons/hi'
 
 const LinkWithId = async ({ productID }) => {
     const productDetails = await getProductDetails(productID);
@@ -30,6 +31,11 @@ const LinkWithId = async ({ productID }) => {
                 href={`/dashboard/product-manage/addproduct-image/${productID}`}
             >
                 <FaPhotoFilm size={20} className="text-cyan-600" />
+            </Link>
+            <Link
+                href={`/dashboard/product-manage/edit-product/${productID}`}
+            >
+                <HiPencilAlt size={20} className="text-green-600" />
             </Link>
         </>
     )

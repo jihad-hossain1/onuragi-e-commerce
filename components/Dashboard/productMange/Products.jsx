@@ -9,12 +9,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Image from "next/image";
-import EditProduct from "@/components/Dashboard/productMange/productAction/EditProduct";
-import Link from "next/link";
-import { FaAddressBook, FaPhotoFilm } from "react-icons/fa6";
 import LinkWithId from "./LinkWithId";
 
-export function Products({ products, categories }) {
+export function Products({ products }) {
   return (
     <>
       <h4>Total Products: {products ? products?.length || 0 : {}} </h4>
@@ -48,8 +45,6 @@ export function Products({ products, categories }) {
               <TableCell className="">{product?.price}</TableCell>
               <TableCell className=" flex items-center gap-4">
                 <LinkWithId productID={product?._id} />
-                {/* edit product  */}
-                <EditProduct product={product} categories={categories} />
               </TableCell>
             </TableRow>
           ))}

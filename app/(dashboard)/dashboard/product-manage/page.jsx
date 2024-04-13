@@ -11,7 +11,7 @@ const ProductManagerpage = async () => {
       <div>
         <AddProduct categories={subcategories} />
       </div>
-      <Products products={products} categories={subcategories} />
+      <Products products={products} />
     </>
   );
 };
