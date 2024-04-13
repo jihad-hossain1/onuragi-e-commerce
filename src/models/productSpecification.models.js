@@ -1,17 +1,6 @@
 import mongoose, { Schema, models } from "mongoose";
 
 
-const lengthWithStockType = Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  quantity: {
-    type: Number,
-    required: true,
-  },
-});
-
 const productSpecificationSchema = new Schema(
   {
     care: [String],
@@ -25,8 +14,6 @@ const productSpecificationSchema = new Schema(
     coller_Neck: String,
 
     sideCut: String,
-
-    lengthWithStock: [lengthWithStockType],
 
     productID: {
       type: mongoose.Schema.Types.ObjectId,

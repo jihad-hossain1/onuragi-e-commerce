@@ -84,3 +84,14 @@ export type ProductDetailType = {
   cretedAt: string;
   updatedAt: string;
 };
+
+
+export type ProductSpecificationType = {
+  care: string[];
+  febric: string[];
+  sleeve: string;
+  valueAddition: string;
+  coller_Neck: string;
+  sideCut: string;
+  productID: string;
+};

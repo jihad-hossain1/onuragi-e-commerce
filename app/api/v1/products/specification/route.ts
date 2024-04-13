@@ -2,9 +2,9 @@ import connectDatabase from "@/src/config/mongodbConnection";
 import ProductSpecification from "@/src/models/productSpecification.models";
 import { validateJSON } from "@/utils/validateJSON";
 import mongoose from "mongoose";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request) {
+export async function POST(request: NextRequest) {
   const reqBody = await request.json();
   try {
     // checker for anyone can send undefine or {} or null value in api requiest
@@ -18,7 +18,6 @@ export async function POST(request) {
         valueAddition,
         coller_Neck,
         sideCut,
-        lengthWithStock,
         productID,
       } = reqBody;
 
@@ -45,7 +44,6 @@ export async function POST(request) {
         valueAddition,
         coller_Neck,
         sideCut,
-        lengthWithStock,
         productID,
       });
       const saveSpecification = await newSpecification.save();

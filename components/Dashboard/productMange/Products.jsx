@@ -10,7 +10,9 @@ import {
 } from "@/components/ui/table";
 import Image from "next/image";
 import EditProduct from "@/components/Dashboard/productMange/productAction/EditProduct";
-
+import Link from "next/link";
+import { FaAddressBook, FaPhotoFilm } from "react-icons/fa6";
+import LinkWithId from "./LinkWithId";
 
 export function Products({ products, categories }) {
   return (
@@ -20,13 +22,12 @@ export function Products({ products, categories }) {
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">#</TableHead>
-            <TableHead className="w-[100px]">Image</TableHead>
-            <TableHead className="w-[100px]">Name</TableHead>
+            <TableHead>#</TableHead>
+            <TableHead>Image</TableHead>
+            <TableHead>Name</TableHead>
             <TableHead>Category</TableHead>
-            <TableHead>Product ID</TableHead>
-            <TableHead className="text-right">Price</TableHead>
-            <TableHead className="text-right">Action</TableHead>
+            <TableHead>Price</TableHead>
+            <TableHead>Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -44,13 +45,11 @@ export function Products({ products, categories }) {
               </TableCell>
               <TableCell className="font-medium">{product?.name}</TableCell>
               <TableCell>{product?.categoryID?.name || "no data"}</TableCell>
-              <TableCell>{product?._id}</TableCell>
-              <TableCell className="text-right">{product?.price}</TableCell>
-              <TableCell className="text-right">
-                <div>
-                  {/* edit product  */}
-                  <EditProduct product={product} categories={categories} />
-                </div>
+              <TableCell className="">{product?.price}</TableCell>
+              <TableCell className=" flex items-center gap-4">
+                <LinkWithId productID={product?._id} />
+                {/* edit product  */}
+                <EditProduct product={product} categories={categories} />
               </TableCell>
             </TableRow>
           ))}

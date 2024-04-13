@@ -6,11 +6,10 @@ import React, { useState } from 'react'
 import { toast } from 'sonner'
 
 type ProductsProps = {
-    products: ProductType
+    productID: string
 }
 
-const AddProductImages: React.FC<ProductsProps> = ({ products }) => {
-    const [productID, setProductID] = React.useState<string>('');
+const AddProductImages: React.FC<ProductsProps> = ({ productID }) => {
     const [multiImage, setMultiImage] = useState([]);
     const [multiLink, setmultiLink] = useState([]);
 
@@ -21,7 +20,7 @@ const AddProductImages: React.FC<ProductsProps> = ({ products }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ productID, urls: multiLink }),
+                body: JSON.stringify({ productID: productID, urls: multiLink }),
             })
 
             const result = await response.json();
@@ -43,14 +42,6 @@ const AddProductImages: React.FC<ProductsProps> = ({ products }) => {
             <h4 className='text-2xl text-center py-8'>Add Product Image</h4>
 
             <button className='btn my-5 w-fit' onClick={handleSubmit}>Submit</button>
-
-            <select name="productID" id="productID" className='w-2/4 p-2 border border-gray-300 rounded' onChange={(e) => setProductID(e.target.value)} value={productID}>
-                {products?.map((product: ProductType) => (
-                    <option key={product?._id} value={product?._id}>
-                        {product?.name}
-                    </option>
-                ))}
-            </select>
 
             <MultipleImageUploader multiImage={multiImage} setMultiImage={setMultiImage} setmultiLink={setmultiLink} multiLink={multiLink} />
 

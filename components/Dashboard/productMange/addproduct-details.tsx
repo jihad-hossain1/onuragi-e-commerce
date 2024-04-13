@@ -6,16 +6,16 @@ import React from 'react'
 import AddSizes from './add-sizes'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { validatedTag } from '@/helpers/validated-tag'
 
 type ProductsProps = {
-    products: ProductType
+    productID: string
 }
 
 
-const AddproductDetails: React.FC<ProductsProps> = ({ products }) => {
+const AddproductDetails: React.FC<ProductsProps> = ({ productID }) => {
 
     const initialData = {
-        productID: '',
         about: '',
         sizeGuide: '',
     }
@@ -35,6 +35,7 @@ const AddproductDetails: React.FC<ProductsProps> = ({ products }) => {
                 body: JSON.stringify({
                     ...formData,
                     sizes: sizes,
+                    productID: productID
                 }),
                 method: 'POST'
             })
@@ -43,6 +44,7 @@ const AddproductDetails: React.FC<ProductsProps> = ({ products }) => {
 
             if (response.ok) {
                 toast(data?.message);
+                validatedTag("productDetails")
                 router.push('/dashboard/product-manage');
 
             } else {
@@ -58,14 +60,6 @@ const AddproductDetails: React.FC<ProductsProps> = ({ products }) => {
             <h4 className='text-2xl text-center my-8'>Add product Details</h4>
 
             <section className='flex flex-col gap-4 max-w-xl m-auto'>
-                <label htmlFor="product">
-                    Select Product
-                </label>
-                <select className='input' name="" id="product" value={formData.productID} onChange={(e) => setFormData({ ...formData, productID: e.target.value })}>
-                    {products?.map((product: ProductType) => (
-                        <option key={product?._id} value={product?._id}>{product?.name}</option>
-                    ))}
-                </select>
 
                 <div className='flex flex-col gap-2'>
                     <label htmlFor="sizeGuide">
