@@ -1,14 +1,15 @@
 export async function getProducts() {
   try {
-    const res = await fetch(`${process.env.URL}/api/v1/products`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/products`, {
       next: { tags: ["products"] },
     });
-    // console.log(res);
-    if (res.ok) {
-      return await res.json();
-    } else if (!res.ok) {
-      throw new Error("Failed to fetch products");
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      console.log("filed to fetch!");
     }
+    return data;
   } catch (error) {
     throw new Error(error.message);
   }
@@ -16,7 +17,7 @@ export async function getProducts() {
 
 export async function getProductById(id: string) {
   try {
-    const res = await fetch(`${process.env.URL}/api/v1/products/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/products/${id}`, {
       next: { tags: ["product"] },
     });
 

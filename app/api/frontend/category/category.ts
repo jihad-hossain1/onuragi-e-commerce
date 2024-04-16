@@ -1,6 +1,6 @@
 export const getAllCategory = async () => {
   try {
-    const res = await fetch(`${process.env.URL}/api/v1/category`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/category`, {
       next: { tags: ["category"] },
     });
     if (!res.ok) {
@@ -15,7 +15,7 @@ export const getAllCategory = async () => {
 
 export const getSubCategories = async () => {
   try {
-    const res = await fetch(`${process.env.URL}/api/v1/category/subCategory`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/category/subCategory`, {
       next: { tags: ["subCategory"] },
     });
     // console.log(res);

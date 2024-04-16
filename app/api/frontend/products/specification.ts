@@ -1,7 +1,7 @@
 export async function getProductSpecification(id: string) {
   try {
     const response = await fetch(
-      `${process.env.URL}/api/v1/products/specification/${id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/products/specification/${id}`,
       {
         next: { tags: ["specification"] },
       }

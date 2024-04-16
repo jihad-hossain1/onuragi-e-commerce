@@ -1,6 +1,6 @@
 export async function getUser(id: string) {
   try {
-    const response = await fetch(`${process.env.URL}/api/v1/users/${id}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/${id}`, {
       next: { tags: ["user"] },
     });
 
