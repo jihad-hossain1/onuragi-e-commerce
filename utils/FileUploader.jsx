@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
 const FileUploader = ({
   setimage,
@@ -9,6 +9,7 @@ const FileUploader = ({
   _photo,
   handleCancelUpload,
 }) => {
+  const [showPhoto, setShowPhoto] = useState(false);
   return (
     <>
       <div className="flex gap-2">
@@ -28,15 +29,17 @@ const FileUploader = ({
           Upload image
         </Button>
       </div>
-
+      <button className="btn w-fit" onClick={() => setShowPhoto(!showPhoto)}>
+        {!showPhoto ? "Show Photo" : "Hide Photo"}
+      </button>
       <div className="relative">
-        {_photo ? (
+        {_photo && showPhoto ? (
           <div>
             <Image
               width={400}
               height={200}
               src={_photo}
-              className="w-full object-cover rounded-md"
+              className=" object-cover rounded-md max-w-[300px]"
               alt="product photo"
             />
             <button

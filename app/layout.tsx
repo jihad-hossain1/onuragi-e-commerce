@@ -23,7 +23,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="">
+        <main className="dark:bg-zinc-800">
           <ThemeProvider attribute="class" disableTransitionOnChange>
             <AuthProvider>
               <Topbar />

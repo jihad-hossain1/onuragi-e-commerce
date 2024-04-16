@@ -3,7 +3,7 @@ import { IoSettings } from "react-icons/io5";
 
 const Sidebar = () => {
   return (
-    <div className="bg-pink-100 dark:bg-pink-950 min-h-screen p-3 shadow">
+    <div className="bg-zinc-50 dark:bg-zinc-800 min-h-screen p-3 shadow border-r border-zinc-600">
       <div className="flex flex-col gap-4 text-nowrap">
         <Link
           href={"/dashboard/product-manage"}

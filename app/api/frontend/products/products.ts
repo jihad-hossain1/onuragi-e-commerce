@@ -1,6 +1,6 @@
 export async function getProducts() {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/products`, {
+    const res = await fetch(`${process.env.URL}/api/v1/products`, {
       next: { tags: ["products"] },
     });
     // console.log(res);
@@ -16,7 +16,7 @@ export async function getProducts() {
 
 export async function getProductById(id: string) {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/products/${id}`, {
+    const res = await fetch(`${process.env.URL}/api/v1/products/${id}`, {
       next: { tags: ["product"] },
     });
 

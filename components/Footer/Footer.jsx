@@ -12,7 +12,7 @@ import Link from "next/link";
 const Footer = () => {
   return (
     <main className="text-center text-sm pt-3">
-      <div className="bg-gray-100/90 border-y border-gray-300 py-10">
+      <div className="bg-gray-100/90 dark:bg-zinc-800 border-y border-gray-300 py-10">
         <Container>
           <div className="flex justify-between">
             <section>

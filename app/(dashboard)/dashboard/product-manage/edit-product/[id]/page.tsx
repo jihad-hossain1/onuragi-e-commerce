@@ -7,10 +7,10 @@ const EditProductpage = async ({ params }) => {
     const product = await getProductById(params?.id);
     const categories = await getSubCategories();
     return (
-        <div>
-            <EditProduct product={product?.product} categories={categories} />
-        </div>
-    )
+      <div>
+        <EditProduct product={product} categories={categories} />
+      </div>
+    );
 }
 
 export default EditProductpage

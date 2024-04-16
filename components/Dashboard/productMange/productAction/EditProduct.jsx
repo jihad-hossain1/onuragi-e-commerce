@@ -85,6 +85,9 @@ const EditProduct = ({ product, categories }) => {
           onChange={(e) => setCategory(e.target.value)}
           className="p-2 border"
         >
+          <option value={0} disabled>
+            Select Category
+          </option>
           {categories?.map((category, index) => (
             <option key={index} value={category?._id}>
               {category?.name}

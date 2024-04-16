@@ -84,29 +84,50 @@ export async function GET(req: NextRequest, { params }) {
 
     if (!product) {
       return NextResponse.json(
-        { message: "product are not found" },
+        { error: "product are not found" },
         { status: 400 }
       );
     }
 
-    const productDetails = await ProductDetail.findOne({ productID: id });
-
-    if (!productDetails) {
-      return NextResponse.json(
-        { message: "product details are not found" },
-        { status: 400 }
-      );
-    }
-
-    const findCategory = await SubCategory.findById(product.categoryID);
-
-    const images = await Image.find({ productID: id });
-
-    return NextResponse.json(
-      { product, productDetails, category: findCategory?.name, images },
-      { status: 201 }
-    );
+    
+    return NextResponse.json(product);
   } catch (error) {
     return NextResponse.json({ error: error?.message }, { status: 500 });
   }
 }
+// export async function GET(req: NextRequest, { params }) {
+//   try {
+//     const id = params.id;
+
+//     await connectDatabase();
+
+//     const product = await Product.findById(id);
+
+//     if (!product) {
+//       return NextResponse.json(
+//         { message: "product are not found" },
+//         { status: 400 }
+//       );
+//     }
+
+//     const productDetails = await ProductDetail.findOne({ productID: id });
+
+//     if (!productDetails) {
+//       return NextResponse.json(
+//         { message: "product details are not found" },
+//         { status: 400 }
+//       );
+//     }
+
+//     const findCategory = await SubCategory.findById(product.categoryID);
+
+//     const images = await Image.find({ productID: id });
+
+//     return NextResponse.json(
+//       { product, productDetails, category: findCategory?.name, images },
+//       { status: 201 }
+//     );
+//   } catch (error) {
+//     return NextResponse.json({ error: error?.message }, { status: 500 });
+//   }
+// }

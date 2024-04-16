@@ -36,7 +36,7 @@ const Modal = ({ children, title, open, setOpen, maxWidth }) => {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel
-                  className={`w-full lg:max-w-[500px] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all`}
+                  className={`w-full lg:max-w-[500px] transform overflow-hidden rounded-2xl bg-white dark:bg-zinc-800 border dark:border-zinc-500 p-6 text-left align-middle shadow-xl transition-all`}
                 >
                   <div className="relative  ">
                     <button
@@ -48,7 +48,7 @@ const Modal = ({ children, title, open, setOpen, maxWidth }) => {
                   </div>
                   <Dialog.Title
                     as="h3"
-                    className="text-center text-lg font-medium leading-6 text-gray-900"
+                    className="text-center text-lg font-medium leading-6 text-gray-900 dark:text-gray-50"
                   >
                     {title}
                   </Dialog.Title>
