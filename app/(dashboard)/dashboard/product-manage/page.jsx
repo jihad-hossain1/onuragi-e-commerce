@@ -4,14 +4,12 @@ import { getSubCategories } from "../../../api/frontend/category/category";
 import AddProduct from "@/components/Dashboard/productMange/action/AddProduct";
 
 const ProductManagerpage = async () => {
-  const products = [];
+ 
   const subcategories = await getSubCategories();
   return (
     <>
-      <div>
-        <AddProduct categories={subcategories} />
-      </div>
-      <Products products={products} />
+      <AddProduct categories={subcategories} />
+      <Products />
     </>
   );
 };

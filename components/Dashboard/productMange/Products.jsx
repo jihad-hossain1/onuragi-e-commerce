@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Table,
   TableBody,
@@ -10,8 +12,26 @@ import {
 } from "@/components/ui/table";
 import Image from "next/image";
 import LinkWithId from "./LinkWithId";
+import React, { useEffect, useState } from "react";
+import { getProducts } from "@/app/api/frontend/products/products";
 
-export function Products({ products }) {
+export function Products() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      await fetch(`/api/v1/products`, {
+        cache: "no-store",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setProducts(data);
+        })
+        .catch((err) => console.log(err));
+    };
+    fetchProducts();
+  }, []);
+
   return (
     <>
       <h4>Total Products: {products ? products?.length || 0 : {}} </h4>
