@@ -26,7 +26,7 @@ export async function getProductById(id: string) {
     if (res.ok) {
       return result;
     } else if (!res.ok) {
-      console.log("failed to fetch data");
+      console.log("failed to fetch data product by id");
     }
   } catch (error) {
     console.log(error);

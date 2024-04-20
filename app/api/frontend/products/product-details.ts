@@ -8,7 +8,7 @@ export async function getProductDetails(id: string) {
     );
 
     if (!response.ok) {
-      console.log("failed to fetched");
+      console.log("failed to fetched product details");
     }
 
     const data = await response.json();

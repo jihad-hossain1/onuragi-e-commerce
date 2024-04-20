@@ -8,7 +8,7 @@ export async function getProductSpecification(id: string) {
     );
 
     if (!response.ok) {
-      console.log("failed to fetched");
+      console.log("failed to fetched specification");
     }
 
     const data = await response.json();

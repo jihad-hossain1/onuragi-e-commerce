@@ -1,10 +1,4 @@
 @tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-.btn{
-    @apply dark:bg-gray-700 bg-pink-600 text-sm text-white rounded-md shadow hover:shadow-md transition-all duration-200 px-3 py-1 uppercase hover:bg-pink-600/90;
-}
-.input{
-    @apply border border-pink-400 rounded-md px-3 py-1 focus:outline-dotted;
-}
+  @tailwind components;
+  @tailwind utilities;
+  
