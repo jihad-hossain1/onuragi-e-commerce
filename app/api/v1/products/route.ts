@@ -1,50 +1,43 @@
+import { fieldValidate, validateFieldMaxMin } from "@/helpers/validetField";
 import connectDatabase from "@/src/config/mongodbConnection";
 import Product from "@/src/models/product.models";
-import { validateJSON } from "@/utils/validateJSON";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const reqBody = await req.json();
   try {
-    // checker for anyone can send undefine or {} or null value in api requiest
-    const isValid = validateJSON(reqBody);
+    const body = await req.json();
 
-    if (isValid === true) {
-      const { name, image, categoryID, price } = reqBody;
+    // Validate the JSON structure
+    const { name, image, categoryID, price } = body;
 
-      // if price is 0 then show error
-      if (price === 0) {
-        return NextResponse.json({ message: "price field are empty" });
-      } else if (!name) {
-        return NextResponse.json({
-          message: "product name is required",
-        });
-      } else if (!image) {
-        return NextResponse.json({
-          message: "image  is required",
-        });
-      } else if (!categoryID) {
-        return NextResponse.json({
-          message: "categoryID  is required",
-        });
-      } else if (!price) {
-        return NextResponse.json({
-          message: "price is required",
-        });
-      }
+    // Validate individual fields
+    fieldValidate(categoryID, "Category Name");
+    validateFieldMaxMin(name, "Product Name", 5, 50);
+    fieldValidate(price, "Price");
+    fieldValidate(image, "Product Image");
 
-      await connectDatabase();
-
-      const newProduct = new Product({ name, image, categoryID, price });
-
-      const product = await newProduct.save();
-
-      return NextResponse.json(product, { status: 201 });
-    } else {
-      return NextResponse.json({ message: "inavlid fields: ", isValid });
+    // Ensure price is a number
+    const priceNumber = parseFloat(price);
+    if (isNaN(priceNumber)) {
+      throw new Error("Price must be a valid number.");
     }
+
+    // Connect to the database
+    await connectDatabase();
+
+    // Create and save the new product
+    const newProduct = new Product({
+      name,
+      image,
+      categoryID,
+      price: priceNumber,
+    });
+    const product = await newProduct.save();
+
+    return NextResponse.json({ result: product }, { status: 201 });
   } catch (error) {
-    return NextResponse.json(error);
+    // Return a consistent error response
+    return NextResponse.json({ error: error?.message }, { status: 400 });
   }
 }
 

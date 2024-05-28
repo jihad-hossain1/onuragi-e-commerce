@@ -27,27 +27,32 @@ const DropDownAction = ({
         <DropdownMenuContent>
           <DropdownMenuLabel>Product action</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <div className="flex flex-col gap-2">
-            <DropdownMenuItem>
-              {!productDetails?.productDetail && (
+          <div className="flex flex-col gap-3 my-3">
+            {!productDetails?.productDetail && (
+              <DropdownMenuItem>
                 <Link
                   href={`/dashboard/product-manage/add-product-details/${productID}`}
+                  className="flex gap-2 items-center"
                 >
+                  <span>Add Details</span>{" "}
                   <FaAddressBook size={20} className="text-blue-600" />
                 </Link>
-              )}
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              {!productSpecification?.specification && (
+              </DropdownMenuItem>
+            )}
+
+            {!productSpecification?.specification && (
+              <DropdownMenuItem>
                 <Link
                   href={`/dashboard/product-manage/add-specification/${productID}`}
+                  className="flex gap-2 items-center"
                 >
+                  <span>Add Spec.</span>{" "}
                   <FaServicestack size={20} className="text-blue-600" />
                 </Link>
-              )}
-            </DropdownMenuItem>
+              </DropdownMenuItem>
+            )}
+
             <DropdownMenuItem>
-              {" "}
               <Link
                 href={`/dashboard/product-manage/addproduct-image/${productID}`}
                 className="flex gap-2 items-center"

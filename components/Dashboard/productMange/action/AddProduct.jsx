@@ -8,7 +8,7 @@ import FileUploader from "@/utils/FileUploader";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 const AddProduct = ({ categories }) => {
   const [btnDisabled, setBtnDisabled] = useState(null);
@@ -19,6 +19,7 @@ const AddProduct = ({ categories }) => {
   const [_photo, setPhoto] = useState("");
   const [image, setimage] = useState(null);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleOnFileUpload = async (e) => {
@@ -39,31 +40,60 @@ const AddProduct = ({ categories }) => {
     }
   };
 
-  const handleAddProduct = async () => {
-    const res = await fetch("/api/v1/products", {
-      method: "POST",
-      headers: {
-        "Content-Type": "applications/json",
-      },
-      body: JSON.stringify({
-        name: name,
-        categoryID: categoryID,
-        price: parseFloat(price),
-        image: _photo,
-      }),
-    });
+  const handleAddProduct = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const res = await fetch("/api/v1/products", {
+        method: "POST",
+        headers: {
+          "Content-Type": "applications/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          categoryID: categoryID,
+          price: parseFloat(price),
+          image: _photo,
+        }),
+      });
 
-    if (res.ok) {
-      router.refresh();
-      validatedTag("products");
-      toast.success("product added Successfull");
-      setname("");
-      setCategory("");
-      setimage("");
-      setprice(0);
-      setIsOpen(false);
-    } else {
-      toast.error("error while adding product");
+      const result = await res.json();
+
+      console.log(result);
+
+      if (result?.error) {
+        setLoading(false);
+        toast(result?.error);
+      }
+      if (result?.result) {
+        setLoading(false);
+        toast.success("product added Successfull");
+        setname("");
+        setCategory("");
+        setimage("");
+        setprice(0);
+        setIsOpen(false);
+        router.refresh();
+        validatedTag("products");
+      }
+
+      // if (res.ok) {
+      //   setLoading(false);
+      //   // router.refresh();
+      //   validatedTag("products");
+      //   toast.success("product added Successfull");
+      //   setname("");
+      //   setCategory("");
+      //   setimage("");
+      //   setprice(0);
+      //   // setIsOpen(false);
+      // } else {
+      //   setLoading(false);
+      //   toast.error("error while adding product");
+      // }
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
     }
   };
 
@@ -90,7 +120,7 @@ const AddProduct = ({ categories }) => {
       </Button>
 
       <Modal open={isOpen} setOpen={setIsOpen} title={"Add Product"}>
-        <div className="flex flex-col gap-3">
+        <form onSubmit={handleAddProduct} className="flex flex-col gap-3">
           <h4 className="text-xs text-pink-600">{error ? error : ""}</h4>
 
           <h4 className="text-xs">Select Category</h4>
@@ -99,6 +129,9 @@ const AddProduct = ({ categories }) => {
             onChange={(e) => setCategory(e.target.value)}
             className="p-2 border"
           >
+            <option disabled value={""}>
+              Select Category
+            </option>
             {categories?.map((category, index) => (
               <option key={index} value={category?._id}>
                 {category?.name}
@@ -136,7 +169,7 @@ const AddProduct = ({ categories }) => {
           </h4>
           <Button
             // disabled={btnDisabled}
-            onClick={handleAddProduct}
+            // onClick={handleAddProduct}
             type="submit"
             size="sm"
             varient="outline"
@@ -144,7 +177,7 @@ const AddProduct = ({ categories }) => {
           >
             create
           </Button>
-        </div>
+        </form>
       </Modal>
     </>
   );

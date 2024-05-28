@@ -18,7 +18,7 @@ interface ProductsProps {
 const Products: React.FC<ProductsProps> = ({ products }) => {
   return (
     <div className="max-w-screen-xl m-auto p-4">
-      <h4>Total Products: {products?.length || 0} </h4>
+      <h4>Total Products: {products?.length || 0}</h4>
 
       <div className="overflow-x-auto">
         <table className="w-full shadow-md  border m-auto border-gray-200  my-6">

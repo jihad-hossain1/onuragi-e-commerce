@@ -65,6 +65,9 @@ const AddSubCategory = ({ categories }) => {
             onChange={(e) => setCategory(e.target.value)}
             className="p-2 border"
           >
+            <option disabled value={""}>
+              Select Category
+            </option>
             {categories?.map((category, index) => (
               <option key={index} value={category?._id}>
                 {category?.name}
