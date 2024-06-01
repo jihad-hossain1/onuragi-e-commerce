@@ -6,9 +6,6 @@ export async function getProducts() {
 
     const data = await res.json();
 
-    if (!res.ok) {
-      console.log("filed to fetch!");
-    }
     return data;
   } catch (error) {
     throw new Error(error.message);

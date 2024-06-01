@@ -1,10 +1,10 @@
 import React from "react";
-import { getProducts } from "@/app/api/frontend/products/products";
 import TrandSingleProduct from "./TrandSingleProduct";
 import Container from "@/components/ui/container";
+import { fetchProducts } from "@/utils/products/fetchProducts";
 
 const Tranding = async () => {
-  const products = await getProducts();
+  const products = await fetchProducts();
   return (
     <Container>
       <main className="grid md:grid-cols-2 lg:flex lg:flex-row  lg:justify-between gap-3">

@@ -29,7 +29,11 @@ const FileUploader = ({
           Upload image
         </Button>
       </div>
-      <button className="btn w-fit" onClick={() => setShowPhoto(!showPhoto)}>
+      <button
+        type="button"
+        className="btn w-fit"
+        onClick={() => setShowPhoto(!showPhoto)}
+      >
         {!showPhoto ? "Show Photo" : "Hide Photo"}
       </button>
       <div className="relative">
@@ -43,6 +47,7 @@ const FileUploader = ({
               alt="product photo"
             />
             <button
+              type="button"
               className="absolute bg-white border text-pink-600 px-3 text-sm top-0 rounded shadow "
               onClick={() => handleCancelUpload()}
             >

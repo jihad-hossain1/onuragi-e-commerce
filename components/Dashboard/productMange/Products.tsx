@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import LinkWithId from "./LinkWithId";
+import { useProducts } from "@/hooks/productHook";
 
 type Product = {
   _id: number;
@@ -16,6 +19,16 @@ interface ProductsProps {
 }
 
 const Products: React.FC<ProductsProps> = ({ products }) => {
+  // const { products, loading, error } = useProducts();
+
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
+
+  // if (error) {
+  //   return <div>Error: {error}</div>;
+  // }
+
   return (
     <div className="max-w-screen-xl m-auto p-4">
       <h4>Total Products: {products?.length || 0}</h4>
@@ -33,7 +46,7 @@ const Products: React.FC<ProductsProps> = ({ products }) => {
             </tr>
           </thead>
           <tbody>
-            {products?.map((product: Product, index: number) => (
+            {products?.map((product: any, index: number) => (
               <tr key={product?._id}>
                 <td className="py-3 px-6 text-left  border-b">{index + 1}</td>
                 <td className="py-3 px-6 text-left  border-b">
@@ -54,9 +67,9 @@ const Products: React.FC<ProductsProps> = ({ products }) => {
                 <td className="py-3 px-6 text-left  border-b">
                   {product?.price}
                 </td>
-                <td className="py-3 px-6  border-b text-end">
+                {/* <td className="py-3 px-6  border-b text-end">
                   <LinkWithId productID={product?._id} />
-                </td>
+                </td> */}
               </tr>
             ))}
           </tbody>
