@@ -66,10 +66,13 @@ const AddSpecification: React.FC<ProductIDProps> = ({ productID }) => {
             const data = await response.json();
 
             if (response.ok) {
-                toast(data?.message);
-                validatedTag("specification")
-                router.refresh();
-                router.push('/dashboard/product-manage')
+              toast(data?.message);
+              // validatedTag("specification")
+              validatedTag("products");
+              router.refresh();
+              router.push("/dashboard/product-manage");
+            } else {
+                toast(data?.message)
             }
 
         } catch (error: any) {

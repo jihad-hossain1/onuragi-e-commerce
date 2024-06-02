@@ -14,7 +14,7 @@ export async function GET(req, { params }) {
         { status: 400 }
       );
     }
-    await connectDatabase();
+    await connectDatabase("product questions");
     const findProduct = await Product.findOne({ _id: productID });
 
     if (findProduct) {

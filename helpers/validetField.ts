@@ -58,3 +58,22 @@ export const fieldValidate = (field, fieldName) => {
     throw new Error(`${fieldName} is required`);
   }
 };
+
+
+export const validateImage = (image: string) => {
+  if (!image) {
+    throw new Error("Image is required");
+  }
+
+  // if (
+  //   !image.startsWith("https://") ||
+  //   !image.endsWith(".jpg") ||
+  //   !image.endsWith(".png") ||
+  //   !image.endsWith(".jpeg") ||
+  //   !image.endsWith(".webp") ||
+  //   !image.endsWith(".gif") ||
+  //   !image.endsWith(".svg")
+  // ) {
+  //   throw new Error("Invalid image URL.");
+  // }
+};

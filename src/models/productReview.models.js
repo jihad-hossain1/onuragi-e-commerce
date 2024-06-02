@@ -1,5 +1,7 @@
 import mongoose, { Schema, models } from "mongoose";
+import connectDatabase from "../config/mongodbConnection";
 
+// await connectDatabase("Product Review");
 
 const productReviewSchema = new Schema(
   {

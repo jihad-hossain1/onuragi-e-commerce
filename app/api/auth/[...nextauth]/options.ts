@@ -61,7 +61,7 @@ export const options: NextAuthOptions = {
         console.log("exist email user ", userExist);
 
         if (!userExist) {
-          await connectDatabase();
+          await connectDatabase("User");
 
           const splitted = profile.email.split("@");
 

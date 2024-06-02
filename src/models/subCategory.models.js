@@ -1,6 +1,10 @@
 import mongoose, { Schema, models } from "mongoose";
 
 
+import connectDatabase from "../config/mongodbConnection";
+
+// await connectDatabase("Product SubCategory");
+
 const productSubCategorySchema = new Schema({
   name: {
     type: String,

@@ -1,7 +1,9 @@
 import mongoose, { Schema } from "mongoose";
 // import connectDatabase from "../config/mongodbConnection";
 
+import connectDatabase from "../config/mongodbConnection";
 
+// await connectDatabase("User");
 
 const favoriteType = new Schema({
   productID: {

@@ -1,6 +1,8 @@
 import mongoose, { Schema, models } from "mongoose";
 
 
+// await connectDatabase("Product Question");
+
 const productQuestionSchema = new Schema(
   {
     content: {

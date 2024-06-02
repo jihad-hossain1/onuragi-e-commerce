@@ -13,7 +13,7 @@ export async function POST(req, res) {
     // already category exist
     const namedEmpty = reqBody.name.trim();
     // console.log(`"${namedEmpty}"`);
-    await connectDatabase();
+    await connectDatabase("product Category");
     const categoryExist = await Category.findOne({
       name: reqBody.name,
     });
@@ -38,7 +38,7 @@ export async function POST(req, res) {
 
 export async function GET(req, res) {
   try {
-    await connectDatabase();
+    await connectDatabase("product Category");
     const categories = await Category.find();
     return NextResponse.json(categories);
   } catch (error) {

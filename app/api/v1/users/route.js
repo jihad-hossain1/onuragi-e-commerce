@@ -5,11 +5,11 @@ import connectDatabase from "@/src/config/mongodbConnection";
 
 export async function GET(req, res) {
 try {
-    await connectDatabase();
-    
-    const users = await User.find().select('fullname _id email')
-  
-    return NextResponse.json(users);
+ await connectDatabase("user");
+
+  const users = await User.find().select("fullname _id email");
+
+  return NextResponse.json(users);
 } catch (error) {
   return NextResponse.json({ error: error.message }, { status: 500 });
 }
@@ -22,7 +22,6 @@ export async function POST(req) {
   const { username, email, password, fullname } = _d;
 
   try {
-
     if (username == "") {
       return NextResponse.json(
         { message: "username fields is required" },
@@ -50,7 +49,7 @@ export async function POST(req) {
       );
     }
 
-    await connectDatabase();
+    await connectDatabase("user");
     const user = await User.findOne({ email });
 
     if (user?.email == email) {
@@ -62,25 +61,32 @@ export async function POST(req) {
 
     const hashedPad = await bcrypt.hash(password, 10);
 
-    const roles = await User.find()
+    const roles = await User.find();
 
-    const findUnique = roles?.find(role => role.role == 'admin');
+    const findUnique = roles?.find((role) => role.role == "admin");
 
     console.log("find user role", findUnique);
 
     // if(user.role !== 'admin')
 
     if (!findUnique) {
-      
-      await User.create({ fullname, username, password: hashedPad, email, role: "admin" });
-      
-      return NextResponse.json({ message: "user created you are admin now" }, { status: 201 });
+      await User.create({
+        fullname,
+        username,
+        password: hashedPad,
+        email,
+        role: "admin",
+      });
+
+      return NextResponse.json(
+        { message: "user created you are admin now" },
+        { status: 201 }
+      );
     }
 
     await User.create({ fullname, username, password: hashedPad, email });
 
     return NextResponse.json({ message: "user created" }, { status: 201 });
-
   } catch (error) {
     return NextResponse.json({
       status: 500,

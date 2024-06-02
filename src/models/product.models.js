@@ -1,8 +1,7 @@
 import mongoose, { Schema, models } from "mongoose";
 import connectDatabase from "../config/mongodbConnection";
 
-await connectDatabase();
-
+// await connectDatabase("Product");
 
 const productSchema = new Schema(
   {
@@ -21,6 +20,14 @@ const productSchema = new Schema(
     price: {
       type: Number,
       required: true,
+    },
+    specification: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "ProductSpecification",
+    },
+    details: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "ProductDetail",
     },
   },
   { timestamps: true }

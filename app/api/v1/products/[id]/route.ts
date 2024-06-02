@@ -17,8 +17,8 @@ export async function PUT(req: NextRequest, { params }) {
         { status: 400 }
       );
     }
-    await connectDatabase();
-    // find prouct from params id
+    await connectDatabase("product");
+    // find product from params id
     const product = await Product.findOne({
       _id: id,
     });
@@ -78,7 +78,7 @@ export async function GET(req: NextRequest, { params }) {
   try {
     const id = params.id;
 
-    await connectDatabase();
+    await connectDatabase("product");
 
     const product = await Product.findById(id);
 
@@ -89,7 +89,6 @@ export async function GET(req: NextRequest, { params }) {
       );
     }
 
-    
     return NextResponse.json(product);
   } catch (error) {
     return NextResponse.json({ error: error?.message }, { status: 500 });

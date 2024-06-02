@@ -17,7 +17,7 @@ export async function POST(req, res) {
     // already category exist
     const namedEmpty = reqBody.name.trim();
     // console.log(`"${namedEmpty}"`);
-    await connectDatabase();
+    await connectDatabase("Sub Category");
     const categoryExist = await SubCategory.findOne({
       name: reqBody.name,
     });
@@ -45,7 +45,7 @@ export async function POST(req, res) {
 
 export async function GET(req, res) {
   try {
-    await connectDatabase();
+    await connectDatabase("Sub Category");
     const categories = await SubCategory.find();
     return NextResponse.json(categories);
   } catch (error) {

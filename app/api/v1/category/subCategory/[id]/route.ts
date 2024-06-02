@@ -18,7 +18,7 @@ export async function PATCH(req: NextRequest, { params }) {
       );
     }
 
-    await connectDatabase();
+    await connectDatabase("Sub Category");
 
     const update = await SubCategory.findByIdAndUpdate(
       { _id: id },

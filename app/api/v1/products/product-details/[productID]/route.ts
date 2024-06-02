@@ -11,8 +11,8 @@ export async function GET(req: NextRequest, { params }) {
       return NextResponse.json({ message: "your provide id is not valid" });
     }
 
-    await connectDatabase();
-    
+    await connectDatabase("product details");
+
     const findDetails = await ProductDetail.findOne({
       productID: productID,
     });

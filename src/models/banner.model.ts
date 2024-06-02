@@ -1,19 +1,16 @@
 import mongoose, { Schema, models } from "mongoose";
 
-
-import connectDatabase from "../config/mongodbConnection";
-
 // await connectDatabase("Product Image");
 
-const urlType = Schema({
+const bannerSchema = new Schema({
   image: {
     type: String,
     required: [true, "url link require"],
   },
-});
-
-const imageSchema = new Schema({
-  urls: [urlType],
+  title: {
+    type: String,
+    required: [true, "title link require"],
+  },
 
   productID: {
     type: mongoose.Schema.Types.ObjectId,
@@ -21,6 +18,6 @@ const imageSchema = new Schema({
   },
 });
 
-const Image = models.Image || mongoose.model("Image", imageSchema);
+const Banner = models.Banner || mongoose.model("Banner", bannerSchema);
 
-export default Image;
+export default Banner;

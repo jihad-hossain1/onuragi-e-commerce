@@ -33,7 +33,7 @@ export async function PUT(request) {
           { status: 400 }
         );
       }
-      await connectDatabase();
+      await connectDatabase("product reply");
       // check user and question are found or not
       const findUser = await User.findOne({ _id: user });
       const findQuestion = await ProductQuestion.findOne({ _id: questionID });

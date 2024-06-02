@@ -1,4 +1,5 @@
 import connectDatabase from "@/src/config/mongodbConnection";
+import Product from "@/src/models/product.models";
 import ProductDetail from "@/src/models/productDetails.models";
 import { validateJSON } from "@/utils/validateJSON";
 import mongoose from "mongoose";
@@ -37,7 +38,7 @@ export async function POST(req: NextRequest) {
         (previous, current) => previous + current?.quantity,
         0
       );
-      await connectDatabase();
+      await connectDatabase("product details");
       //   build new product details
       const newDetails = new ProductDetail({
         productID,
@@ -47,6 +48,13 @@ export async function POST(req: NextRequest) {
         sizes,
       });
       const savedDetails = await newDetails.save();
+
+      // Update the product with the new specification ID
+      const updateProduct = await Product.findByIdAndUpdate(
+        productID,
+        { $set: { details: savedDetails._id } },
+        { new: true }
+      );
 
       return NextResponse.json(
         {

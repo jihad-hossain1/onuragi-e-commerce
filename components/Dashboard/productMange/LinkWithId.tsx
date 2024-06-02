@@ -4,16 +4,32 @@ import { getProductSpecification } from '@/app/api/frontend/products/specificati
 import React from "react";
 import DropDownAction from "./DropDownAction";
 
-const LinkWithId = async ({ productID }) => {
-  const productDetails = await getProductDetails(productID);
-  const productSpecification = await getProductSpecification(productID);
+const LinkWithId = async ({ productID, specification, details }) => {
+  // let initialDetail;
+  // if (productID) {
+  //   const productDetails = await getProductDetails(productID);
+  //   initialDetail = productDetails;
+  // }
 
+  // let specificationData;
+
+  // if (productID) {
+  //   const productSpecification = await getProductSpecification(productID);
+  //   specificationData = productSpecification;
+  // }
+
+  // let pid;
+  // if (productID) {
+  //   pid = productID;
+  // }
   return (
     <>
       <DropDownAction
+        details={details}
         productID={productID}
-        productDetails={productDetails}
-        productSpecification={productSpecification}
+        specification={specification}
+        // productDetails={initialDetail}
+        // productSpecification={specificationData}
       />
     </>
   );

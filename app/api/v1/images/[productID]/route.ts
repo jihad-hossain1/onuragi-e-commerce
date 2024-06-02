@@ -10,7 +10,7 @@ export async function GET(req: NextRequest, { params }) {
     if (!mongoose.Types.ObjectId.isValid(productID)) {
       return NextResponse.json({ message: "your provide id is not valid" });
     }
-    await connectDatabase();
+    await connectDatabase("product Image");
     const productImages = await Image.find({
       productID: productID,
     });

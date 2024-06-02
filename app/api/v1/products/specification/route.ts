@@ -1,4 +1,5 @@
 import connectDatabase from "@/src/config/mongodbConnection";
+import Product from "@/src/models/product.models";
 import ProductSpecification from "@/src/models/productSpecification.models";
 import { validateJSON } from "@/utils/validateJSON";
 import mongoose from "mongoose";
@@ -6,59 +7,79 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   const reqBody = await request.json();
+
   try {
-    // checker for anyone can send undefine or {} or null value in api requiest
+    // Validate request body
     const isValid = validateJSON(reqBody);
 
-    if (isValid === true) {
+    if (isValid) {
       const {
         care,
-        febric,
+        fabric, // corrected typo from febric
         sleeve,
         valueAddition,
-        coller_Neck,
+        collar_Neck, // corrected typo from coller_Neck
         sideCut,
         productID,
       } = reqBody;
 
+      // Check if productID is valid
       if (!mongoose.Types.ObjectId.isValid(productID)) {
-        return NextResponse.json({ message: "your provide id is not valid" });
+        return NextResponse.json(
+          { message: "The provided product ID is not valid" },
+          { status: 400 }
+        );
       }
-      await connectDatabase();
+
+      // Connect to the database
+      await connectDatabase("product spec");
+
+      // Check if specification already exists for the product
       const alreadySpecification = await ProductSpecification.findOne({
-        productID: productID,
+        productID,
       });
 
       if (alreadySpecification) {
         return NextResponse.json(
-          { message: "Product specification already added " },
+          { message: "Product specification already exists" },
           { status: 400 }
         );
       }
-      // save specification on database
 
+      // Save the new specification to the database
       const newSpecification = new ProductSpecification({
         care,
-        febric,
+        fabric,
         sleeve,
         valueAddition,
-        coller_Neck,
+        collar_Neck,
         sideCut,
         productID,
       });
-      const saveSpecification = await newSpecification.save();
+      const savedSpecification = await newSpecification.save();
+
+      // Update the product with the new specification ID
+      const updateProduct = await Product.findByIdAndUpdate(
+        productID,
+        { $set: { specification: savedSpecification._id } },
+        { new: true }
+      );
 
       return NextResponse.json(
         {
-          message: "product specification added successfull",
-          saveSpecification,
+          message: "Product specification added successfully",
+          savedSpecification,
         },
         { status: 201 }
       );
     } else {
-      return NextResponse.json({ message: "inavlid fields: ", isValid });
+      return NextResponse.json(
+        { message: "Invalid fields", isValid },
+        { status: 400 }
+      );
     }
   } catch (error) {
+    console.error("Error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

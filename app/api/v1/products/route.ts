@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Connect to the database
-    // await connectDatabase();
+    await connectDatabase("product");
 
     // Create and save the new product
     const newProduct = new Product({
@@ -43,9 +43,11 @@ export async function POST(req: NextRequest) {
 
 export async function GET() {
   try {
-    // await connectDatabase();
+    await connectDatabase("product");
 
-    const products = await Product.find().select("_id name image price");
+    const products = await Product.find().select(
+      "_id name image price specification details "
+    );
 
     return NextResponse.json(products);
   } catch (error) {

@@ -13,11 +13,7 @@ import { FaAddressBook, FaPhotoFilm, FaServicestack } from "react-icons/fa6";
 import { HiPencilAlt } from "react-icons/hi";
 import { BsThreeDots } from "react-icons/bs";
 
-const DropDownAction = ({
-  productID,
-  productDetails,
-  productSpecification,
-}) => {
+const DropDownAction = ({ productID, specification, details }) => {
   return (
     <>
       <DropdownMenu>
@@ -28,20 +24,38 @@ const DropDownAction = ({
           <DropdownMenuLabel>Product action</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <div className="flex flex-col gap-3 my-3">
-            {!productDetails?.productDetail && (
+            {
               <DropdownMenuItem>
+                {details ? (
+                  <Link
+                    href={`/dashboard/product-manage/update-product-details/${productID}`}
+                    className="flex gap-2 items-center"
+                  >
+                    <span>Update Details</span>{" "}
+                    <FaAddressBook size={20} className="text-blue-600" />
+                  </Link>
+                ) : (
+                  <Link
+                    href={`/dashboard/product-manage/add-product-details/${productID}`}
+                    className="flex gap-2 items-center"
+                  >
+                    <span>Add Details</span>{" "}
+                    <FaAddressBook size={20} className="text-blue-600" />
+                  </Link>
+                )}
+              </DropdownMenuItem>
+            }
+
+            <DropdownMenuItem>
+              {specification ? (
                 <Link
-                  href={`/dashboard/product-manage/add-product-details/${productID}`}
+                  href={`/dashboard/product-manage/update-specification/${productID}`}
                   className="flex gap-2 items-center"
                 >
-                  <span>Add Details</span>{" "}
-                  <FaAddressBook size={20} className="text-blue-600" />
+                  <span>Update Spec.</span>{" "}
+                  <FaServicestack size={20} className="text-blue-600" />
                 </Link>
-              </DropdownMenuItem>
-            )}
-
-            {!productSpecification?.specification && (
-              <DropdownMenuItem>
+              ) : (
                 <Link
                   href={`/dashboard/product-manage/add-specification/${productID}`}
                   className="flex gap-2 items-center"
@@ -49,8 +63,8 @@ const DropDownAction = ({
                   <span>Add Spec.</span>{" "}
                   <FaServicestack size={20} className="text-blue-600" />
                 </Link>
-              </DropdownMenuItem>
-            )}
+              )}
+            </DropdownMenuItem>
 
             <DropdownMenuItem>
               <Link

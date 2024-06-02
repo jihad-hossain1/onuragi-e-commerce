@@ -6,7 +6,7 @@ export async function DELETE(req: NextRequest, { params }) {
   const id = params.id as { id: string };
 
   try {
-    await connectDatabase();
+    // await connectDatabase();
 
     const findUser = await User.findById(id);
 
@@ -29,7 +29,7 @@ export async function GET(req: NextRequest, { params }) {
   const id = params.id as { id: string };
 
   try {
-    await connectDatabase();
+    // await connectDatabase();
 
     const user = await User.findById(id).select("-password");
 
@@ -52,7 +52,7 @@ export async function PATCH(req: NextRequest, { params }) {
   try {
     const { fullname, email, username } = await req.json();
 
-    await connectDatabase();
+    await connectDatabase("user");
 
     const user = await User.findById(id).select("-password");
 
@@ -83,7 +83,6 @@ export async function PATCH(req: NextRequest, { params }) {
       },
       { status: 200 }
     );
-
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

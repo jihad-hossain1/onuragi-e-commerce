@@ -35,7 +35,7 @@ export async function POST(request) {
           { status: 400 }
         );
       }
-      await connectDatabase();
+      await connectDatabase("product questions");
       // verify if user are product bought are not from cart
       const findUser = await User.findOne({ _id: user });
       const findProduct = await Product.findOne({ _id: productID });

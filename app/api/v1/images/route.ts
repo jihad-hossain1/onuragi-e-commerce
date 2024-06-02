@@ -24,8 +24,8 @@ export async function POST(request: NextRequest) {
           message: "your image urls are not found",
         });
       }
-      
-      await connectDatabase();
+
+      await connectDatabase("product Image");
       // new urls
       const newUrls = new Image({ productID, urls });
 
