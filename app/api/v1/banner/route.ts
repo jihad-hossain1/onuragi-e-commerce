@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
 export async function GET() {
   try {
     await connectDatabase("banner");
-    const banner = await Banner.find().populate("productId");
+    const banner = await Banner.find();
     return NextResponse.json(banner);
   } catch (error) {
     return NextResponse.json({ error: error?.message }, { status: 500 });

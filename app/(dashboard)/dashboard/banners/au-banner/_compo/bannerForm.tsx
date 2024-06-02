@@ -8,8 +8,9 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { validatedTag } from "@/helpers/validated-tag";
 import Link from "next/link";
+import { updateServerAction } from "./updateServerAction";
 
-const BannerForm = ({ products }) => {
+const BannerForm = ({ products, id, bannerData }) => {
   const [loading, setLoading] = React.useState(false);
   const [_photo, setPhoto] = useState("");
   const [image, setimage] = useState(null);
@@ -19,6 +20,16 @@ const BannerForm = ({ products }) => {
     title: "",
     productId: "",
   });
+
+  React.useEffect(() => {
+    if (bannerData) {
+      setFormData({
+        title: bannerData?.title,
+        productId: bannerData?.productId,
+      });
+      setPhoto(bannerData?.image);
+    }
+  }, [bannerData]);
 
   const handleOnFileUpload = async (e) => {
     e.preventDefault();
@@ -39,29 +50,54 @@ const BannerForm = ({ products }) => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     try {
       // setLoading(true);
-      const data = await bannerServerAction({
-        title: formData?.title,
-        image: _photo,
-        productId: formData?.productId,
-      });
+      if (id) {
+        setLoading(true);
 
-      setLoading(false);
+        const data = await updateServerAction({
+          _id: id[0],
+          title: formData?.title,
+          image: _photo,
+          productId: formData?.productId,
+        });
 
-      if (data?.error) {
         setLoading(false);
-        toast(data?.error);
-      }
 
-      if (data?.result) {
+        if (data?.error) {
+          setLoading(false);
+          toast(data?.error);
+        }
+
+        if (data?.result) {
+          setLoading(false);
+          toast("Banner Updated Successfull");
+          validatedTag("banner");
+          router.refresh();
+        }
+      } else {
+        const data = await bannerServerAction({
+          title: formData?.title,
+          image: _photo,
+          productId: formData?.productId,
+        });
+
         setLoading(false);
-        toast(data?.result);
-        validatedTag("banners");
-        router.refresh();
+
+        if (data?.error) {
+          setLoading(false);
+          toast(data?.error);
+        }
+
+        if (data?.result) {
+          setLoading(false);
+          toast("Banner Added Successfull");
+          validatedTag("banner");
+          router.refresh();
+        }
       }
     } catch (error) {
       setLoading(false);
@@ -79,7 +115,9 @@ const BannerForm = ({ products }) => {
       <Link href="/dashboard/banners" className="btn w-fit">
         Back
       </Link>
-      <h1 className="text-2xl font-semibold text-center py-5">Add Banner</h1>
+      <h1 className="text-2xl font-semibold text-center py-5">
+        {id ? "Update" : "Add"} Banner
+      </h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-2">
         <input
           value={formData.title}
@@ -117,9 +155,11 @@ const BannerForm = ({ products }) => {
         />
 
         <button disabled={loading} type="submit" className="btn">
-          {loading ? "Loading..." : "Submit"}
+          {loading ? "Loading..." : id ? "Update" : "Add"}
         </button>
       </form>
+
+      {}
     </main>
   );
 };

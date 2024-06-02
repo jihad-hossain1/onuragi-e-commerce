@@ -12,7 +12,7 @@ const bannerSchema = new Schema({
     required: [true, "title link require"],
   },
 
-  productID: {
+  productId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Product",
   },

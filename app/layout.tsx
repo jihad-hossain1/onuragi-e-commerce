@@ -24,11 +24,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en">
       <body className={inter.className}>
         <main className="dark:bg-zinc-800">
-          <ThemeProvider attribute="class" disableTransitionOnChange>
+          <ThemeProvider>
             <AuthProvider>
               <Topbar />
               <AnimatedNavbar />
-              <section className="min-h-screen">{children}</section>
+              <div className="min-h-screen">{children}</div>
               <Toaster />
               <Footer />
             </AuthProvider>
