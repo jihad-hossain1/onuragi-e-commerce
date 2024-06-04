@@ -30,6 +30,10 @@ const Sidebar = () => {
           <IoSettings size={20} />
           <span className="text-sm">Banner</span>
         </Link>
+        <Link href={"/dashboard/posters"} className="flex gap-2 items-center">
+          <IoSettings size={20} />
+          <span className="text-sm">Posters</span>
+        </Link>
       </div>
     </div>
   );

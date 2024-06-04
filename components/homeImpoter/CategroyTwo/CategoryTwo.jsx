@@ -3,9 +3,12 @@ import Container from "@/components/ui/container";
 import Image from "next/image";
 import React from "react";
 import { fetchProducts } from "@/utils/products/fetchProducts";
+import { fetchPosters } from "@/utils/poster/fetchPosters";
 
 const CategoryTwo = async () => {
   const products = await fetchProducts();
+  const posters = await fetchPosters();
+  const poster = posters?.[1];
   return (
     <Container>
       <div className="grid md:grid-cols-2 gap-4 lg:gap-6 mt-14">
@@ -22,8 +25,8 @@ const CategoryTwo = async () => {
         </div>
         <div>
           <Image
-            src={"https://i.ibb.co/wSr9mDy/imageOne.webp"}
-            alt="Women image"
+            src={poster?.image}
+            alt={poster?.title}
             height={400}
             width={800}
             className="w-full rounded h-full"
