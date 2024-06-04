@@ -54,7 +54,7 @@ export const options: NextAuthOptions = {
 
         const { email } = profile;
 
-        await connectDatabase();
+        await connectDatabase("user");
 
         let userExist = await User.findOne({ email: email });
 
@@ -107,7 +107,7 @@ export const options: NextAuthOptions = {
           }
           const { email, password } = credentials;
 
-          await connectDatabase();
+          await connectDatabase("user");
 
           const foundUser: UserType = await User.findOne({ email: email });
 

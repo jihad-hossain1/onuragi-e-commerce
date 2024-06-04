@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AnimatedNavbar } from "@/components/Navbar/AnimatedNavbar";
 import Topbar from "@/components/Navbar/topbar/Topbar";
+import Navbar from "@/components/Navbar/navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,7 +28,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <ThemeProvider>
             <AuthProvider>
               <Topbar />
-              <AnimatedNavbar />
+
+              <Navbar />
+              {/* <AnimatedNavbar /> */}
               <div className="min-h-screen">{children}</div>
               <Toaster />
               <Footer />

@@ -6,7 +6,7 @@ export async function DELETE(req: NextRequest, { params }) {
   const id = params.id as { id: string };
 
   try {
-    // await connectDatabase();
+    await connectDatabase("user");
 
     const findUser = await User.findById(id);
 
@@ -29,7 +29,7 @@ export async function GET(req: NextRequest, { params }) {
   const id = params.id as { id: string };
 
   try {
-    // await connectDatabase();
+    await connectDatabase("user");
 
     const user = await User.findById(id).select("-password");
 

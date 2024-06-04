@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import Image from "next/image";
@@ -34,7 +33,7 @@ const Slider = ({ banners }) => {
                 <Image
                   height={500}
                   width={1920}
-                  className="rounded-lg object-cover"
+                  className="rounded-lg object-cover  lg:h-[500px]"
                   src={banner?.image}
                   alt="photo"
                 />

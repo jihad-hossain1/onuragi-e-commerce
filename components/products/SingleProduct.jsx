@@ -9,7 +9,7 @@ const SingleProduct = ({ product }) => {
           alt="product iamge"
           height={300}
           width={400}
-          className="rounded"
+          className="rounded lg:max-h-[300px]"
           src={product?.image}
         />
       </a>

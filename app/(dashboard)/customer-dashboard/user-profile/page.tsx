@@ -9,9 +9,9 @@ const Profilepage = async () => {
 
   const session = await getServerSession(options)
 
-  const id = session?.user?.id;
+  const id = session?.user?.id as string | undefined;
 
-  const user: User = await getUser(id);
+  const user = await getUser(id);
 
   return <main className="max-w-screen-xl mx-auto p-3">
     <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
