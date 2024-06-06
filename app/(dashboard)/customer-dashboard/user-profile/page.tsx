@@ -1,18 +1,21 @@
-import { options } from "@/app/api/auth/[...nextauth]/options";
+
+
+// import { options } from "@/app/api/auth/[...nextauth]/options";
 // import { getUser } from "@/app/api/frontend/users/users";
 // import { User } from "@/helpers/types/types";
-import { fetchUser } from "@/utils/users/fetchuser";
-import { getServerSession } from "next-auth/next";
+// import { fetchUser } from "@/utils/users/fetchuser";
+// import { getServerSession } from "next-auth/next";
 import React from "react";
+import Profile from "./_compo/profile";
 
 const ProfilePage = async () => {
-  const session = await getServerSession(options)
-  const id = session?.user?.id
+  // const session = await getServerSession(options)
+  // const id = session?.user?.id
 
-  let user: any;
-  if (id) {
-    user = await fetchUser(id)
-  }
+  // let user: any;
+  // if (id) {
+  //   user = await fetchUser(id)
+  // }
 
   // let user = null;
   // try {
@@ -28,28 +31,10 @@ const ProfilePage = async () => {
 
   return <main className="max-w-screen-xl mx-auto p-3">
     <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
-      <div className="bg-gray-100/20 border border-gray-300 shadow-sm p-4 flex flex-col gap-4">
-        <h4 className="text-center font-semibold underline"> Short Info.</h4>
-        <h4 className="flex items-center gap-2 text-sm">
-          <span className="font-semibold">Name : </span>
-          <span>{user?.fullname}</span>
-        </h4>
-        <h4 className="flex items-center gap-2 text-sm">
-          <span className="font-semibold">Email : </span>
-          <span>{user?.email}</span>
-        </h4>
-        <h4 className="flex items-center gap-2 text-sm">
-          <span className="font-semibold">User Name : </span>
-          <span>{user?.username || 'no data'}</span>
-        </h4>
-        <h4 className="flex items-center gap-2 text-sm">
-          <span className="font-semibold">User Role : </span>
-          <span>{user?.role || 'no data'}</span>
-        </h4>
-      </div>
+      <Profile />
 
       {/* address info  */}
-      <div className="bg-gray-100/20 border border-gray-300 shadow-sm p-4 flex flex-col gap-4">
+      {/* <div className="bg-gray-100/20 border border-gray-300 shadow-sm p-4 flex flex-col gap-4">
         <h4 className="text-center font-semibold underline"> Address Info.</h4>
         <h4 className="flex items-center gap-2 text-sm">
           <span className="font-semibold">City : </span>
@@ -63,10 +48,10 @@ const ProfilePage = async () => {
           <span className="font-semibold">ZipCode : </span>
           <span>{user?.profile?.address?.zipCode || "no data."}</span>
         </h4>
-      </div>
+      </div> */}
 
       {/* delivery address  */}
-      <div className="bg-gray-100/20 border border-gray-300 shadow-sm p-4 flex flex-col gap-4">
+      {/* <div className="bg-gray-100/20 border border-gray-300 shadow-sm p-4 flex flex-col gap-4">
         <h4 className="text-center font-semibold underline"> Delivery Address.</h4>
         <h4 className="flex items-center gap-2 text-sm">
           <span className="font-semibold">Sate : </span>
@@ -80,7 +65,7 @@ const ProfilePage = async () => {
           <span className="font-semibold">zipCode : </span>
           <span>{user?.profile?.deliveryAddress?.zipCode || "no data"}</span>
         </h4>
-      </div>
+      </div> */}
     </section>
   </main>;
 };

@@ -14,7 +14,7 @@ const OfferBannerpage = async () => {
 
             <div>
                 {
-                    offerBanners?.map((offerBanner) => (
+                    offerBanners?.map((offerBanner: { _id: string, title: string, image: string }) => (
                         <div key={offerBanner?._id}>
                             <h1>{offerBanner?.title}</h1>
                             <Link href={`/dashboard/offer-banner/au-offer-banner/${offerBanner?._id}`}>
