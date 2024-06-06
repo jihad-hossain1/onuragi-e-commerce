@@ -1,17 +1,10 @@
 import Container from "@/components/ui/container";
-// import { fetchOfferBanner } from "@/utils/offer-banner/fetchOfferBanner";
+import { fetchOfferBanner } from "@/utils/offer-banner/fetchOfferBanner";
 import Image from "next/image";
 import React from "react";
 
 const ShortBanner = async () => {
-  // const offerBanners = await fetchOfferBanner();
-  const offerBanners = [
-    {
-      _id: "1",
-      title: "Offer Banner 1",
-      image: "",
-    },
-  ]
+  const offerBanners = await fetchOfferBanner();
   return (
     <Container>
       <div className="grid md:grid-cols-2 mt-4 md:mt-12 gap-5">
