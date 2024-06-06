@@ -5,26 +5,26 @@ import { fetchUser } from "@/utils/users/fetchuser";
 import { getServerSession } from "next-auth/next";
 import React from "react";
 
-const Profilepage = async () => {
-  // const session = await getServerSession(options)
-  // const id = session?.user?.id
+const ProfilePage = async () => {
+  const session = await getServerSession(options)
+  const id = session?.user?.id
 
-  // let user;
-  // if (id) {
-  //   user = await fetchUser(id)
-  // }
-
-  let user = null;
-  try {
-    const session = await getServerSession(options);
-    const id = session?.user?.id;
-
-    if (id) {
-      user = await fetchUser(id);
-    }
-  } catch (error) {
-    console.error('Error fetching user data:', error);
+  let user: any;
+  if (id) {
+    user = await fetchUser(id)
   }
+
+  // let user = null;
+  // try {
+  //   const session = await getServerSession(options);
+  //   const id = session?.user?.id;
+
+  //   if (id) {
+  //     user = await fetchUser(id);
+  //   }
+  // } catch (error) {
+  //   console.error('Error fetching user data:', error);
+  // }
 
   return <main className="max-w-screen-xl mx-auto p-3">
     <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -85,4 +85,4 @@ const Profilepage = async () => {
   </main>;
 };
 
-export default Profilepage;
+export default ProfilePage;
