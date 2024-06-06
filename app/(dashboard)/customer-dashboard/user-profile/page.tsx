@@ -1,17 +1,30 @@
 import { options } from "@/app/api/auth/[...nextauth]/options";
-import { getUser } from "@/app/api/frontend/users/users";
-import { User } from "@/helpers/types/types";
+// import { getUser } from "@/app/api/frontend/users/users";
+// import { User } from "@/helpers/types/types";
+import { fetchUser } from "@/utils/users/fetchuser";
 import { getServerSession } from "next-auth/next";
 import React from "react";
 
 const Profilepage = async () => {
-  // if (typeof window == 'undefined') return null;
+  // const session = await getServerSession(options)
+  // const id = session?.user?.id
 
-  const session = await getServerSession(options)
+  // let user;
+  // if (id) {
+  //   user = await fetchUser(id)
+  // }
 
-  const id = session?.user?.id as string | undefined;
+  let user = null;
+  try {
+    const session = await getServerSession(options);
+    const id = session?.user?.id;
 
-  const user = await getUser(id);
+    if (id) {
+      user = await fetchUser(id);
+    }
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+  }
 
   return <main className="max-w-screen-xl mx-auto p-3">
     <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">

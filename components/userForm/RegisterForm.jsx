@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import axios from "axios";
+import { validatedTag } from "@/helpers/validated-tag";
 
 const RegisterForm = () => {
   const [fullname, setfullname] = useState("");
@@ -19,6 +20,7 @@ const RegisterForm = () => {
   const handleRegister = async () => {
     try {
       await axios.post(`/api/v1/users`, { ...myObj });
+      validatedTag("user");
 
       toast("Your Account has created Successfull", {
         description:
