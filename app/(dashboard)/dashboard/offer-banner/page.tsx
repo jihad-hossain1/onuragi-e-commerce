@@ -1,4 +1,4 @@
-import { fetchOfferBanner } from '@/utils/offer-banner/fetchOfferBanner'
+// import { fetchOfferBanner } from '@/utils/offer-banner/fetchOfferBanner'
 import Image from 'next/image';
 import Link from 'next/link'
 import React from 'react'
@@ -18,7 +18,7 @@ const OfferBannerpage = async () => {
             </Link>
 
             <div>
-                {
+                {/* {
                     offerBanners?.map((offerBanner: { _id: string, title: string, image: string }) => (
                         <div key={offerBanner?._id}>
                             <h1>{offerBanner?.title}</h1>
@@ -33,7 +33,7 @@ const OfferBannerpage = async () => {
                             />
                         </div>
                     ))
-                }
+                } */}
             </div>
         </div>
     )
