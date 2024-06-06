@@ -4,7 +4,12 @@ import Link from 'next/link'
 import React from 'react'
 
 const OfferBannerpage = async () => {
-    const offerBanners = await fetchOfferBanner();
+    const offerBanners = [{
+        _id: '1',
+        title: 'Offer Banner 1',
+        image: ''
+    }]
+    // const offerBanners = await fetchOfferBanner();
 
     return (
         <div>
