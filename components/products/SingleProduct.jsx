@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import AddToCart from "./addToCart";
 
 const SingleProduct = ({ product }) => {
   return (
@@ -19,9 +20,7 @@ const SingleProduct = ({ product }) => {
           <span className="">${product?.price}.00</span>
         </h4>
         <div>
-          <button className="hidden group-hover:block hover:text-pink-500 hover:transition-all duration-500 ">
-            add to cart
-          </button>
+          <AddToCart id={product?._id} />
         </div>
       </div>
     </div>

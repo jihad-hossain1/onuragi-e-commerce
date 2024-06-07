@@ -66,6 +66,7 @@ const userSchema = new Schema(
       {
         product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
         quantity: Number,
+        userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
       },
     ],
 
@@ -88,8 +89,7 @@ const userSchema = new Schema(
       },
     ],
 
-    profile: profileType
-
+    profile: profileType,
   },
   {
     timestamps: true,
