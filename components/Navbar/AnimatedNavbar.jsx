@@ -10,7 +10,8 @@ import { ThemeButton } from "./themeButton/ThemeButton";
 import { SiteLogo } from ".";
 import Link from "next/link";
 
-export function AnimatedNavbar({ products }) {
+export function AnimatedNavbar({ products, carts }) {
+  // console.log(carts);
   return (
     <main className="max-w-screen-xl mx-auto p-2">
       <div className="relative w-full flex items-center justify-between">
@@ -20,7 +21,7 @@ export function AnimatedNavbar({ products }) {
         <section className="flex items-center gap-4">
           <Search />
 
-          <ShopingCart />
+          <ShopingCart carts={carts} />
 
           <UserAccount />
 

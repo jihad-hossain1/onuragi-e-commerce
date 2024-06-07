@@ -4,10 +4,13 @@ import { useSession } from 'next-auth/react'
 import React from 'react'
 import { toast } from 'sonner'
 import { addToCart } from './cart-serrver-action'
+import { validatedTag } from '@/helpers/validated-tag'
+import { useRouter } from 'next/navigation'
 
 const AddToCart = ({ id }) => {
     const { data: session, status } = useSession()
     const [loading, setLoading] = React.useState(false)
+    const router = useRouter()
 
     const handleAddToCart = async (productId: string) => {
         if (status === 'unauthenticated') {
@@ -25,8 +28,10 @@ const AddToCart = ({ id }) => {
                 toast.error(response?.error)
             }
             if (response?.result) {
+                validatedTag('cart')
                 setLoading(false)
                 toast.success(response?.message)
+                router.refresh()
             }
         } catch (error) {
             setLoading(false)

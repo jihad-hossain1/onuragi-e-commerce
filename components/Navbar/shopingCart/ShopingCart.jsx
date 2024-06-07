@@ -2,8 +2,7 @@
 
 import { BsBag } from "react-icons/bs";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
 import {
   Sheet,
   SheetClose,
@@ -14,41 +13,103 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useSession } from "next-auth/react";
+import { TbCurrencyTaka } from "react-icons/tb";
+import Link from "next/link";
+import CartQuantity from "./CartQuantity";
+import Image from "next/image";
+import RemoveFromCart from "./RemoveFromCart";
 
-const ShopingCart = () => {
+const ShopingCart = ({ carts }) => {
+  const { data: session, status } = useSession();
+
   return (
     <>
       <Sheet>
         <SheetTrigger asChild>
-          <BsBag className="text-[20px] lg:text-[30px]" />
-        </SheetTrigger>
-        <SheetContent>
-          <SheetHeader>
-            <SheetTitle>Edit profile</SheetTitle>
-            <SheetDescription>
-              Make changes to your profile here. Click save when you re done.
-            </SheetDescription>
-          </SheetHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Name
-              </Label>
-              <Input id="name" value="Pedro Duarte" className="col-span-3" />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="username" className="text-right">
-                Username
-              </Label>
-              <Input id="username" value="@peduarte" className="col-span-3" />
-            </div>
+          <div className="relative">
+            <BsBag className="text-[20px] lg:text-[30px]" />
+            {carts?.length > 0 && (
+              <div className="w-5 h-5 rounded-full bg-red-500 text-white text-xs flex justify-center items-center absolute top-0 right-0 translate-x-1/2 -translate-y-1/2">
+                {carts?.length}
+              </div>
+            )}
           </div>
-          <SheetFooter>
-            <SheetClose asChild>
-              <Button type="submit">Save changes</Button>
-            </SheetClose>
-          </SheetFooter>
-        </SheetContent>
+        </SheetTrigger>
+        {status == "unauthenticated" ? (
+          <SheetContent>
+            <SheetTitle>You need to login</SheetTitle>
+            <SheetFooter>
+              <Link href="/login" className="btn">
+                Login
+              </Link>
+            </SheetFooter>
+          </SheetContent>
+        ) : (
+          <SheetContent>
+            <SheetHeader>
+              <SheetTitle>Cart Information</SheetTitle>
+              <SheetDescription>
+                Make changes to your profile here. Click save when you re done.
+              </SheetDescription>
+              <div className="flex flex-col gap-3">
+                {carts?.map((cart, index) => (
+                  <div
+                    key={index}
+                    className="border bg-slate-50 p-3 rounded shadow-sm hover:shadow flex justify-between gap-3"
+                  >
+                    <div className="flex flex-col gap-2">
+                      <h4>{cart?.productDetails?.name}</h4>
+
+                      <h4 className="flex items-center gap-1">
+                        <span className="font-semibold text-sm">Price: </span>
+                        <span className="text-sm">
+                          {cart?.productDetails?.price}
+                        </span>
+                        <TbCurrencyTaka />
+                      </h4>
+                      <CartQuantity
+                        quantity={cart?.quantity}
+                        id={cart?._id}
+                        productId={cart?.product}
+                        userId={cart?.userId}
+                      />
+                    </div>
+
+                    <div>
+                      <Image
+                        src={cart?.productDetails?.image}
+                        width={70}
+                        height={70}
+                        alt="product image"
+                      />
+                      <div>
+                        <RemoveFromCart />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {carts?.length == 0 && (
+                <div className="flex flex-col gap-3 items-center mt-10">
+                  <p className="text-center">No product in cart</p>
+                  <Link href="/products" className="btn mt-3 text-xs">
+                    Continue shopping
+                  </Link>
+                </div>
+              )}
+            </SheetHeader>
+
+            {carts?.length > 0 && (
+              <SheetFooter>
+                <Link href="/customer-dashboard/cart/checkout" className="btn">
+                  Checkout
+                </Link>
+              </SheetFooter>
+            )}
+          </SheetContent>
+        )}
       </Sheet>
     </>
   );
