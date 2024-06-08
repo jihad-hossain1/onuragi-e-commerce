@@ -1,6 +1,7 @@
 'use client'
 
 import { useSession } from 'next-auth/react'
+import Link from 'next/link'
 import React from 'react'
 
 const Profile = () => {
@@ -14,6 +15,9 @@ const Profile = () => {
     return (
         <div className="bg-gray-100/20 border border-gray-300 shadow-sm p-4 flex flex-col gap-4">
             <h4 className="text-center font-semibold underline"> Short Info.</h4>
+            <Link href={`/customer-dashboard/user-profile/${user?.id}`} className="btn text-xs w-fit">
+                Update Profile
+            </Link>
             <h4 className="flex items-center gap-2 text-sm">
                 <span className="font-semibold">Name : </span>
                 <span>{user?.name}</span>

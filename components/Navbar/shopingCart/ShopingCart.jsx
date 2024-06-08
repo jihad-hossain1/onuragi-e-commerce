@@ -84,7 +84,10 @@ const ShopingCart = ({ carts }) => {
                         alt="product image"
                       />
                       <div>
-                        <RemoveFromCart />
+                        <RemoveFromCart
+                          productId={cart?.product}
+                          userId={cart?.userId}
+                        />
                       </div>
                     </div>
                   </div>

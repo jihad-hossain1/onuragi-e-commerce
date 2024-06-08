@@ -24,7 +24,7 @@ const UserAccount = () => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           {status === "authenticated" ? (
-            <>
+            <div className="flex flex-col space-y-2">
               {admin == "admin" && (
                 <Link href={"/dashboard"}>
                   <DropdownMenuItem>Dashboard</DropdownMenuItem>
@@ -33,10 +33,13 @@ const UserAccount = () => {
               <Link href={"/customer-dashboard/user-profile"}>
                 <DropdownMenuItem>Profile</DropdownMenuItem>
               </Link>
+              <Link href={"/customer-dashboard/cart"}>
+                <DropdownMenuItem>Carts</DropdownMenuItem>
+              </Link>
               <DropdownMenuItem onClick={() => signOut()}>
-                Logout
+                <button>Logout</button>
               </DropdownMenuItem>
-            </>
+            </div>
           ) : (
             <>
               <DropdownMenuItem>
