@@ -1,5 +1,6 @@
 import connectDatabase from "@/src/config/mongodbConnection";
 import User from "@/src/models/user.models";
+import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(req: NextRequest, { params }) {
@@ -47,43 +48,70 @@ export async function GET(req: NextRequest, { params }) {
 }
 
 export async function PATCH(req: NextRequest, { params }) {
-  const id = params.id as { id: string };
+  const id = params.id;
+
+  const {
+    fullname,
+    username,
+    mobile,
+    street,
+    city,
+    zipCode,
+    dstreet,
+    dcity,
+    dzipCode,
+    image,
+    gender,
+  } = await req.json();
 
   try {
-    const { fullname, email, username } = await req.json();
+    if (!id) {
+      return NextResponse.json(
+        { error: "user id is required" },
+        { status: 400 }
+      );
+    }
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return NextResponse.json({ error: "invalid user id" }, { status: 400 });
+    }
 
     await connectDatabase("user");
 
     const user = await User.findById(id).select("-password");
 
     if (!user) {
-      return NextResponse.json(
-        { error: "user are not found" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "user not found" }, { status: 404 });
     }
 
-    const updateUser = await User.findByIdAndUpdate(
-      { _id: id },
-      {
-        fullname: fullname || undefined,
-        email: email || undefined,
-        username: username || undefined,
-      },
-      { new: true }
-    );
-
-    return NextResponse.json(
-      {
-        user: {
-          fullname: updateUser.fullname,
-          email: updateUser.email,
-          username: updateUser.username,
+    const updatedFields = {
+      fullname: fullname || user.fullname,
+      username: username || user.username,
+      profile: {
+        mobile: mobile || user.profile.mobile,
+        image: image || user.profile.image,
+        gender: gender || user.profile.gender,
+        address: {
+          street: street || user.profile.address.street,
+          city: city || user.profile.address.city,
+          zipCode: zipCode || user.profile.address.zipCode,
+        },
+        deliveryAddress: {
+          dstreet: dstreet || user.profile.deliveryAddress.dstreet,
+          dcity: dcity || user.profile.deliveryAddress.dcity,
+          dzipCode: dzipCode || user.profile.deliveryAddress.dzipCode,
         },
       },
-      { status: 200 }
+    };
+
+    const updateUser = await User.findByIdAndUpdate(
+      id,
+      { $set: updatedFields },
+      { new: true } // return the updated document
     );
-  } catch (error: any) {
+
+    return NextResponse.json({ result: updateUser }, { status: 200 });
+  } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

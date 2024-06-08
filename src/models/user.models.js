@@ -1,9 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-// import connectDatabase from "../config/mongodbConnection";
-
-import connectDatabase from "../config/mongodbConnection";
-
-// await connectDatabase("User");
 
 const favoriteType = new Schema({
   productID: {
@@ -15,22 +10,24 @@ const favoriteType = new Schema({
 
 const profileType = new Schema({
   image: {
-    type: String
+    type: String,
   },
 
   address: {
-          street: { type: String },
-          city: { type: String },
-          zipCode: { type: String },
-  },
-  
-  deliveryAddress: {
-          street: { type: String },
-          city: { type: String },
-          zipCode: { type: String },
+    street: { type: String },
+    city: { type: String },
+    zipCode: { type: String },
   },
 
-})
+  deliveryAddress: {
+    dstreet: { type: String },
+    dcity: { type: String },
+    dzipCode: { type: String },
+  },
+
+  mobile: { type: String },
+  gender: { type: String },
+});
 
 const userSchema = new Schema(
   {
