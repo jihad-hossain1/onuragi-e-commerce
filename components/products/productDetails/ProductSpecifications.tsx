@@ -1,9 +1,18 @@
-const ProductSpecifications = () => {
+'use client'
+
+import { ProductSpecificationType } from "@/helpers/types/types";
+import React from "react";
+interface IProps {
+    details: any,
+    specification: ProductSpecificationType
+}
+
+const ProductSpecifications: React.FC<IProps> = ({ specification, details }) => {
     return (
         <div className="p-5">
             <div className="bg-white shadow-md rounded-lg overflow-hidden">
                 <div className="border-b">
-                    <nav className="flex">
+                    <nav className="grid md:grid-cols-4 gap-4">
                         <button className="flex-1 py-4 px-6 text-center text-gray-600 hover:text-black border-b-2 border-transparent hover:border-indigo-600 focus:outline-none">
                             Specifications
                         </button>

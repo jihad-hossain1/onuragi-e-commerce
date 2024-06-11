@@ -58,7 +58,7 @@ export async function GET() {
     await connectDatabase("product");
 
     const products = await Product.find().select(
-      "_id name image price specification details "
+      "_id name image price specification details slug"
     );
 
     return NextResponse.json(products);

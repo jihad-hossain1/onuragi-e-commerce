@@ -3,41 +3,36 @@
 import Image from "next/image";
 import React from "react";
 
-const ProductDetail = ({ product }) => {
+const ProductDetail = ({ product, images }) => {
     const [selectedImage, setSelectedImage] = React.useState(0);
     const [selectedColor, setSelectedColor] = React.useState("PURPLE");
     const [selectedSize, setSelectedSize] = React.useState("90");
+    const [isImagesLoaded, setIsImagesLoaded] = React.useState(images);
 
-    const images = [
-
-        "https://res.cloudinary.com/dqfi9zw3e/image/upload/v1717657188/images_preset/dxqpdbk5ini5h1d5qkyg.png",
-        "https://res.cloudinary.com/dqfi9zw3e/image/upload/v1717910386/images_preset/sr7ptqtc2jh5spxmawm4.png",
-        "https://res.cloudinary.com/dqfi9zw3e/image/upload/v1717657188/images_preset/dxqpdbk5ini5h1d5qkyg.png",
-        "https://res.cloudinary.com/dqfi9zw3e/image/upload/v1717910386/images_preset/sr7ptqtc2jh5spxmawm4.png",
-    ];
+    const _images = isImagesLoaded?.urls?.map((url: { image: string }) => url?.image) || [product?.image];
 
     const colors = ["Pink", "PURPLE", "green"];
     const sizes = ["110", "120", "130", "90", "100"];
 
     return (
-        <div className="max-w-4xl mx-auto p-6">
+        <div className="max-w-screen-xl mx-auto p-6">
             <div className="flex flex-col lg:flex-row bg-white shadow-md rounded-lg overflow-hidden">
                 <div className="lg:w-1/2 p-6">
                     <div className="relative">
                         <Image
-                            src={images[selectedImage]}
+                            src={_images[selectedImage]}
                             alt="Product"
-                            className="w-full h-auto"
+                            className="w-full md:w-[700px]  h-full rounded-md"
                             width={500}
                             height={500}
                         />
-                        <div className="flex space-x-2 mt-2">
-                            {images.map((image, index) => (
+                        <div className="flex space-x-2 mt-2 overflow-auto scrollbar-hide">
+                            {_images?.length > 0 && _images?.map((image: string, index: number) => (
                                 <Image
                                     width={50}
                                     height={50}
                                     key={index}
-                                    src={image}
+                                    src={image || product?.image}
                                     alt={`Thumbnail ${index}`}
                                     className={`w-16 h-16 object-cover cursor-pointer ${index === selectedImage ? "border-2 border-indigo-500" : ""
                                         }`}
@@ -73,7 +68,7 @@ const ProductDetail = ({ product }) => {
                         </div>
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-700 mb-2"> Size</label>
+                        <label className="block text-gray-700 mb-2">Size</label>
                         <div className="flex space-x-2">
                             {sizes.map((size) => (
                                 <button

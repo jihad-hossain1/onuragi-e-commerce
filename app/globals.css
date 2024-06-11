@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
 .btn {
     @apply py-2 px-4 bg-pink-500 text-white rounded-md shadow-sm hover:bg-pink-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-500
   }
@@ -10,4 +9,3 @@
   .input {
     @apply w-full rounded-md border border-gray-300 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm p-3
   }
- }

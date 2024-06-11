@@ -102,7 +102,7 @@ export async function GET(req: NextRequest) {
       productID: product?._id,
     })
 
-    const findImages = await Image.find({ productID: product?._id });
+    const findImages = await Image.findOne({ productID: product?._id });
 
     result = {
        product: product,
