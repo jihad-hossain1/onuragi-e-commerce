@@ -8,11 +8,12 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
 
     // Validate the JSON structure
-    const { name, image, categoryID, price } = body;
+    const { name, image, categoryID, price, slug } = body;
 
     // Validate individual fields
     fieldValidate(categoryID, "Category Name");
     validateFieldMaxMin(name, "Product Name", 5, 50);
+    validateFieldMaxMin(slug, "Product Slug", 5, 50);
     fieldValidate(price, "Price");
     fieldValidate(image, "Product Image");
 
@@ -25,12 +26,23 @@ export async function POST(req: NextRequest) {
     // Connect to the database
     await connectDatabase("product");
 
+    const isProdutSlug = await Product.findOne({
+      slug: slug.trim().toLowerCase(),
+    });
+    if (isProdutSlug) {
+      return NextResponse.json(
+        { error: "Slug already exists" },
+        { status: 400 }
+      );
+    }
+
     // Create and save the new product
     const newProduct = new Product({
       name,
       image,
       categoryID,
       price: priceNumber,
+      slug: slug.trim().toLowerCase(),
     });
     const product = await newProduct.save();
 

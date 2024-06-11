@@ -52,7 +52,9 @@ const ShopingCart = ({ carts }) => {
               <SheetDescription>
                 Make changes to your profile here. Click save when you re done.
               </SheetDescription>
-              <div className="flex flex-col gap-3">
+              <div
+                className={`flex flex-col gap-3 max-h-[400px] overflow-y-auto`}
+              >
                 {carts?.map((cart, index) => (
                   <div
                     key={index}
@@ -105,8 +107,11 @@ const ShopingCart = ({ carts }) => {
             </SheetHeader>
 
             {carts?.length > 0 && (
-              <SheetFooter>
-                <Link href="/customer-dashboard/cart/checkout" className="btn">
+              <SheetFooter className={"mt-4"}>
+                <Link
+                  href="/customer-dashboard/cart/checkout"
+                  className="btn text-xs w-fit"
+                >
                   Checkout
                 </Link>
               </SheetFooter>

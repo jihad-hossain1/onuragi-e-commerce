@@ -1,6 +1,7 @@
 import mongoose, { Schema, models } from "mongoose";
 import connectDatabase from "../config/mongodbConnection";
 
+
 // await connectDatabase("Product");
 
 const productSchema = new Schema(
@@ -8,6 +9,11 @@ const productSchema = new Schema(
     name: {
       type: String,
       required: true,
+    },
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
     },
     image: {
       type: String,

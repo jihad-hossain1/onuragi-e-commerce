@@ -4,8 +4,8 @@ import AddToCart from "./addToCart";
 
 const SingleProduct = ({ product }) => {
   return (
-    <div className="group">
-      <a href={`/products/${product?._id}`}>
+    <div className="group border border-gray-100 rounded-md shadow-sm hover:shadow p-4">
+      <a href={`/products/${product?.slug + `=${product?._id}`}`}>
         <Image
           alt="product iamge"
           height={300}
@@ -16,10 +16,11 @@ const SingleProduct = ({ product }) => {
       </a>
       <h4>{product?.name}</h4>
       <div>
-        <h4 className="block group-hover:hidden">
-          <span className="">${product?.price}.00</span>
+        <h4 className="">
+          <span className="">{`${product?.price}.00`}</span>
+          <span className="text-xs ml-1">tk.</span>
         </h4>
-        <div>
+        <div className="flex justify-center">
           <AddToCart id={product?._id} />
         </div>
       </div>

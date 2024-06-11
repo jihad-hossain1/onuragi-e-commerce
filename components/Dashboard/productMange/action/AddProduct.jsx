@@ -16,6 +16,7 @@ const AddProduct = ({ categories }) => {
   const [name, setname] = useState("");
   const [categoryID, setCategory] = useState("");
   const [price, setprice] = useState(0);
+  const [slug, setSlug] = useState("");
   const [_photo, setPhoto] = useState("");
   const [image, setimage] = useState(null);
   const [error, setError] = useState("");
@@ -54,6 +55,7 @@ const AddProduct = ({ categories }) => {
           categoryID: categoryID,
           price: parseFloat(price),
           image: _photo,
+          slug: slug,
         }),
       });
 
@@ -146,6 +148,13 @@ const AddProduct = ({ categories }) => {
             placeholder="Product name"
             value={name}
             onChange={(e) => setname(e.target.value)}
+            className="bg-transparent"
+          />
+          <Input
+            type="text"
+            placeholder="product-slug"
+            value={slug}
+            onChange={(e) => setSlug(e.target.value)}
             className="bg-transparent"
           />
           {btnDisabled ? btnDisabled?.name : ""}

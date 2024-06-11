@@ -41,7 +41,7 @@ const AddToCart = ({ id }) => {
     }
 
     return (
-        <button onClick={() => handleAddToCart(id)} className=" hover:text-pink-500 hover:transition-all duration-500 ">
+        <button onClick={() => handleAddToCart(id)} className=" btn w-fit text-xs hover:transition-all duration-500 ">
             {loading ? 'loading...' : 'Add to cart'}
         </button>
     )

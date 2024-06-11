@@ -32,7 +32,7 @@ export async function PUT(req: NextRequest, { params }) {
 
     // if product found then play another role
     if (product) {
-      const { image, name, categoryID, price } = await req.json();
+      const { image, name, categoryID, price, slug } = await req.json();
 
       if (price == 0) {
         return NextResponse.json(
@@ -57,12 +57,34 @@ export async function PUT(req: NextRequest, { params }) {
           { message: "product image link is empty not allow" },
           { status: 400 }
         );
+      } else if (slug === "") {
+        return NextResponse.json(
+          { message: "product slug is empty not allow" },
+          { status: 400 }
+        );
+      }
+
+      const isProductSlug = await Product.findOne({
+        slug: slug.trim().toLowerCase(),
+      });
+
+      if (isProductSlug && isProductSlug?._id != id) {
+        return NextResponse.json(
+          { error: "Slug already exists" },
+          { status: 400 }
+        );
       }
 
       const updatedPro = await Product.findByIdAndUpdate(
         { _id: product?._id },
         {
-          $set: { image, name, categoryID, price },
+          $set: {
+            image,
+            name: name.trim(),
+            categoryID,
+            price: parseFloat(price),
+            slug: slug.trim().toLowerCase(),
+          },
         }
       );
 

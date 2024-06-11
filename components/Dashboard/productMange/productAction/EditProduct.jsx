@@ -17,6 +17,7 @@ const EditProduct = ({ product, categories }) => {
   const [_photo, setPhoto] = useState(product?.image);
   const [image, setimage] = useState(null);
   const [error, setError] = useState("");
+  const [slug, setSlug] = useState(product?.slug);
   const router = useRouter();
 
   const handleOnFileUpload = async (e) => {
@@ -44,6 +45,7 @@ const EditProduct = ({ product, categories }) => {
         categoryID: categoryID,
         price: parseFloat(price),
         image: _photo,
+        slug: slug,
       });
 
       if (res?.status === 201) {
@@ -58,7 +60,8 @@ const EditProduct = ({ product, categories }) => {
         toast(res?.data?.message);
       }
     } catch (error) {
-      setError(error?.response.data.message);
+      setError(error?.response?.data?.message);
+      toast(error?.response?.data?.error);
       console.log(error?.response);
     }
   };
@@ -105,6 +108,15 @@ const EditProduct = ({ product, categories }) => {
           className="bg-transparent"
         />
         {btnDisabled ? btnDisabled?.name : ""}
+
+        <Input
+          type="text"
+          placeholder="product-slug"
+          value={slug}
+          onChange={(e) => setSlug(e.target.value)}
+          className="bg-transparent"
+        />
+
         <Input
           type="number"
           placeholder="Price"
