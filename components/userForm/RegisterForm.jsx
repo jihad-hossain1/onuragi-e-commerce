@@ -4,6 +4,8 @@ import { useState } from "react";
 import { toast } from "sonner";
 import axios from "axios";
 import { validatedTag } from "@/helpers/validated-tag";
+import InputField from "../../components/ui/InputField";
+import Link from "next/link";
 
 const RegisterForm = () => {
   const [fullname, setfullname] = useState("");
@@ -22,12 +24,12 @@ const RegisterForm = () => {
       await axios.post(`/api/v1/users`, { ...myObj });
       validatedTag("user");
 
-      toast("Your Account has created Successfull", {
+      toast("Your Account has created Successful", {
         description:
           "Go to Login page and login your account with email or username & password",
         action: {
-          label: "Login",
-          onClick: () => console.log("login"),
+          label: <a href="/login">Login</a>,
+          // onClick: () => console.log("login"),
         },
       });
 
@@ -44,47 +46,58 @@ const RegisterForm = () => {
   };
   return (
     <div className="max-w-screen-sm mx-auto p-3 mt-20">
+      <h1 className="text-3xl font-bold my-6">Register</h1>
       <form action={handleRegister} className="flex flex-col gap-4 ">
-        <input
+        <InputField
+          label="Full Name"
           type="text"
-          className="input"
-          name=""
+          name="fullname"
+          id="fullname"
           value={fullname}
-          placeholder="fullname"
           onChange={(e) => setfullname(e.target.value)}
-          id=""
         />
-        <input
+        <InputField
+          label="Email"
           type="email"
-          className="input"
-          name=""
+          name="email"
+          id="email"
           value={email}
-          placeholder="email"
           onChange={(e) => setEmail(e.target.value)}
-          id=""
         />
-        <input
+        <InputField
+          label="User Name"
           type="text"
-          className="input"
-          name=""
+          name="username"
+          id="username"
           value={username}
-          placeholder="username"
           onChange={(e) => setusername(e.target.value)}
-          id=""
         />
-        <input
+        <InputField
+          label="Password"
           type="password"
-          className="input"
-          name=""
+          name="password"
+          id="password"
           value={password}
-          placeholder="password"
           onChange={(e) => setPassword(e.target.value)}
-          id=""
         />
+
         <button className="btn" type="submit">
           register
         </button>
       </form>
+
+      <div className="flex gap-1 items-center text-sm mt-3">
+        <h4>Already have an account ?</h4>
+        <Link href={"/login"} className="text-pink-500">
+          Login
+        </Link>
+      </div>
+
+      <div className="my-6">
+        <Link href="/login" className="btn ">
+          Back
+        </Link>
+      </div>
     </div>
   );
 };

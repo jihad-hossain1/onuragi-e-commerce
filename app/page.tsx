@@ -5,13 +5,13 @@ import ShortBanner from "@/components/homeImpoter/ShortBanner/ShortBanner";
 import Slider from "@/components/homeImpoter/Slider";
 import Banner from "@/components/homeImpoter/banner/Banner";
 import Tranding from "@/components/homeImpoter/tranding/Tranding";
-import { fetchBanner } from "@/utils/banner/fetchBanner";
+// import { fetchBanner } from "@/utils/banner/fetchBanner";
 
 const HomePage = async () => {
-  const banners = await fetchBanner();
+  
   return (
     <>
-      <Slider banners={banners} />
+      <Slider />
       <CategoryOne />
       <ShortBanner />
       <CategoryTwo />

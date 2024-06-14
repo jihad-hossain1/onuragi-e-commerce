@@ -18,21 +18,11 @@ type Product = {
 };
 
 interface ProductsProps {
-  products: Product[];
-  subcategories: any[];
+  products: any;
+  subcategories: any;
 }
 
 const Products: React.FC<ProductsProps> = ({ products, subcategories }) => {
-  // const { products, loading, error } = useProducts();
-
-  // if (loading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (error) {
-  //   return <div>Error: {error}</div>;
-  // }
-
   return (
     <div className="max-w-screen-xl m-auto p-4">
       <div className="overflow-x-auto">

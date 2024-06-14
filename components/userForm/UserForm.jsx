@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import { toast } from "sonner";
+import InputField from "../../components/ui/InputField";
 
 const UserForm = () => {
   const [email, setEmail] = useState("");
@@ -68,25 +69,26 @@ const UserForm = () => {
   return (
     <div className="max-w-[600px] mx-auto min-h-[70vh] mt-20">
       <form action={handleLogin} className="flex flex-col gap-5 ">
-        <input
+        <h1 className="text-3xl font-bold my-6">Login</h1>
+
+        <InputField
+          label="Email"
           type="email"
-          className="input"
-          name=""
+          name="email"
+          id="email"
           value={email}
-          placeholder="email"
           onChange={(e) => setEmail(e.target.value)}
-          id=""
         />
 
-        <input
+        <InputField
+          label="Password"
           type="password"
-          className="input"
-          name=""
+          name="password"
+          id="password"
           value={password}
-          placeholder="password"
           onChange={(e) => setPassword(e.target.value)}
-          id=""
         />
+
         <button className="btn" type="submit">
           {loading ? "Loading..." : " login"}
         </button>
@@ -102,12 +104,12 @@ const UserForm = () => {
             register
           </Link>
         </div>
-        <button
+        {/* <button
           onClick={() => signIn("google")}
-          className="mt-3 border border-green-400 w-fit px-3 rounded-lg py-1 text-sm hover:bg-green-500 hover:text-white transition duration-300"
+          className="mt-3 border border-green-400 w-full px-3 rounded-lg py-1 text-sm hover:bg-green-500 hover:text-white transition duration-300"
         >
           Login by Google
-        </button>
+        </button> */}
       </div>
     </div>
   );

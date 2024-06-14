@@ -1,10 +1,22 @@
-import Container from "@/components/ui/container";
-import { fetchOfferBanner } from "@/utils/offer-banner/fetchOfferBanner";
-import Image from "next/image";
-import React from "react";
+"use client";
 
-const ShortBanner = async () => {
-  const offerBanners = await fetchOfferBanner();
+import Container from "@/components/ui/container";
+
+import Image from "next/image";
+import React, { useEffect } from "react";
+
+const ShortBanner = () => {
+  const [offerBanners, setOfferBanners] = React.useState([]);
+  useEffect(() => {
+    const fetchOfferBanners = async () => {
+      const res = await fetch("/api/v1/offerBanner");
+      const data = await res.json();
+      setOfferBanners(data);
+    };
+
+    fetchOfferBanners();
+  }, []);
+
   return (
     <Container>
       <div className="grid md:grid-cols-2 mt-4 md:mt-12 gap-5">

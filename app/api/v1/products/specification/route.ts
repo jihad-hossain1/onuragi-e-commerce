@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
         fabric, // corrected typo from febric
         sleeve,
         valueAddition,
-        collar_Neck, // corrected typo from coller_Neck
+        coller_Neck, // corrected typo from coller_Neck
         sideCut,
         productID,
       } = reqBody;
@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
         fabric,
         sleeve,
         valueAddition,
-        collar_Neck,
+        coller_Neck,
         sideCut,
         productID,
       });
@@ -78,6 +78,72 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+  } catch (error) {
+    console.error("Error:", error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+
+export async function PATCH(request: NextRequest) {
+  const specId = request.nextUrl.searchParams.get("specId");
+  const reqBody = await request.json();
+
+  const { care, febric, sleeve, valueAddition, coller_Neck, sideCut } = reqBody;
+  try {
+    await connectDatabase("product spec");
+
+    if (!mongoose.Types.ObjectId.isValid(specId)) {
+      return NextResponse.json(
+        {
+          error: "The provided specification ID is not valid",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+
+    const findSpec = await ProductSpecification.findById(specId);
+    if (!findSpec) {
+      return NextResponse.json(
+        {
+          error: "The provided specification are not found",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+
+    const update = await ProductSpecification.findByIdAndUpdate(
+      { _id: specId },
+      {
+        care: care || findSpec?.care,
+        febric: febric || findSpec?.febric,
+        sleeve: sleeve || findSpec?.sleeve,
+        valueAddition: valueAddition || findSpec?.valueAddition,
+        coller_Neck: coller_Neck || findSpec?.coller_Neck,
+        sideCut: sideCut || findSpec?.sideCut,
+      },
+      { new: true }
+    );
+
+    return NextResponse.json(
+      { update, message: "Specification updated" },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error:", error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+
+export async function GET(request: NextRequest) {
+  const specId = request.nextUrl.searchParams.get("specId");
+  try {
+    await connectDatabase("product spec");
+    const specifications = await ProductSpecification.findById(specId);
+    return NextResponse.json({ specifications }, { status: 200 });
   } catch (error) {
     console.error("Error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });

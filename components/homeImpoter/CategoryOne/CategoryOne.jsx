@@ -1,33 +1,56 @@
+"use client";
+
 import SingleProduct from "@/components/products/SingleProduct";
 import Container from "@/components/ui/container";
 import Image from "next/image";
 import React from "react";
-import { fetchProducts } from "@/utils/products/fetchProducts";
-import { fetchPosters } from "@/utils/poster/fetchPosters";
 
-const CategoryOne = async () => {
-  const products = await fetchProducts();
-  const posters = await fetchPosters();
+const CategoryOne = () => {
+  const [products, setProducts] = React.useState([]);
+  const [posters, setPosters] = React.useState([]);
+
+  React.useEffect(() => {
+    const fetchProducts = async () => {
+      const res = await fetch("/api/v1/products");
+      const data = await res.json();
+      setProducts(data);
+    };
+
+    fetchProducts();
+  }, []);
+
+  React.useEffect(() => {
+    const fetchPosters = async () => {
+      const res = await fetch("/api/v1/banner/poster");
+      const data = await res.json();
+      setPosters(data);
+    };
+
+    fetchPosters();
+  }, []);
+
   const poster = posters?.[0];
   const poster2 = posters?.[1];
+
+  const filterProducts = [...products].splice(0, 6);
 
   return (
     <Container>
       <div className="grid md:grid-cols-2 gap-4 lg:gap-6">
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 py-8">
           <Image
             src={poster?.image}
             alt={poster?.title}
             height={400}
             width={800}
-            className="w-full rounded lg:h-[400px] border shadow"
+            className="w-full rounded lg:h-[500px] border shadow"
           />
           <Image
             src={poster2?.image}
             alt={poster2?.title}
             height={400}
             width={800}
-            className="w-full rounded lg:h-[400px] border shadow"
+            className="w-full rounded lg:h-[500px] border shadow"
           />
         </div>
         <div>
@@ -36,7 +59,7 @@ const CategoryOne = async () => {
           </h4>
 
           <div className="mt-4 grid grid-cols-2 lg:grid-cols-2 gap-4">
-            {products?.slice(0, 6)?.map((product, index) => (
+            {filterProducts?.map((product, index) => (
               <SingleProduct key={index} product={product} />
             ))}
           </div>

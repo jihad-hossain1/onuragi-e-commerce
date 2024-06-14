@@ -1,181 +1,141 @@
 'use client'
 
-import { ProductSpecificationType } from "@/helpers/types/types";
 import React from "react";
 interface IProps {
-    details: any,
-    specification: ProductSpecificationType
+  details: any;
+  specification: any;
 }
 
-const ProductSpecifications: React.FC<IProps> = ({ specification, details }) => {
-    return (
-        <div className="p-5">
-            <div className="bg-white shadow-md rounded-lg overflow-hidden">
-                <div className="border-b">
-                    <nav className="grid md:grid-cols-4 gap-4">
-                        <button className="flex-1 py-4 px-6 text-center text-gray-600 hover:text-black border-b-2 border-transparent hover:border-indigo-600 focus:outline-none">
-                            Specifications
-                        </button>
-                        <button className="flex-1 py-4 px-6 text-center text-gray-600 hover:text-black border-b-2 border-transparent hover:border-indigo-600 focus:outline-none">
-                            Details
-                        </button>
-                        <button className="flex-1 py-4 px-6 text-center text-gray-600 hover:text-black border-b-2 border-transparent hover:border-indigo-600 focus:outline-none">
-                            Q&A
-                        </button>
-                        <button className="flex-1 py-4 px-6 text-center text-gray-600 hover:text-black border-b-2 border-transparent hover:border-indigo-600 focus:outline-none">
-                            Review
-                        </button>
-                    </nav>
-                </div>
-                <div className="p-6">
-                    <table className="min-w-full text-left text-sm text-gray-500">
-                        <tbody>
-                            <tr className="border-b">
-                                <th className="py-2 px-6 font-medium text-gray-900">General</th>
-                                <td className="py-2 px-6"></td>
-                            </tr>
-                            <tr className="border-b">
-                                <td className="py-2 px-6">Brand</td>
-                                <td className="py-2 px-6">Royal Kludge</td>
-                            </tr>
-                            <tr className="border-b">
-                                <td className="py-2 px-6">Model</td>
-                                <td className="py-2 px-6">Royal Kludge RK71</td>
-                            </tr>
-                            <tr className="border-b">
-                                <td className="py-2 px-6">Style & Size</td>
-                                <td className="py-2 px-6">Ergonomic</td>
-                            </tr>
-                            <tr className="border-b">
-                                <td className="py-2 px-6">Type</td>
-                                <td className="py-2 px-6">Mechanical Gaming Keyboard</td>
-                            </tr>
-                            <tr className="border-b">
-                                <th className="py-2 px-6 font-medium text-gray-900">
-                                    Language
-                                </th>
-                                <td className="py-2 px-6"></td>
-                            </tr>
-                            <tr className="border-b">
-                                <td className="py-2 px-6">Language (English)</td>
-                                <td className="py-2 px-6">Yes</td>
-                            </tr>
-                            <tr className="border-b">
-                                <td className="py-2 px-6">Language (Bangla)</td>
-                                <td className="py-2 px-6">No</td>
-                            </tr>
-                            <tr className="border-b">
-                                <td className="py-2 px-6">Connection Type</td>
-                                <td className="py-2 px-6">Both</td>
-                            </tr>
-                            <tr className="border-b">
-                                <td className="py-2 px-6">Interface</td>
-                                <td className="py-2 px-6">Bluetooth & USB</td>
-                            </tr>
-                            <tr className="border-b">
-                                <td className="py-2 px-6">Lighting</td>
-                                <td className="py-2 px-6">Yes</td>
-                            </tr>
-                            <tr className="border-b">
-                                <td className="py-2 px-6">Lighting Type</td>
-                                <td className="py-2 px-6">RGB</td>
-                            </tr>
-                            <tr className="border-b">
-                                <td className="py-2 px-6">Fingerprint Sensor</td>
-                                <td className="py-2 px-6">No</td>
-                            </tr>
-                            <tr className="border-b">
-                                <td className="py-2 px-6">Mechanical (Key)</td>
-                                <td className="py-2 px-6">Yes</td>
-                            </tr>
-                            <tr className="border-b">
-                                <td className="py-2 px-6">Switch Type</td>
-                                <td className="py-2 px-6">Brown Switch</td>
-                            </tr>
-                            <tr className="border-b">
-                                <td className="py-2 px-6">Combo Package</td>
-                                <td className="py-2 px-6">Keyboard only</td>
-                            </tr>
-                            <tr className="border-b">
-                                <th className="py-2 px-6 font-medium text-gray-900">
-                                    Technical Info
-                                </th>
-                                <td className="py-2 px-6"></td>
-                            </tr>
-                            <tr className="border-b">
-                                <td className="py-2 px-6">Number of Buttons</td>
-                                <td className="py-2 px-6">71</td>
-                            </tr>
-                            <tr className="border-b">
-                                <td className="py-2 px-6">Scrolling Control</td>
-                                <td className="py-2 px-6">No</td>
-                            </tr>
-                            <tr className="border-b">
-                                <td className="py-2 px-6">Wheel</td>
-                                <td className="py-2 px-6">No</td>
-                            </tr>
-                            <tr className="border-b">
-                                <td className="py-2 px-6">2X Click</td>
-                                <td className="py-2 px-6">No</td>
-                            </tr>
-                            <tr className="border-b">
-                                <td className="py-2 px-6">Click Sound</td>
-                                <td className="py-2 px-6">Yes</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div className="mt-6">
-                <h2 className="text-xl font-semibold mb-2">Similar Products</h2>
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-                    <div className="p-4 bg-white border rounded-lg shadow">
-                        <div className="mb-2">Rapoo V700RGB Alloy RGB Backlit Wired</div>
-                        <div className="text-gray-500">Tk 4,200</div>
-                        <button className="w-full py-2 mt-2 text-white bg-green-500 rounded">
-                            Add to Cart
-                        </button>
-                    </div>
-                    <div className="p-4 bg-white border rounded-lg shadow">
-                        <div className="mb-2">
-                            Rapoo V500PRO USB Cyan Blue Backlit Wired
-                        </div>
-                        <div className="text-gray-500">Tk 4,300</div>
-                        <button className="w-full py-2 mt-2 text-white bg-green-500 rounded">
-                            Add to Cart
-                        </button>
-                    </div>
-                    <div className="p-4 bg-white border rounded-lg shadow">
-                        <div className="mb-2">
-                            Meetion MT-MK01 USB Black RGB Backlit Mech
-                        </div>
-                        <div className="text-gray-500">Tk 3,450</div>
-                        <button className="w-full py-2 mt-2 text-white bg-green-500 rounded">
-                            Add to Cart
-                        </button>
-                    </div>
-                    <div className="p-4 bg-white border rounded-lg shadow">
-                        <div className="mb-2">
-                            Rapoo VPRO V500PRO Backlit Wired Purple Me
-                        </div>
-                        <div className="text-gray-500">Tk 4,100</div>
-                        <button className="w-full py-2 mt-2 text-white bg-green-500 rounded">
-                            Add to Cart
-                        </button>
-                    </div>
-                    <div className="p-4 bg-white border rounded-lg shadow">
-                        <div className="mb-2">
-                            Royal Kludge RK61 Dual Mode RGB Red Switch
-                        </div>
-                        <div className="text-gray-500">Tk 3,800</div>
-                        <button className="w-full py-2 mt-2 text-white bg-green-500 rounded">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
-            </div>
+const ProductSpecifications: React.FC<IProps> = ({
+  specification,
+  details,
+}) => {
+  // const { sizes, sizeGuide, quantity, about } = details;
+  const data = specification;
+
+  return (
+    <div className="p-5">
+      <div className="bg-white shadow-md rounded-lg overflow-hidden">
+        <div className="border-b">
+          <nav className="grid md:grid-cols-4 gap-4">
+            <button className="flex-1 py-4 px-6 text-center text-gray-600 hover:text-black border-b-2 border-transparent hover:border-indigo-600 focus:outline-none">
+              Specifications
+            </button>
+            <button className="flex-1 py-4 px-6 text-center text-gray-600 hover:text-black border-b-2 border-transparent hover:border-indigo-600 focus:outline-none">
+              Details
+            </button>
+            <button className="flex-1 py-4 px-6 text-center text-gray-600 hover:text-black border-b-2 border-transparent hover:border-indigo-600 focus:outline-none">
+              Q&A
+            </button>
+            <button className="flex-1 py-4 px-6 text-center text-gray-600 hover:text-black border-b-2 border-transparent hover:border-indigo-600 focus:outline-none">
+              Review
+            </button>
+          </nav>
         </div>
-    );
+        <div className="p-6">
+          <div className="overflow-x-auto">
+            <table className="min-w-full bg-white border border-gray-300">
+              <thead>
+                <tr>
+                  <th className="px-4 py-2 border-b">Field</th>
+                  <th className="px-4 py-2 border-b">Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="px-4 py-2 border-b">Care</td>
+                  <td className="px-4 py-2 border-b">
+                    <ul className="list-disc list-inside">
+                      {data?.care?.map((item, index) => (
+                        <li key={index}>{item}</li>
+                      ))}
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-2 border-b">Febric</td>
+                  <td className="px-4 py-2 border-b">
+                    {data?.febric?.length > 0
+                      ? data?.febric?.join(", ")
+                      : "N/A"}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-2 border-b">Sleeve</td>
+                  <td className="px-4 py-2 border-b">{data?.sleeve}</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-2 border-b">Value Addition</td>
+                  <td className="px-4 py-2 border-b">{data?.valueAddition}</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-2 border-b">Side Cut</td>
+                  <td className="px-4 py-2 border-b">{data?.sideCut}</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-2 border-b">Product ID</td>
+                  <td className="px-4 py-2 border-b">{data?.productID}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div className="p-4">
+            <h2 className="text-2xl font-bold mb-4">Size Table</h2>
+            <table className="min-w-full border-collapse block md:table">
+              <thead className="block md:table-header-group">
+                <tr className="border border-gray-300 md:border-none block md:table-row">
+                  <th className="bg-gray-200 p-2 text-gray-600 font-bold md:border md:border-gray-300 text-center block md:table-cell">
+                    Size
+                  </th>
+                  <th className="bg-gray-200 p-2 text-gray-600 font-bold md:border md:border-gray-300 text-center block md:table-cell">
+                    Price
+                  </th>
+                  <th className="bg-gray-200 p-2 text-gray-600 font-bold md:border md:border-gray-300 text-center block md:table-cell">
+                    Stock Quantity
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="block md:table-row-group">
+                {details?.sizes?.map((size, index) => (
+                  <tr
+                    key={index}
+                    className="bg-white border border-gray-300 md:border-none block md:table-row"
+                  >
+                    <td className="p-2 md:border md:border-gray-300 text-center block md:table-cell">
+                      {size?.size}
+                    </td>
+                    <td className="p-2 md:border md:border-gray-300 text-center block md:table-cell">
+                      {size?.price}
+                    </td>
+                    <td className="p-2 md:border md:border-gray-300 text-center block md:table-cell">
+                      {size?.quantity}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div className="mt-4">
+              <h3 className="text-xl font-bold">Size Guide</h3>
+              <p>{details?.sizeGuide}</p>
+            </div>
+            <div className="mt-4">
+              <h3 className="text-xl font-bold">Quantity</h3>
+              <p>{details?.quantity}</p>
+            </div>
+            <div className="mt-4">
+              <h3 className="text-xl font-bold">About</h3>
+              <p>{details?.about}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="mt-6">
+        <h2 className="text-xl font-semibold mb-2">Similar Products</h2>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"></div>
+      </div>
+    </div>
+  );
 };
 
 

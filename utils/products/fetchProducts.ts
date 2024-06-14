@@ -1,5 +1,3 @@
-"use server";
-
 export async function fetchProducts() {
   try {
     const res = await fetch(
@@ -12,7 +10,7 @@ export async function fetchProducts() {
     const data = await res.json();
 
     return data;
-  } catch (error) {
-    throw new Error(error.message);
+  } catch (error: any) {
+    console.error(error.message);
   }
 }

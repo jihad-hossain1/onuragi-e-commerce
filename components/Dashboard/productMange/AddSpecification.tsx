@@ -1,196 +1,235 @@
 'use client'
 
-import { validatedTag } from '@/helpers/validated-tag';
-import { useRouter } from 'next/navigation';
-import React from 'react'
-import { FaTrash } from 'react-icons/fa6';
-import { toast } from 'sonner';
+import {
+  server_action,
+  update_server_action,
+} from "@/app/(dashboard)/dashboard/product-manage/add-specification/_compo/server-action";
+import InputField from "@/components/ui/InputField";
+import { validatedTag } from "@/helpers/validated-tag";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
+import { FaTrash } from "react-icons/fa6";
+import { toast } from "sonner";
 type ProductIDProps = {
-    productID: string;
-}
-const AddSpecification: React.FC<ProductIDProps> = ({ productID }) => {
+  productID: string;
+  specId: string[];
+  specValue: any;
+};
+const AddSpecification: React.FC<ProductIDProps> = ({
+  productID,
+  specId,
+  specValue,
+}) => {
+  const router = useRouter();
+  const [formData, setFormData] = React.useState({
+    sleeve: "",
+    valueAddition: "",
+    coller_Neck: "",
+    sideCut: "",
+  });
 
-    const router = useRouter();
-    const initialValue = {
-        sleeve: '',
-        valueAddition: '',
-        coller_Neck: '',
-        sideCut: '',
+  const [loading, setLoading] = React.useState(false);
+  const [care, setCare] = React.useState(
+    specValue?.care ? specValue?.care : []
+  );
+  const [addCare, setAddCare] = React.useState("");
+  const [febric, setFebric] = React.useState(
+    specValue?.febric ? specValue?.febric : []
+  );
+  const [addFebric, setAddedFebric] = React.useState("");
+
+  useEffect(() => {
+    if (specValue) {
+      setFormData({
+        sleeve: specValue?.sleeve,
+        valueAddition: specValue?.valueAddition,
+        coller_Neck: specValue?.coller_Neck,
+        sideCut: specValue?.sideCut,
+      });
     }
+  }, [specValue]);
 
-    const [formData, setFormData] = React.useState(initialValue);
-    const [care, setCare] = React.useState([]);
-    const [addCare, setAddCare] = React.useState('');
-    const [febric, setFebric] = React.useState([]);
-    const [addFebric, setAddedFebric] = React.useState('');
+  function getCare() {
+    if (addCare === "" || !addCare) {
+      toast("Enter Care");
+      return;
+    }
+    setCare([...care, addCare]);
+    setAddCare("");
+  }
 
-    function getCare() {
-        if (addCare === '' || !addCare) {
-            toast("Enter Care");
-            return;
+  function removeCare() {
+    setCare(care.slice(0, -1));
+  }
+
+  function getFebric() {
+    if (addFebric === "" || !addFebric) {
+      toast("Enter Febric");
+      return;
+    }
+    setFebric([...febric, addFebric]);
+    setAddedFebric("");
+  }
+
+  function removeFebric() {
+    setFebric(febric.slice(0, -1));
+  }
+
+  async function handleSubmit() {
+    try {
+      if (specId) {
+        setLoading(true);
+        const response = await update_server_action({
+          ...formData,
+          care: care,
+          febric: febric,
+          specId: specId,
+        });
+        setLoading(false);
+
+        if (response?.update) {
+          validatedTag("specification");
+          toast(response?.message);
+          router.refresh();
         }
-        setCare([...care, addCare]);
-        setAddCare("");
-    }
 
-    function removeCare() {
-        setCare(care.slice(0, -1));
-    }
-
-    function getFebric() {
-        if (addFebric === '' || !addFebric) {
-            toast("Enter Febric");
-            return;
+        if (response?.error) {
+          setLoading(false);
+          toast(response?.error);
+          router.refresh();
         }
-        setFebric([...febric, addFebric]);
-        setAddedFebric("");
-    }
+      } else {
+        setLoading(true);
+        const response = await server_action({
+          ...formData,
+          productID: productID,
+          care: care,
+          febric: febric,
+        });
 
-    function removeFebric() {
-        setFebric(febric.slice(0, -1));
-    }
+        setLoading(false);
 
-    async function handleSubmit() {
-        try {
-            const response = await fetch(`/api/v1/products/specification`, {
-                headers: {
-                    "Content-Type": "applications/json"
-                },
-                body: JSON.stringify({
-                    ...formData,
-                    productID: productID
-                }),
-                method: 'POST'
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-              toast(data?.message);
-              // validatedTag("specification")
-              validatedTag("products");
-              router.refresh();
-              router.push("/dashboard/product-manage");
-            } else {
-                toast(data?.message)
-            }
-
-        } catch (error: any) {
-            console.log(error?.message)
+        if (response) {
+          toast(response?.message);
+          // validatedTag("specification")
+          validatedTag("products");
+          router.refresh();
+          router.push("/dashboard/product-manage");
+        } else {
+          toast(response?.message);
         }
+      }
+    } catch (error: any) {
+      setLoading(false);
+      console.error(error?.message);
     }
-    return (
-        <div className='flex flex-col gap-4 max-w-xl m-auto p-4'>
+  }
 
-            <div className='flex flex-col gap-2'>
-                <label htmlFor="sleeve">sleeve</label>
-                <input
-                    type="text"
-                    name="sleeve"
-                    id="sleeve"
-                    value={formData?.sleeve}
-                    onChange={(e) => setFormData({ ...formData, sleeve: e.target.value })}
-                    className="input"
-                />
-            </div>
-            <div className='flex flex-col gap-2'>
-                <label htmlFor="valueAddition">valueAddition</label>
-                <input
-                    type="text"
-                    name="valueAddition"
-                    id="valueAddition"
-                    value={formData?.valueAddition}
-                    onChange={(e) => setFormData({ ...formData, valueAddition: e.target.value })}
-                    className="input"
-                />
-            </div>
+  return (
+    <div className="flex flex-col gap-4 max-w-xl m-auto p-4">
+      <h1 className="text-2xl font-bold">
+        {" "}
+        {specId ? "Update" : "Add"} Specification
+      </h1>
+      <InputField
+        label="sleeve"
+        type="text"
+        name="sleeve"
+        value={formData?.sleeve}
+        onChange={(e) => setFormData({ ...formData, sleeve: e.target.value })}
+        id={""}
+      />
 
-            <div className='flex flex-col gap-2'>
-                <label htmlFor="coller_Neck">coller_Neck</label>
-                <input
-                    type="text"
-                    name="coller_Neck"
-                    id="coller_Neck"
-                    value={formData?.coller_Neck}
-                    onChange={(e) => setFormData({ ...formData, coller_Neck: e.target.value })}
-                    className="input"
-                />
+      <InputField
+        label="valueAddition"
+        type="text"
+        name="valueAddition"
+        value={formData?.valueAddition}
+        onChange={(e) =>
+          setFormData({ ...formData, valueAddition: e.target.value })
+        }
+        id={""}
+      />
 
-            </div>
+      <InputField
+        label="coller_Neck"
+        type="text"
+        name="coller_Neck"
+        value={formData?.coller_Neck}
+        onChange={(e) =>
+          setFormData({ ...formData, coller_Neck: e.target.value })
+        }
+        id={""}
+      />
 
-            <div className='flex flex-col gap-2'>
-                <label htmlFor="sideCut">sideCut</label>
-                <input
-                    type="text"
-                    name="sideCut"
-                    id="sideCut"
-                    value={formData?.sideCut}
-                    onChange={(e) => setFormData({ ...formData, sideCut: e.target.value })}
-                    className="input"
-                />
-            </div>
+      <InputField
+        label="sideCut"
+        type="text"
+        name="sideCut"
+        value={formData?.sideCut}
+        onChange={(e) => setFormData({ ...formData, sideCut: e.target.value })}
+        id={""}
+      />
 
-            <div className='flex flex-col gap-2'>
-                <label htmlFor="care">care</label>
-                <div className='flex items-center gap-2'>
-                    <input
-                        type="text"
-                        name="care"
-                        id="care"
-                        className="input w-full"
-                        value={addCare}
-                        onChange={(e) => setAddCare(e.target.value)}
-                    />
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-2">
+          <InputField
+            label="care"
+            type="text"
+            name="care"
+            value={addCare}
+            onChange={(e) => setAddCare(e.target.value)}
+            id={""}
+          />
 
-                    <button className="btn w-fit" onClick={getCare} type='button'>Add</button>
-                </div>
-                {care?.map((item, index) => (
-                    <p
-                        key={index}
-                        className="text-sm flex items-center gap-4"
-                    >
-                        <p>{item}</p>
-                        <button onClick={removeCare} className="text-pink-600">
-                            <FaTrash />
-                        </button>
-                    </p>
-                ))}
-            </div>
-
-            <div className='flex flex-col gap-2'>
-                <label htmlFor="febric">febric</label>
-                <div className='flex items-center gap-2'>
-                    <input
-                        type="text"
-                        name="febric"
-                        id="febric"
-                        className="input w-full"
-                        value={addFebric}
-                        onChange={(e) => setAddedFebric(e.target.value)}
-                    />
-                    <button className="btn w-fit" onClick={getFebric} type='button'>Add</button>
-                </div>
-                {febric?.map((item, index) => (
-                    <p
-                        key={index}
-                        className="text-sm flex items-center gap-4"
-                    >
-                        <p>{item}</p>
-                        <button onClick={removeFebric} className="text-pink-600">
-                            <FaTrash />
-                        </button>
-                    </p>
-                ))}
-            </div>
-
-            <button
-                className="btn"
-                onClick={handleSubmit}
-            >
-                Submit
-            </button>
+          <button className="btn w-fit" onClick={getCare} type="button">
+            Add
+          </button>
         </div>
-    )
-}
+        {care?.map((item, index) => (
+          <p key={index} className="text-sm flex items-center gap-4">
+            <p>{item}</p>
+            <button onClick={removeCare} className="text-pink-600">
+              <FaTrash />
+            </button>
+          </p>
+        ))}
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-2">
+          <InputField
+            label="febric"
+            type="text"
+            name="febric"
+            value={addFebric}
+            onChange={(e) => setAddedFebric(e.target.value)}
+            id={""}
+          />
+
+          <button className="btn w-fit" onClick={getFebric} type="button">
+            Add
+          </button>
+        </div>
+        {febric?.map((item, index) => (
+          <p key={index} className="text-sm flex items-center gap-4">
+            <p>{item}</p>
+            <button onClick={removeFebric} className="text-pink-600">
+              <FaTrash />
+            </button>
+          </p>
+        ))}
+      </div>
+
+      <button disabled={loading} className="btn" onClick={handleSubmit}>
+        {specId ? (
+          <span> {loading ? "Updating..." : "Update"} </span>
+        ) : (
+          <span>{loading ? "Adding..." : "Add"}</span>
+        )}
+      </button>
+    </div>
+  );
+};
 
 export default AddSpecification

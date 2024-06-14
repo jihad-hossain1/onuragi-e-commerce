@@ -1,5 +1,3 @@
-"use server";
-
 export async function fetchCart(userId: string) {
   try {
     const res = await fetch(

@@ -57,9 +57,7 @@ export async function GET() {
   try {
     await connectDatabase("product");
 
-    const products = await Product.find().select(
-      "_id name image price specification details slug"
-    );
+    const products = await Product.find({});
 
     return NextResponse.json(products);
   } catch (error) {

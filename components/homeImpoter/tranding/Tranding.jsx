@@ -1,10 +1,21 @@
+'use client'
+
 import React from "react";
 import TrandSingleProduct from "./TrandSingleProduct";
 import Container from "@/components/ui/container";
-import { fetchProducts } from "@/utils/products/fetchProducts";
 
-const Tranding = async () => {
-  const products = await fetchProducts();
+
+const Tranding =  () => {
+  const [products, setProducts] = React.useState([]);
+  React.useEffect(() => {
+    const fetchProducts = async () => {
+      const res = await fetch("/api/v1/products");
+      const data = await res.json();
+      setProducts(data);
+    };
+
+    fetchProducts();
+  }, []);
   return (
     <Container>
       <main className="grid md:grid-cols-2 lg:flex lg:flex-row  lg:justify-between gap-3">

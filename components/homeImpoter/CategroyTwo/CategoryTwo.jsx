@@ -1,13 +1,29 @@
+"use client";
+
 import SingleProduct from "@/components/products/SingleProduct";
 import Container from "@/components/ui/container";
 import Image from "next/image";
 import React from "react";
-import { fetchProducts } from "@/utils/products/fetchProducts";
-import { fetchPosters } from "@/utils/poster/fetchPosters";
 
-const CategoryTwo = async () => {
-  const products = await fetchProducts();
-  const posters = await fetchPosters();
+const CategoryTwo = () => {
+  const [products, setProducts] = React.useState([]);
+  const [posters, setPosters] = React.useState([]);
+
+  React.useEffect(() => {
+    const fetchProducts = async () => {
+      const res = await fetch("/api/v1/products");
+      const data = await res.json();
+      setProducts(data);
+    };
+    const fetchPosters = async () => {
+      const res = await fetch("/api/v1/banner/poster");
+      const data = await res.json();
+      setPosters(data);
+    };
+
+    fetchProducts();
+    fetchPosters();
+  }, []);
   const poster3 = posters?.[2];
   const poster4 = posters?.[3];
   return (
@@ -24,20 +40,20 @@ const CategoryTwo = async () => {
             ))}
           </div>
         </div>
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 py-8">
           <Image
             src={poster3?.image}
             alt={poster3?.title}
             height={400}
             width={800}
-            className="w-full rounded lg:h-[400px] border shadow"
+            className="w-full rounded lg:h-[500px] border shadow"
           />
           <Image
             src={poster4?.image}
             alt={poster4?.title}
             height={400}
             width={800}
-            className="w-full rounded lg:h-[400px] border shadow"
+            className="w-full rounded lg:h-[500px] border shadow"
           />
         </div>
       </div>

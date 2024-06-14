@@ -1,5 +1,3 @@
-"use server";
-
 export async function fetchOfferBanner() {
   try {
     const response = await fetch(

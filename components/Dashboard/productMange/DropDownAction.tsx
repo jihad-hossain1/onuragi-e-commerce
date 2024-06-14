@@ -28,7 +28,7 @@ const DropDownAction = ({ productID, specification, details }) => {
               <DropdownMenuItem>
                 {details ? (
                   <Link
-                    href={`/dashboard/product-manage/update-product-details/${productID}`}
+                    href={`/dashboard/product-manage/add-product-details/${productID}`}
                     className="flex gap-2 items-center"
                   >
                     <span>Update Details</span>{" "}
@@ -49,7 +49,7 @@ const DropDownAction = ({ productID, specification, details }) => {
             <DropdownMenuItem>
               {specification ? (
                 <Link
-                  href={`/dashboard/product-manage/update-specification/${productID}`}
+                  href={`/dashboard/product-manage/add-specification/${productID}=${specification}`}
                   className="flex gap-2 items-center"
                 >
                   <span>Update Spec.</span>{" "}

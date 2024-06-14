@@ -1,10 +1,19 @@
-import { fetchPosters } from "@/utils/poster/fetchPosters";
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const PosterPage = async () => {
-  const posters = await fetchPosters();
+const PosterPage = () => {
+  const [posters, setPosters] = React.useState([]);
+
+  React.useEffect(() => {
+    (async () => {
+      const posters = await fetch("/api/v1/banner/poster");
+      const data = await posters.json();
+      setPosters(data);
+    })();
+  }, []);
   return (
     <main className="max-w-screen-xl mx-auto p-2">
       <h4 className="text-2xl text-center">Poster Page</h4>

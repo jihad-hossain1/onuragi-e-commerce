@@ -6,7 +6,18 @@ import { Carousel } from "react-responsive-carousel";
 import Image from "next/image";
 import BannerLink from "./bannerLink";
 
-const Slider = ({ banners }) => {
+const Slider = () => {
+  const [banners, setBanners] = React.useState([]);
+
+  React.useEffect(() => {
+    const fetchBanner = async () => {
+      const response = await fetch("/api/v1/banner");
+      const data = await response.json();
+      setBanners(data);
+    };
+    fetchBanner();
+  }, []);
+
   return (
     <div className="bg-[#f9f9f9]">
       <div className="max-w-screen-xl mx-auto p-2">
