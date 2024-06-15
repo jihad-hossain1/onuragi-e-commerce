@@ -10,6 +10,7 @@ const ProductDetails = ({ product }) => {
       <ProductDetail product={product?.product} images={product?.images} />
       <ProductSpecifications
         specification={product?.specification}
+        product={product?.product}
         details={product?.details}
       />
     </div>

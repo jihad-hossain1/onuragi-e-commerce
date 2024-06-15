@@ -4,11 +4,13 @@ import React from "react";
 interface IProps {
   details: any;
   specification: any;
+  product: any;
 }
 
 const ProductSpecifications: React.FC<IProps> = ({
   specification,
   details,
+  product,
 }) => {
   // const { sizes, sizeGuide, quantity, about } = details;
   const data = specification;
@@ -71,7 +73,9 @@ const ProductSpecifications: React.FC<IProps> = ({
                 </tr>
                 <tr>
                   <td className="px-4 py-2 border-b">Product ID</td>
-                  <td className="px-4 py-2 border-b">{data?.PID || "N/A"}</td>
+                  <td className="px-4 py-2 border-b">
+                    {product?.PID || "N/A"}
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -119,23 +123,27 @@ const ProductSpecifications: React.FC<IProps> = ({
 
             <div className="mt-4">
               <h3 className="text-xl font-semibold">Overall Stock</h3>
-              <p>{details?.quantity}</p>
+              <p>{details?.quantity || "N/A"}</p>
             </div>
             <div className="mt-4">
               <h3 className="text-xl font-semibold">Size Guide</h3>
-              <p>{details?.sizeGuide}</p>
+              <p>{details?.sizeGuide || "N/A"}</p>
             </div>
 
             <div className="mt-4">
               <h3 className="text-xl font-semibold">About</h3>
-              <p>{details?.about}</p>
+              <p>{details?.about || "N/A"}</p>
             </div>
           </div>
         </div>
       </div>
       <div className="mt-6">
         <h2 className="text-xl font-semibold mb-2">Similar Products</h2>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"></div>
+        {product?.smilerProducts?.length > 0 ? (
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"></div>
+        ) : (
+          "N/A"
+        )}
       </div>
     </div>
   );

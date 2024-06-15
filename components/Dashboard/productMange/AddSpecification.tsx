@@ -88,7 +88,7 @@ const AddSpecification: React.FC<ProductIDProps> = ({
         setLoading(false);
 
         if (response?.update) {
-          validatedTag("specification");
+          validatedTag("products");
           toast(response?.message);
           router.refresh();
         }
