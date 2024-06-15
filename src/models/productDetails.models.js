@@ -18,6 +18,31 @@ const sizeType = new Schema({
     type: String,
     required: true,
   },
+  colors: [
+    {
+      color: {
+        type: String,
+        required: true,
+      },
+      name: {
+        type: String,
+        required: true,
+      },
+      image: {
+        type: String,
+      },
+    },
+  ],
+});
+const colorsType = new Schema({
+  quantity: {
+    type: Number,
+    required: true,
+  },
+  color: {
+    type: String,
+    required: true,
+  },
 });
 
 const productDetailsSchema = new Schema(
@@ -28,7 +53,6 @@ const productDetailsSchema = new Schema(
       type: String,
       required: true,
     },
-
 
     productID: {
       type: mongoose.Schema.Types.ObjectId,

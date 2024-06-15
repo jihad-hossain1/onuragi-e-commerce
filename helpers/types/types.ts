@@ -67,11 +67,16 @@ export type ImageType = {
   productID: string;
 };
 
+export type ColorType = {
+  _id: string;
+  color: string;
+};
 
 export type SizeType = {
   price: number;
   quantity: number;
   size: string;
+  colors: ColorType[];
 };
 
 export type ProductDetailType = {
