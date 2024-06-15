@@ -9,9 +9,10 @@ import UserAccount from "./userAccount/UserAccount";
 import { ThemeButton } from "./themeButton/ThemeButton";
 import { SiteLogo } from ".";
 import Link from "next/link";
+import { useCartItems } from "@/hooks/cartsHook";
 
 export function AnimatedNavbar({ products, carts }) {
-  // console.log(carts);
+  // const { cartItems } = useCartItems();
   return (
     <main className="max-w-screen-xl mx-auto p-2">
       <div className="relative w-full flex items-center justify-between">

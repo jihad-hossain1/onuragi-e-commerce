@@ -1,31 +1,35 @@
-"use client";
+// "use client";
 
 import CartQuantity from "@/components/Navbar/shopingCart/CartQuantity";
 import RemoveFromCart from "@/components/Navbar/shopingCart/RemoveFromCart";
+import { serverAuth } from "@/hooks/serverAuth";
 import { fetchCart } from "@/utils/cart/fetchCart";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import { TbCurrencyTaka } from "react-icons/tb";
 
-const CartPage = () => {
-  const [carts, setCarts] = React.useState<any>();
-  const session = useSession();
+const CartPage = async () => {
+  // const [carts, setCarts] = React.useState<any>();
+  // const session = useSession();
 
-  useEffect(() => {
-    (async () => {
-      const cart = await fetch(
-        `/api/v1/users/cart?userId=${session?.data?.user?.id}`
-      );
-      const data = await cart.json();
-      if (data) {
-        setCarts(data);
-      }
-    })();
-  }, [session?.data?.user?.id]);
+  // useEffect(() => {
+  //   (async () => {
+  //     const cart = await fetch(
+  //       `/api/v1/users/cart?userId=${session?.data?.user?.id}`
+  //     );
+  //     const data = await cart.json();
+  //     if (data) {
+  //       setCarts(data);
+  //     }
+  //   })();
+  // }, [session?.data?.user?.id]);
 
   // console.log(carts);
+  const authUser: any = await serverAuth();
+  const carts = await fetchCart(authUser?.user?.id);
+  // console.log("🚀 ~ CartPage ~ carts:", carts);
   return (
     <main className="max-w-screen-xl mx-auto p-4 min-h-[80vh]">
       <div className="flex flex-col gap-3">

@@ -5,7 +5,6 @@ import ProductDetail from "./ProductDetail";
 import ProductSpecifications from "./ProductSpecifications";
 
 const ProductDetails = ({ product }) => {
-  console.log("🚀 ~ ProductDetails ~ product:", product);
   return (
     <div>
       <ProductDetail product={product?.product} images={product?.images} />

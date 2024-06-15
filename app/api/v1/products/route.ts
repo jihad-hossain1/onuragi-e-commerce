@@ -3,6 +3,30 @@ import connectDatabase from "@/src/config/mongodbConnection";
 import Product from "@/src/models/product.models";
 import { NextRequest, NextResponse } from "next/server";
 
+
+async function generateUniqueID(): Promise<string> {
+  await connectDatabase("products");
+  const previousProducts = await Product.find({});
+
+  const rememberPreviousItemCodes = previousProducts?.map(
+    (product) => product?.PID
+  );
+
+  // Extract the numeric part of the IDs and find the maximum number
+  const maxNumber = rememberPreviousItemCodes?.reduce((max, id) => {
+    const num = parseInt(id?.replace("PID", ""), 5);
+    return num > max ? num : max;
+  }, 0);
+
+  // Increment the maximum number by 1
+  const nextNumber = maxNumber + 1;
+
+  // Format the new ID with leading zeros
+  const newID = `PID${nextNumber?.toString()?.padStart(3, "0")}`;
+
+  return newID;
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -13,7 +37,7 @@ export async function POST(req: NextRequest) {
     // Validate individual fields
     fieldValidate(categoryID, "Category Name");
     validateFieldMaxMin(name, "Product Name", 5, 50);
-    validateFieldMaxMin(slug, "Product Slug", 5, 50);
+    fieldValidate(slug, "Product Slug");
     fieldValidate(price, "Price");
     fieldValidate(image, "Product Image");
 
@@ -27,7 +51,7 @@ export async function POST(req: NextRequest) {
     await connectDatabase("product");
 
     const isProdutSlug = await Product.findOne({
-      slug: slug.trim().toLowerCase(),
+      slug: slug?.trim()?.toLowerCase(),
     });
     if (isProdutSlug) {
       return NextResponse.json(
@@ -36,13 +60,16 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const productID = await generateUniqueID();
+
     // Create and save the new product
     const newProduct = new Product({
+      PID: productID,
       name,
       image,
       categoryID,
       price: priceNumber,
-      slug: slug.trim().toLowerCase(),
+      slug: slug?.trim()?.toLowerCase(),
     });
     const product = await newProduct.save();
 

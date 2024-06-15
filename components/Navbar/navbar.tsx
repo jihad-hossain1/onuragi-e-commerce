@@ -1,40 +1,32 @@
-"use client";
-
 import React from "react";
-
 import { AnimatedNavbar } from "./AnimatedNavbar";
-import { useSession } from "next-auth/react";
+import { fetchProducts } from "@/utils/products/fetchProducts";
+// import { useProducts } from "@/hooks/productHook";
+// import { useCartItems } from "@/hooks/cartsHook";
+import { fetchCart } from "../../utils/cart/fetchCart";
+import { serverAuth } from "@/hooks/serverAuth";
 
-const Navbar = () => {
-  const { data } = useSession();
-  const [userCart, setUserCart] = React.useState<any>();
-  const [products, setProducts] = React.useState([]);
+const Navbar = async () => {
+  // const { products } = useProducts();
+  // const { cartItems } = useCartItems();
+  const authUser: any = await serverAuth();
+  const products = await fetchProducts();
 
-  React.useEffect(() => {
-    const fetchProducts = async () => {
-      const res = await fetch("/api/v1/products");
-      const data = await res.json();
-      setProducts(data);
-    };
+  let initialProducts;
 
-    fetchProducts();
-  }, []);
+  if (products) {
+    initialProducts = products;
+    initialProducts = [...products]?.splice(0, 4);
+  }
 
-  React.useEffect(() => {
-    const fetchUserCart = async () => {
-      const res = await fetch(`/api/v1/users/cart?userId=${data?.user?.id}`);
-      const _data = await res.json();
-      setUserCart(_data);
-    };
-
-    fetchUserCart();
-  }, [data?.user?.id]);
-
-  const filterProducts = [...products].splice(0, 4);
+  let initialCarts;
+  if (authUser) {
+    initialCarts = await fetchCart(authUser?.user?.id);
+  }
 
   return (
     <div>
-      <AnimatedNavbar products={filterProducts} carts={userCart?.result} />
+      <AnimatedNavbar products={initialProducts} carts={initialCarts?.result} />
     </div>
   );
 };

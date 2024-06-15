@@ -9,6 +9,11 @@ export async function fetchProducts() {
 
     const data = await res.json();
 
+    if (!res.ok) {
+      console.error("failed to fetch data products");
+      return;
+    }
+
     return data;
   } catch (error: any) {
     console.error(error.message);
