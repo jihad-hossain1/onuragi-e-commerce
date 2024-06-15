@@ -142,7 +142,7 @@ const AddproductDetails: React.FC<ProductsProps> = ({
             disabled={loading}
             onClick={handleSubmit}
             type="submit"
-            className="btn"
+            className="btn w-full"
           >
             {detailId ? (
               <span> {loading ? "Updating..." : "Update"} </span>

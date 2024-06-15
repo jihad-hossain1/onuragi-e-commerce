@@ -2,9 +2,11 @@
 
 import uploadImageToCDN from "@/utils/uploadImageToCDN";
 import Image from "next/image";
-import React, { FormEvent } from "react";
+import React, { FormEvent, useRef, useState } from "react";
 import { toast } from "sonner";
-import { FaImage } from "react-icons/fa";
+import { FaImage, FaCloudUploadAlt } from "react-icons/fa";
+import { MdFileUploadOff } from "react-icons/md";
+import { VscLoading } from "react-icons/vsc";
 
 export type ColorType = {
   _id: string;
@@ -31,7 +33,10 @@ const AddSizes: React.FC<Props> = ({ sizes, setSizes }) => {
   const [image, setImage] = React.useState<File | null>(null);
   const [photo, setPhoto] = React.useState<string>("");
   const [loading, setLoading] = React.useState<boolean>(false);
-  const [imagePreview, setImagePreview] = React.useState<string | null>(null);
+  const [showName, setShowName] = useState({});
+  const [showImagePreview, setShowImagePreview] = useState({});
+  const fileInputRef = useRef();
+
   const [imageUploadOpen, setImageUploadOpen] = React.useState<boolean>(false);
 
   const [sizeData, setSizeData] = React.useState({
@@ -80,12 +85,6 @@ const AddSizes: React.FC<Props> = ({ sizes, setSizes }) => {
     setSizes(sizes.slice(0, -1));
   }
 
-  const handleOnFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setImage(e.target.files[0]);
-    }
-  };
-
   const handleOnFileUpload = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -101,11 +100,6 @@ const AddSizes: React.FC<Props> = ({ sizes, setSizes }) => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleDeleteImage = () => {
-    setImage(null);
-    setImagePreview(null);
   };
 
   function addColor() {
@@ -134,7 +128,7 @@ const AddSizes: React.FC<Props> = ({ sizes, setSizes }) => {
   return (
     <section>
       <main className="flex flex-col ">
-        <div className="flex  gap-2">
+        <section className="flex  gap-2">
           <div className="flex flex-col gap-2">
             <label htmlFor="size">Size</label>
 
@@ -186,48 +180,26 @@ const AddSizes: React.FC<Props> = ({ sizes, setSizes }) => {
               }
             />
           </div>
-        </div>
+        </section>
 
         <section className="flex flex-col gap-2">
+          <label htmlFor="color">Color</label>
           <div className="flex gap-2">
-            <label htmlFor="color">Color</label>
-            <div className="flex gap-2">
-              {_colors?.map((color, index) => (
-                <div className="flex gap-2" key={index}>
-                  <p>{color?.name}</p>
-                  <p
-                    style={{ backgroundColor: color?.color }}
-                    className="p-1 rounded shadow-sm"
-                  >
-                    {color?.color}
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => removeColor()}
-                    className=" text-xs text-pink-600"
-                  >
-                    Remove
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="flex gap-2 items-center">
-            <div className="flex gap-2">
-              <input
-                type="text"
-                name="color"
-                id="color"
-                className="input"
-                placeholder="Enter Color Name"
-                value={color.name}
-                onChange={(e) => setColor({ ...color, name: e.target.value })}
-              />
+            <input
+              type="text"
+              name="color"
+              id="color"
+              className="input"
+              placeholder="Enter Color Name"
+              value={color.name}
+              onChange={(e) => setColor({ ...color, name: e.target.value })}
+            />
+            <div className="border p-1 w-full border-gray-300 my-0">
               <input
                 type="color"
                 name="color"
                 id="color"
-                className="input"
+                className=" w-full"
                 placeholder="Select Color"
                 value={color.color}
                 onChange={(e) => setColor({ ...color, color: e.target.value })}
@@ -236,77 +208,140 @@ const AddSizes: React.FC<Props> = ({ sizes, setSizes }) => {
 
             <button
               onClick={() => setImageUploadOpen(!imageUploadOpen)}
-              className="btn w-fit text-xs"
               type="button"
+              className="border p-2 rounded-md text-xl shadow-sm"
             >
-              {imageUploadOpen ? "Close" : "add Image"}
+              {imageUploadOpen ? <MdFileUploadOff /> : <FaImage />}
             </button>
             <button onClick={addColor} className="btn w-fit" type="button">
               +
             </button>
           </div>
           {imageUploadOpen && (
-            <div className="flex flex-col items-center p-4">
-              <form onSubmit={handleOnFileUpload} className="w-full max-w-md">
+            <>
+              <form
+                onSubmit={handleOnFileUpload}
+                className="flex gap-2 items-center"
+              >
                 <input
+                  ref={fileInputRef}
+                  onChange={(e) => {
+                    if (e.target.files && e.target.files[0]) {
+                      const imageFile = e.target.files[0];
+                      setImage(imageFile);
+                      setShowName(imageFile);
+                      setShowImagePreview(URL.createObjectURL(imageFile));
+                    }
+                  }}
+                  className="w-full p-2 border border-gray-300 rounded"
+                  id="file5"
                   type="file"
-                  onChange={handleOnFileChange}
-                  className="mb-4 w-full p-2 border border-gray-300 rounded"
                 />
-                {imagePreview && (
-                  <div className="mb-4">
-                    <Image
-                      width={200}
-                      height={200}
-                      src={imagePreview}
-                      alt="Selected"
-                      className="w-full h-auto mb-2"
-                    />
-                    <p>File Name: {image?.name}</p>
-                    <p>File Size: {(image?.size / 1024).toFixed(2)} KB</p>
+
+                <button
+                  className="border rounded-md p-2 shadow-sm text-xl border-gray-400 hover:shadow transition-all duration-200"
+                  type="submit"
+                  disabled={!image || loading}
+                >
+                  {loading ? (
+                    <span className="">
+                      <VscLoading className="animate-spin" />
+                    </span>
+                  ) : (
+                    <span className="flex gap-2 items-center">
+                      <span className="text-xs">Upload</span>{" "}
+                      <FaCloudUploadAlt />
+                    </span>
+                  )}
+                </button>
+              </form>
+            </>
+          )}
+          <div className="flex  gap-2">
+            {showImagePreview && (
+              <div className="mb-4 flex gap-4 ">
+                <Image
+                  width={200}
+                  height={200}
+                  src={showImagePreview as string}
+                  alt="Selected"
+                  className="w-20 h-20 rounded-md mb-2"
+                />
+                <div>
+                  <p>File Name: {image?.name}</p>
+                  <p>File Size: {(image?.size / 1024).toFixed(2)} KB</p>
+                  <div>
+                    {" "}
                     <button
                       type="button"
-                      onClick={handleDeleteImage}
-                      className="bg-red-500 text-white py-1 px-4 rounded"
+                      onClick={() => {
+                        setShowImagePreview(null);
+                        setImage(null);
+                        setShowName(null);
+                      }}
+                      className="bg-red-500 text-white py-1 px-2 text-xs rounded"
                     >
                       Delete
                     </button>
                   </div>
-                )}
-                <button
-                  type="submit"
-                  className="bg-blue-500 text-white py-2 px-4 rounded"
-                  disabled={!image || loading}
-                >
-                  {loading ? "Uploading..." : "Upload"}
-                </button>
-              </form>
-              {photo && (
-                <div className="mt-4">
-                  <p>Uploaded Image:</p>
-                  <Image
-                    width={200}
-                    height={200}
-                    src={photo}
-                    alt="Uploaded"
-                    className="mt-2 w-32 h-32 object-cover"
-                  />
                 </div>
-              )}
-            </div>
-          )}
+              </div>
+            )}
+            {photo && (
+              <div className="flex gap-2">
+                <Image
+                  width={200}
+                  height={200}
+                  src={photo}
+                  alt="Uploaded"
+                  className="mt-2 w-20 h-20 rounded-md object-cover"
+                />
+                <div>
+                  <p>Uploaded Image:</p>
+                  <button
+                    type="button"
+                    onClick={() => setPhoto(null)}
+                    className="bg-red-500 text-white py-1 px-2 text-xs rounded"
+                  >
+                    Remove Image
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         </section>
 
         <div className="flex flex-col gap-2">
           <button
             type="button"
             onClick={addSize}
-            className="btn w-fit  mt-3 pt-3"
+            className="w-fit text-xs bg-gray-900 text-white py-1 px-2 rounded shadow hover:shadow-md"
           >
-            +
+            Add Size
           </button>
         </div>
       </main>
+      <div className="flex gap-2">
+        {_colors?.map((color, index) => (
+          <div className="flex gap-2" key={index}>
+            <p>{color?.name}</p>
+            <p
+              style={{ backgroundColor: color?.color }}
+              className="p-1 rounded shadow-sm"
+            >
+              {color?.color}
+            </p>
+            <Image src={color?.image} alt="color" width={20} height={20} />
+            <button
+              type="button"
+              onClick={() => removeColor()}
+              className=" text-xs text-pink-600"
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+      </div>
 
       {sizes?.map((size, index) => (
         <div key={index} className="flex gap-2">
