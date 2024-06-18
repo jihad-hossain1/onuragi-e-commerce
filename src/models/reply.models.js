@@ -1,7 +1,16 @@
 import mongoose, { Schema, models } from "mongoose";
 import connectDatabase from "../config/mongodbConnection";
 
-// await connectDatabase("Product Reply");
+const userType = {
+  id: {
+    type: String,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+};
 
 const replySchema = new Schema(
   {
@@ -10,8 +19,8 @@ const replySchema = new Schema(
       required: true,
     },
     user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      type: userType,
+      required: true,
     },
     reviewID: {
       type: mongoose.Schema.Types.ObjectId,

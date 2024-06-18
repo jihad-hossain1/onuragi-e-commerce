@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 export const validateFieldMaxMin = (
   field: string,
@@ -59,21 +60,27 @@ export const fieldValidate = (field, fieldName) => {
   }
 };
 
-
 export const validateImage = (image: string) => {
   if (!image) {
     throw new Error("Image is required");
   }
-
-  // if (
-  //   !image.startsWith("https://") ||
-  //   !image.endsWith(".jpg") ||
-  //   !image.endsWith(".png") ||
-  //   !image.endsWith(".jpeg") ||
-  //   !image.endsWith(".webp") ||
-  //   !image.endsWith(".gif") ||
-  //   !image.endsWith(".svg")
-  // ) {
-  //   throw new Error("Invalid image URL.");
-  // }
 };
+
+export const validateOBJID = (id: string, fieldName: string) => {
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new Error(`${fieldName} is not valid`);
+  }
+};
+
+// if (
+//   !image.startsWith("https://") ||
+//   !image.endsWith(".jpg") ||
+//   !image.endsWith(".png") ||
+//   !image.endsWith(".jpeg") ||
+//   !image.endsWith(".webp") ||
+//   !image.endsWith(".gif") ||
+//   !image.endsWith(".svg")
+// ) {
+//   throw new Error("Invalid image URL.");
+// }
+// };

@@ -3,6 +3,17 @@ import mongoose, { Schema, models } from "mongoose";
 
 // await connectDatabase("Product Question");
 
+const userType = {
+  id: {
+    type: String,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+};
+
 const productQuestionSchema = new Schema(
   {
     content: {
@@ -10,8 +21,8 @@ const productQuestionSchema = new Schema(
       required: true,
     },
     user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      type: userType,
+      required: true,
     },
     replies: [
       {
@@ -20,8 +31,8 @@ const productQuestionSchema = new Schema(
           required: true,
         },
         user: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
+          type: userType,
+          required: true,
         },
         questionID: {
           type: mongoose.Schema.Types.ObjectId,
