@@ -18,7 +18,9 @@ const productQuestionSchema = new Schema(
   {
     content: {
       type: String,
-      required: true,
+      required: [true, "Content is required"],
+      trim: true,
+      maxlength: [500, "Content cannot be more than 500 characters"],
     },
     user: {
       type: userType,
@@ -26,18 +28,8 @@ const productQuestionSchema = new Schema(
     },
     replies: [
       {
-        content: {
-          type: String,
-          required: true,
-        },
-        user: {
-          type: userType,
-          required: true,
-        },
-        questionID: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "ProductQuestion",
-        },
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Reply",
       },
     ],
     productID: {

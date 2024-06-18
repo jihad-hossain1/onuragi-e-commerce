@@ -1,6 +1,7 @@
 import { validateOBJID } from "@/helpers/validetField";
 import connectDatabase from "@/src/config/mongodbConnection";
 import ProductQuestion from "@/src/models/productQuestion.models";
+import Reply from "@/src/models/reply.models";
 import User from "@/src/models/user.models";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -24,15 +25,12 @@ export async function DELETE(req: NextRequest, { params }) {
     }
 
     const deleteQuestionWithReplies = await ProductQuestion.findByIdAndDelete(
-      id,
-      {
-        $set: {
-          replies: [],
-        },
-      }
+      id
     );
 
-    // const deleteQuestion = await ProductQuestion.findByIdAndDelete(id);
+    const deleteReplies = await Reply.deleteMany({
+      questionID: id,
+    });
 
     return NextResponse.json(
       {

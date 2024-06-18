@@ -10,15 +10,37 @@ import { deleteServerAction } from "./deleteServerAction";
 import { FaTrashArrowUp } from "react-icons/fa6";
 import { PiNotePencilFill } from "react-icons/pi";
 import { updateServerAction } from "./updateServerAction";
+import { MdOutlineReply } from "react-icons/md";
+import { addReplyAction } from "./reply/addReplyAction";
+import { deleteReplyAction } from "./reply/releteReplyAction";
+
+type TQusetion = {
+  content: string;
+  _id: string;
+  createdAt: string;
+  user: { name: string; id: string; _id: string };
+  replies: {
+    content: string;
+    _id: string;
+    createdAt: string;
+    user: { name: string; id: string; _id: string };
+  }[];
+};
 
 const ProductQuestion = ({ questions, productId }) => {
-  console.log("🚀 ~ ProductQuestion ~ questions:", questions);
+  // console.log("🚀 ~ ProductQuestion ~ questions:", questions);
   const [loading, setLoading] = useState(false);
+  const [replyLoading, setReplyLoading] = useState(false);
+  const [replyEditMode, setReplyEditMode] = useState(false);
   const router = useRouter();
   const { data, status } = useSession();
   const [content, setContent] = useState("");
   const [editMode, setEditMode] = useState(false);
   const [questionId, setQuestionId] = useState("");
+  const [replyOpen, setReplyOpen] = useState(false);
+  const [tabIndex, setTabIndex] = useState(null);
+  const [replyContent, setReplyContent] = useState("");
+  const [replyId, setReplyId] = useState("");
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -78,6 +100,38 @@ const ProductQuestion = ({ questions, productId }) => {
     }
   };
 
+  const handleReplySubmit = async (e: any) => {
+    e.preventDefault();
+    try {
+      setReplyLoading(true);
+      const response = await addReplyAction({
+        user: {
+          id: data?.user?.id,
+          name: data?.user?.name,
+        },
+        content: replyContent,
+        questionID: questionId,
+      });
+
+      setReplyLoading(false);
+      if (response?.result) {
+        validatedTag("question");
+        toast(response?.message);
+        router.refresh();
+        setReplyContent("");
+        setReplyId("");
+        setReplyEditMode(false);
+      }
+
+      if (response?.error) {
+        toast(response?.error);
+      }
+    } catch (error) {
+      setReplyLoading(false);
+      console.error(error);
+    }
+  };
+
   const handleDelete = async (id: string) => {
     if (status === "unauthenticated") return toast("Login first");
 
@@ -113,6 +167,47 @@ const ProductQuestion = ({ questions, productId }) => {
     setQuestionId(id);
   }
 
+  function handleReplyBoxOpen(ind, id) {
+    setReplyOpen(true);
+    setTabIndex(ind);
+    setQuestionId(id);
+    console.log(id);
+  }
+
+  function handleReplyBoxClose(ind) {
+    setReplyOpen(false);
+    setTabIndex(null);
+  }
+
+  function handleSetReply(id) {
+    setReplyEditMode(true);
+    setReplyId(id);
+  }
+
+  async function handleDeleteReply(id) {
+    const confirm = window.confirm("Are you sure you want to delete?");
+    if (!confirm) return;
+
+    try {
+      const response = await deleteReplyAction({
+        id: id,
+        userId: data?.user?.id,
+      });
+
+      if (response?.result) {
+        validatedTag("question");
+        toast(`${response?.message} ${response?.result?.content}`);
+        router.refresh();
+      }
+
+      if (response?.error) {
+        toast(response.error);
+      }
+    } catch (error: any) {
+      console.error(error?.message);
+    }
+  }
+
   useEffect(() => {
     if (editMode) {
       const findQuestion = questions?.result?.find(
@@ -132,6 +227,7 @@ const ProductQuestion = ({ questions, productId }) => {
 
   return (
     <div>
+      {/* question form  */}
       <form action="" onSubmit={handleSubmit}>
         <label htmlFor="">Write your Question here.</label>
         <textarea
@@ -142,7 +238,7 @@ const ProductQuestion = ({ questions, productId }) => {
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />
-        <button disabled={loading} type="submit" className="btn">
+        <button disabled={loading} type="submit" className="btn text-xs">
           {loading ? (
             <span> {editMode ? "Updating..." : "Submitting..."} </span>
           ) : (
@@ -153,59 +249,169 @@ const ProductQuestion = ({ questions, productId }) => {
       <div className="mt-4">
         <div className="flex flex-col gap-3">
           {questions?.result?.length > 0 &&
-            questions?.result?.map(
-              (
-                question: {
-                  content: string;
-                  _id: string;
-                  createdAt: string;
-                  user: { name: string; id: string; _id: string };
-                },
-                index: number
-              ) => (
-                <div key={index} className="border p-4 rounded relative">
-                  <div className="flex flex-col gap-2">
-                    <div className="flex gap-3 border-b border-gray-200">
-                      <h4 className="font-semibold bg-pink-50 w-fit rounded shadow px-1 flex  items-center border border-gray-400 text-xs">
-                        {question?.user?.name}
-                      </h4>
-                      <p>
-                        <span className="text-sm text-gray-600">
-                          {new Date(question?.createdAt).toLocaleDateString()}
-                        </span>
-                        <span className="ml-2 text-xs text-gray-400">
-                          {new Date(question?.createdAt).toLocaleTimeString(
-                            "en-US",
-                            { hour: "numeric", minute: "numeric", hour12: true }
-                          )}
-                        </span>
-                      </p>
-                    </div>
-                    <p className="text-sm ">{question?.content}</p>
-                  </div>
+            questions?.result?.map((question: TQusetion, index: number) => (
+              <div key={index} className="border p-4 rounded relative">
+                {/* replies button  */}
+
+                {tabIndex !== index && (
                   <div
                     className={
-                      question?.user?.id === data?.user?.id
-                        ? "absolute top-2 right-2 flex gap-3"
-                        : "hidden"
+                      tabIndex == index
+                        ? "absolute top-0 right-4 flex items-center gap-2"
+                        : "absolute bottom-1 right-4 flex items-center gap-2"
                     }
                   >
+                    {question?.replies?.length > 0 && (
+                      <button
+                        onClick={() => handleReplyBoxOpen(index, question?._id)}
+                        className="text-xs text-green-600"
+                      >
+                        Replies {question?.replies?.length}
+                      </button>
+                    )}
                     <button
-                      onClick={() => handleDelete(question?._id)}
-                      className="text-red-500"
+                      onClick={() => handleReplyBoxOpen(index, question?._id)}
+                      className="border flex gap-1 items-center border-gray-300 shadow-sm hover:shadow rounded px-2"
                     >
-                      <FaTrashArrowUp size={20} />
-                    </button>
-                    <button
-                      onClick={() => handleSetQuestion(question?._id)}
-                      className="text-blue-500"
-                    >
-                      <PiNotePencilFill size={22} />
+                      <span className="text-xs">Write Reply</span>{" "}
+                      <MdOutlineReply size={22} />
                     </button>
                   </div>
+                )}
+
+                {/* question section start  */}
+                <div className="flex flex-col gap-2">
+                  <div className="flex gap-3 border-b border-gray-200">
+                    <h4 className="font-semibold bg-pink-50 w-fit rounded shadow px-1 flex  items-center border border-gray-400 text-xs">
+                      {question?.user?.name}
+                    </h4>
+                    <p>
+                      <span className="text-sm text-gray-600">
+                        {new Date(question?.createdAt).toLocaleDateString()}
+                      </span>
+                      <span className="ml-2 text-xs text-gray-400">
+                        {new Date(question?.createdAt).toLocaleTimeString(
+                          "en-US",
+                          { hour: "numeric", minute: "numeric", hour12: true }
+                        )}
+                      </span>
+                    </p>
+                  </div>
+                  <p className="text-sm ">{question?.content}</p>
                 </div>
-              )
-            )}
+                <div
+                  className={
+                    question?.user?.id === data?.user?.id
+                      ? "absolute top-2 right-2 flex gap-3"
+                      : "hidden"
+                  }
+                >
+                  <button
+                    onClick={() => handleDelete(question?._id)}
+                    className="text-red-500"
+                  >
+                    <FaTrashArrowUp size={20} />
+                  </button>
+                  <button
+                    onClick={() => handleSetQuestion(question?._id)}
+                    className="text-blue-500"
+                  >
+                    <PiNotePencilFill size={22} />
+                  </button>
+                </div>
+                {/* question section end  */}
+
+                {/* replies form  */}
+                {tabIndex == index && (
+                  <form onSubmit={handleReplySubmit} className="relative mt-2">
+                    <label htmlFor="" className="text-sm">
+                      Write your Reply here.
+                    </label>
+                    <textarea
+                      cols={2}
+                      className="input"
+                      name={"replyContent"}
+                      id={"replyContent"}
+                      value={replyContent}
+                      onChange={(e) => setReplyContent(e.target.value)}
+                    />
+                    <div className="flex items-center gap-2">
+                      <button
+                        disabled={replyLoading}
+                        type="submit"
+                        className="btn text-xs"
+                      >
+                        {replyLoading ? (
+                          <span>
+                            {replyEditMode ? "Updating..." : "Submitting..."}
+                          </span>
+                        ) : (
+                          <span> {replyEditMode ? "Update" : "Submit"} </span>
+                        )}
+                      </button>
+                      <button
+                        onClick={() => handleReplyBoxClose(index)}
+                        className="border flex gap-1 items-center border-gray-300 shadow-sm hover:shadow rounded px-2"
+                      >
+                        <span className="text-xs">Close Reply</span>
+                        <MdOutlineReply size={22} />
+                      </button>
+                    </div>
+                  </form>
+                )}
+
+                {/* replies  */}
+                {tabIndex == index &&
+                  question?.replies?.length > 0 &&
+                  question?.replies?.map((reply, index: number) => (
+                    <div key={index} className="border p-3 rounded relative">
+                      <div className="flex flex-col gap-2">
+                        <div className="flex gap-3 border-b border-gray-200">
+                          <h4 className="font-semibold bg-pink-50 w-fit rounded shadow px-1 flex  items-center border border-gray-400 text-xs">
+                            {reply?.user?.name}
+                          </h4>
+                          <p>
+                            <span className="text-sm text-gray-600">
+                              {new Date(reply?.createdAt).toLocaleDateString()}
+                            </span>
+                            <span className="ml-2 text-xs text-gray-400">
+                              {new Date(reply?.createdAt).toLocaleTimeString(
+                                "en-US",
+                                {
+                                  hour: "numeric",
+                                  minute: "numeric",
+                                  hour12: true,
+                                }
+                              )}
+                            </span>
+                          </p>
+                        </div>
+                        <p className="text-sm ">{reply?.content}</p>
+                      </div>
+                      <div
+                        className={
+                          reply?.user?.id === data?.user?.id
+                            ? "absolute top-2 right-2 flex gap-3"
+                            : "hidden"
+                        }
+                      >
+                        <button
+                          onClick={() => handleDeleteReply(reply?._id)}
+                          className="text-red-500"
+                        >
+                          <FaTrashArrowUp size={20} />
+                        </button>
+                        <button
+                          onClick={() => handleSetReply(reply?._id)}
+                          className="text-blue-500"
+                        >
+                          <PiNotePencilFill size={22} />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            ))}
         </div>
 
         {questions?.result?.length == 0 && (

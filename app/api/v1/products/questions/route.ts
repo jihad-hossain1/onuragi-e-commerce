@@ -2,6 +2,7 @@ import { fieldValidate, validateOBJID } from "@/helpers/validetField";
 import connectDatabase from "@/src/config/mongodbConnection";
 import Product from "@/src/models/product.models";
 import ProductQuestion from "@/src/models/productQuestion.models";
+import Reply from "@/src/models/reply.models";
 import User from "@/src/models/user.models";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -59,7 +60,9 @@ export async function GET(req: NextRequest) {
     if (findProduct) {
       const productQuestions = await ProductQuestion.find({
         productID: productID,
-      }).sort({ createdAt: "desc" });
+      })
+        .sort({ createdAt: "desc" })
+        .populate("replies");
 
       return NextResponse.json({ result: productQuestions }, { status: 200 });
     } else {
