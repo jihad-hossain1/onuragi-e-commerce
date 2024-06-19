@@ -49,3 +49,48 @@ export async function DELETE(req: NextRequest, { params }) {
     });
   }
 }
+
+
+export async function PATCH(req: NextRequest, { params }) {
+  const { content, userId, id } = await req.json();
+  const rid = params?.id;
+
+  try {
+    validateOBJID(userId, "User ID");
+    validateOBJID(id, "Question ID");
+
+    await connectDatabase("Question db");
+
+    const findUser = await User.findById(userId);
+    const findRply = await Reply.findById(id);
+
+    if (!(findUser._id == findRply.user.id)) {
+      return NextResponse.json(
+        { error: "You are not author this content" },
+        { status: 404 }
+      );
+    }
+
+    const updateQuestion = await Reply.findByIdAndUpdate(
+      rid,
+      {
+        $set: {
+          content: content || findRply.content,
+        },
+      },
+      {
+        new: true,
+      }
+    );
+
+    return NextResponse.json(
+      {
+        message: "Content Update Successful",
+        result: { content: updateQuestion.content },
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json({ error: error?.message }, { status: 500 });
+  }
+}

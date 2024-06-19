@@ -64,6 +64,10 @@ export async function GET(req: NextRequest) {
         .sort({ createdAt: "desc" })
         .populate("replies");
 
+      // const findWithReplies = await Promise.all((question) => {
+      //   const quest = await Reply.find()
+      // })
+
       return NextResponse.json({ result: productQuestions }, { status: 200 });
     } else {
       return NextResponse.json(

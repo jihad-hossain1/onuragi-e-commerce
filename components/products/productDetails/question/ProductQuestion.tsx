@@ -13,6 +13,7 @@ import { updateServerAction } from "./updateServerAction";
 import { MdOutlineReply } from "react-icons/md";
 import { addReplyAction } from "./reply/addReplyAction";
 import { deleteReplyAction } from "./reply/releteReplyAction";
+import { updateReplyAction } from "./reply/updateReplyAction";
 
 type TQusetion = {
   content: string;
@@ -103,28 +104,51 @@ const ProductQuestion = ({ questions, productId }) => {
   const handleReplySubmit = async (e: any) => {
     e.preventDefault();
     try {
-      setReplyLoading(true);
-      const response = await addReplyAction({
-        user: {
-          id: data?.user?.id,
-          name: data?.user?.name,
-        },
-        content: replyContent,
-        questionID: questionId,
-      });
+      if (replyEditMode) {
+        setReplyLoading(true);
+        const response = await updateReplyAction({
+          userId: data?.user?.id,
+          content: replyContent,
+          id: replyId,
+        });
 
-      setReplyLoading(false);
-      if (response?.result) {
-        validatedTag("question");
-        toast(response?.message);
-        router.refresh();
-        setReplyContent("");
-        setReplyId("");
-        setReplyEditMode(false);
-      }
+        setReplyLoading(false);
+        if (response?.result) {
+          validatedTag("question");
+          toast(response?.message);
+          router.refresh();
+          setReplyContent("");
+          setReplyId("");
+          setReplyEditMode(false);
+        }
 
-      if (response?.error) {
-        toast(response?.error);
+        if (response?.error) {
+          toast(response?.error);
+        }
+      } else {
+        setReplyLoading(true);
+        const response = await addReplyAction({
+          user: {
+            id: data?.user?.id,
+            name: data?.user?.name,
+          },
+          content: replyContent,
+          questionID: questionId,
+        });
+
+        setReplyLoading(false);
+        if (response?.result) {
+          validatedTag("question");
+          toast(response?.message);
+          router.refresh();
+          setReplyContent("");
+          setReplyId("");
+          setReplyEditMode(false);
+        }
+
+        if (response?.error) {
+          toast(response?.error);
+        }
       }
     } catch (error) {
       setReplyLoading(false);
@@ -179,9 +203,10 @@ const ProductQuestion = ({ questions, productId }) => {
     setTabIndex(null);
   }
 
-  function handleSetReply(id) {
+  function handleSetReply(id, qid) {
     setReplyEditMode(true);
     setReplyId(id);
+    setQuestionId(qid);
   }
 
   async function handleDeleteReply(id) {
@@ -207,6 +232,20 @@ const ProductQuestion = ({ questions, productId }) => {
       console.error(error?.message);
     }
   }
+
+  useEffect(() => {
+    if (replyEditMode && questionId) {
+      const findQuestionReply = questions?.result?.find(
+        (question) => question?._id == questionId
+      );
+
+      const findRep = findQuestionReply?.replies?.find(
+        (reply) => reply?._id == replyId
+      );
+
+      setReplyContent(findRep?.content);
+    }
+  }, [questionId, questions?.result, replyEditMode, replyId]);
 
   useEffect(() => {
     if (editMode) {
@@ -402,7 +441,9 @@ const ProductQuestion = ({ questions, productId }) => {
                           <FaTrashArrowUp size={20} />
                         </button>
                         <button
-                          onClick={() => handleSetReply(reply?._id)}
+                          onClick={() =>
+                            handleSetReply(reply?._id, question?._id)
+                          }
                           className="text-blue-500"
                         >
                           <PiNotePencilFill size={22} />
