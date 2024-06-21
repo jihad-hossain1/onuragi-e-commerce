@@ -49,8 +49,6 @@ export async function POST(request: NextRequest) {
 export async function GET(req: NextRequest) {
   const productID = req.nextUrl.searchParams.get("id");
   try {
-    // const { productID } = params;
-
     validateOBJID(productID, "Product Id");
 
     await connectDatabase("product questions");
@@ -61,22 +59,58 @@ export async function GET(req: NextRequest) {
       const productQuestions = await ProductQuestion.find({
         productID: productID,
       })
-        .sort({ createdAt: "desc" })
-        .populate("replies");
 
-      // const findWithReplies = await Promise.all((question) => {
-      //   const quest = await Reply.find()
-      // })
+      const questionsWithReplies = await Promise.all(
+        productQuestions.map(async (question) => {
+          const replies = await Reply.find({ questionID: question._id });
+          return {
+            ...question.toObject(),
+            replies: replies,
+          };
+        })
+      );
 
-      return NextResponse.json({ result: productQuestions }, { status: 200 });
+      return NextResponse.json(
+        { result: questionsWithReplies },
+        { status: 200 }
+      );
     } else {
       return NextResponse.json(
-        { message: "product are not found" },
+        { message: "product not found" },
         { status: 400 }
       );
     }
   } catch (error) {
-    // console.log(error);
     return NextResponse.json({ error: error?.message }, { status: 500 });
   }
 }
+// export async function GET(req: NextRequest) {
+//   const productID = req.nextUrl.searchParams.get("id");
+//   try {
+//     // const { productID } = params;
+
+//     validateOBJID(productID, "Product Id");
+
+//     await connectDatabase("product questions");
+
+//     const findProduct = await Product.findOne({ _id: productID });
+
+//     if (findProduct) {
+//       const productQuestions = await ProductQuestion.find({
+//         productID: productID,
+//       })
+//         .sort({ createdAt: "desc" })
+//         .populate("replies");
+
+//       return NextResponse.json({ result: productQuestions }, { status: 200 });
+//     } else {
+//       return NextResponse.json(
+//         { message: "product are not found" },
+//         { status: 400 }
+//       );
+//     }
+//   } catch (error) {
+//     // console.log(error);
+//     return NextResponse.json({ error: error?.message }, { status: 500 });
+//   }
+// }

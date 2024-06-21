@@ -35,7 +35,7 @@ const AddSizes: React.FC<Props> = ({ sizes, setSizes }) => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [showName, setShowName] = useState({});
   const [showImagePreview, setShowImagePreview] = useState({});
-  const fileInputRef = useRef();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [imageUploadOpen, setImageUploadOpen] = React.useState<boolean>(false);
 
@@ -79,6 +79,8 @@ const AddSizes: React.FC<Props> = ({ sizes, setSizes }) => {
       quantity: 0,
       size: "",
     });
+
+    _setColors([]);
   }
 
   function remove() {
@@ -107,19 +109,23 @@ const AddSizes: React.FC<Props> = ({ sizes, setSizes }) => {
       toast("Please fill color fields");
       return;
     }
-    const findSameColor = _colors.find(
-      (color) => color.color.trim() === color.color.trim()
-    );
-    if (findSameColor) {
-      toast("Color already exists");
-      return;
-    }
+    // const findSameColor = _colors.find(
+    //   (color) => color.color.trim() === color.color.trim()
+    // );
+    // if (findSameColor) {
+    //   toast("Color already exists");
+    //   return;
+    // }
 
     _setColors([
       ..._colors,
       { color: color.color, name: color.name, image: photo },
     ]);
     setColor({ color: "", name: "" });
+
+    setPhoto("");
+
+    fileInputRef.current.value = "";
   }
 
   function removeColor() {
@@ -348,12 +354,28 @@ const AddSizes: React.FC<Props> = ({ sizes, setSizes }) => {
           <p>Size: {size?.size}</p>
           <p>Price: {size?.price}</p>
           <p>Quantity: {size?.quantity}</p>
-          <p>
+          <div>
             Color:{" "}
             {size?.colors?.map((color, index) => (
-              <span key={index}>{color?.color}</span>
+              <div key={index} className="flex gap-2 items-center">
+                <h4>{color?.name}</h4>
+                <div
+                  style={{ backgroundColor: color?.image }}
+                  className="h-5 w-5"
+                />
+                <div>
+                  <Image
+                    src={color?.image}
+                    alt="color"
+                    width={20}
+                    height={20}
+                    className="rounded"
+                  />
+                </div>
+              </div>
             ))}
-          </p>
+          </div>
+
           <button onClick={() => remove()} className="text-xs text-pink-600">
             Remove
           </button>
