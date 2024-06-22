@@ -11,7 +11,6 @@ const Payment = ({
   userId: string;
   profileInfo: any;
 }) => {
-  console.log("🚀 ~ Payment ~ profileInfo:", profileInfo);
   const [loading, setLoading] = useState(false);
   const address = profileInfo?.address;
   const dAddress = profileInfo?.deliveryAddress;
