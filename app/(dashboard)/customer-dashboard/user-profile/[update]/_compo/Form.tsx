@@ -9,76 +9,73 @@ import { validatedTag } from "@/helpers/validated-tag";
 import Link from "next/link";
 
 const Form = ({ user }) => {
+console.log("🚀 ~ Form ~ user:", user);
 
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+const [loading, setLoading] = useState(false);
+const router = useRouter();
 
-  const [formData, setFormData] = React.useState({
-    fullname: "",
-    gender: "",
-    username: "",
-    mobile: "",
-    street: "",
-    city: "",
-    country: "",
-    pincode: "",
-    zipCode: "",
-    dstreet: "",
-    dzipCode: "",
-    dcity: "",
-  });
-  // console.log("🚀 ~ Form ~ formData:", formData);
+const [formData, setFormData] = React.useState({
+  fullname: "",
+  gender: "",
+  username: "",
+  mobile: "",
+  street: "",
+  city: "",
+  zipCode: "",
+  dstreet: "",
+  dzipCode: "",
+  dcity: "",
+});
+// console.log("🚀 ~ Form ~ formData:", formData);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+const handleChange = (e) => {
+  const { name, value } = e.target;
+  setFormData((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
+};
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    console.log(formData);
+  console.log(formData);
 
-    try {
-      setLoading(true);
-      const res = await serverAction({ ...formData, id: user?._id });
-      // console.log("🚀 ~ handleSubmit ~ res:", res)
-      setLoading(false);
+  try {
+    setLoading(true);
+    const res = await serverAction({ ...formData, id: user?._id });
+    // console.log("🚀 ~ handleSubmit ~ res:", res)
+    setLoading(false);
 
-      if (res?.error) {
-        toast(res?.error);
-      }
-      if (res?.result) {
-        validatedTag("user");
-        toast("Update Successfull");
-        router.refresh();
-      }
-    } catch (error) {
-      console.error(error);
+    if (res?.error) {
+      toast(res?.error);
     }
-  };
-
-  useEffect(() => {
-    if (user) {
-      setFormData({
-        fullname: user?.profile?.fullname || "",
-        gender: user?.profile?.gender || "",
-        username: user?.username || "",
-        mobile: user?.profile?.mobile || "",
-        street: user?.profile?.street || "",
-        city: user?.profile?.city || "",
-        country: user?.profile?.country || "",
-        pincode: user?.profile?.pincode || "",
-        zipCode: user?.profile?.zipCode || "",
-        dstreet: user?.profile?.dstreet || "",
-        dzipCode: user?.profile?.dzipCode || "",
-        dcity: user?.profile?.dcity || "",
-      });
+    if (res?.result) {
+      validatedTag("user");
+      toast("Update Successfull");
+      router.refresh();
     }
-  }, [user]);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+useEffect(() => {
+  if (user) {
+    setFormData({
+      fullname: user?.fullname || "",
+      gender: user?.profile?.gender || "",
+      username: user?.username || "",
+      mobile: user?.profile?.mobile || "",
+      street: user?.profile?.address?.street || "",
+      city: user?.profile?.address?.city || "",
+      zipCode: user?.profile?.address?.zipCode || "",
+      dstreet: user?.profile?.deliveryAddress?.dstreet || "",
+      dzipCode: user?.profile?.deliveryAddress?.dzipCode || "",
+      dcity: user?.profile?.deliveryAddress?.dcity || "",
+    });
+  }
+}, [user]);
 
   return (
     <section>

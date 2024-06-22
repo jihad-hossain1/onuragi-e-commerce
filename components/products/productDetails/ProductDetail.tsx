@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { handleAddToCart } from "@/utils/handleAddToCart";
 import { useSession } from "next-auth/react";
+import BuyNow from "../buyNow";
 
 interface ProductDetailProps {
   product: {
@@ -105,38 +106,22 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, details }) => {
     }
   };
 
-  const handleAddToCartClick =async () => {
-  await handleAddToCart(
-    product,
-    selectedSize,
-    selectedColor,
-    cardQuantity,
-    currentPrice,
-    isLoggedIn
-  );
-  };
+  // const handleAddToCartClick =async () => {
+  // await handleAddToCart(
+  //   product,
+  //   selectedSize,
+  //   selectedColor,
+  //   cardQuantity,
+  //   currentPrice,
+  //   isLoggedIn
+  // );
+  // };
 
   useEffect(() => {
-    if(status === "authenticated"){
+    if (status === "authenticated") {
       setIsLoggedIn(true);
     }
-  },[status])
-
-
-  const handleBuyNow = () => {
-    // Handle buying now logic here
-    console.log(
-      `size=${selectedSize}&color=${selectedColor}&quantity=${cardQuantity}&price=${currentPrice}`
-    );
-
-    // set size,color,quantity,price on local storage
-    localStorage.setItem("buyNowInfo", JSON.stringify({ size: selectedSize, color: selectedColor, quantity: cardQuantity, price: currentPrice }));
-
-
-    router.push(
-      `/customer-dashboard/cart/buy-now/${product._id}`
-    );
-  };
+  }, [status]);
 
   return (
     <div className="max-w-screen-xl mx-auto p-6">
@@ -240,15 +225,20 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, details }) => {
             </div>
           </div>
           <div className="flex gap-4">
-            <button onClick={handleBuyNow} className="btn">
-              Buy Now
-            </button>
-            <button
+            <BuyNow
+              selectedColor={selectedColor}
+              selectedSize={selectedSize}
+              cardQuantity={cardQuantity}
+              currentPrice={currentPrice}
+              productId={product._id}
+            />
+            {/* <button
               onClick={handleAddToCartClick}
               className="py-2 px-4 bg-blue-500 text-white rounded"
             >
               Add to Cart
-            </button>
+            </button> */}
+            <AddToCart id={product._id} style="" />
           </div>
           <div className="mt-6">
             <p className="text-gray-500">Delivery</p>

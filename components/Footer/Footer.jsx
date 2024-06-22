@@ -14,7 +14,7 @@ const Footer = () => {
     <main className="text-center text-sm pt-3">
       <div className="bg-gray-100/90 dark:bg-zinc-800 border-y border-gray-300 py-10">
         <Container>
-          <div className="flex justify-between">
+          <div className="grid grid-cols-1 gap-4 md:gap-0 md:flex md:justify-between">
             <section>
               <SiteLogo />
               <div className="flex flex-col gap-4 text-start mt-8">
@@ -73,15 +73,15 @@ const Footer = () => {
                   Subscribe to our newsletters now <br />
                   and stay up-to-date with new collections.
                 </h4>
-                <div className="relative w-fit">
+                <div className="relative w-full">
                   <input
                     type="email"
                     name="email"
                     placeholder="Your email address"
-                    className="p-2 border border-gray-200 focus:outline-none lg:min-w-[300px]"
+                    className="p-2 border border-gray-200 focus:outline-none lg:min-w-[300px] w-full"
                     id=""
                   />
-                  <button className="text-white absolute right-0 bg-pink-500 p-2">
+                  <button className="text-white absolute right-0 bg-pink-500 p-2 ">
                     Subscribe
                   </button>
                 </div>

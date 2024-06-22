@@ -39,7 +39,7 @@ const UserForm = () => {
       if (res?.ok) {
         setloading(true);
         toast("LOGIN SUCCESSFULL");
-        router.push("/");
+        router.back();
       }
     } catch (error) {
       toast(error?.message);

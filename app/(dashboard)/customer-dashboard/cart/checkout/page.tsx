@@ -33,7 +33,7 @@ const CheckoutPage = () => {
         </div>
         <div className="border shadow-sm bg-slate-50 p-3">
           <h4 className="text-center font-semibold">Payment method</h4>
-          <Payment userId={session?.user?.id} />
+          <Payment userId={session?.user?.id} profileInfo={userAddress} />
         </div>
       </div>
     </main>

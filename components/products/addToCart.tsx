@@ -6,6 +6,8 @@ import { toast } from 'sonner'
 import { addToCart } from './cart-serrver-action'
 import { validatedTag } from '@/helpers/validated-tag'
 import { useRouter } from 'next/navigation'
+import Modal from "../Modal";
+import Link from "next/link";
 
 const AddToCart = ({
   id,
@@ -15,10 +17,11 @@ const AddToCart = ({
   const { data: session, status } = useSession();
   const [loading, setLoading] = React.useState(false);
   const router = useRouter();
+  const [open, setOpen] = React.useState(false);
 
   const handleAddToCart = async (productId: string) => {
     if (status === "unauthenticated") {
-      toast.error("please login first");
+      setOpen(true);
       return;
     }
 
@@ -43,17 +46,42 @@ const AddToCart = ({
       }
     } catch (error) {
       setLoading(false);
-      console.log(error);
+      console.error(error);
     }
   };
 
   return (
-    <button
-      onClick={() => handleAddToCart(id)}
-      className={`${className} ${style}`}
-    >
-      {loading ? "loading..." : "Add to cart"}
-    </button>
+    <div>
+      <button
+        onClick={() => handleAddToCart(id)}
+        className={`${className} ${style}`}
+      >
+        {loading ? "loading..." : "Add to cart"}
+      </button>
+
+      <Modal
+        title={"Authentication"}
+        open={open}
+        setOpen={setOpen}
+        maxWidth={undefined}
+      >
+        <div className="flex flex-col gap-5">
+          <p className="text-red-500 text-center">Please login first</p>
+          <Link
+            href="/login"
+            className="bg-pink-600 text-white w-full py-2 rounded shadow hover:shadow-md transition-all duration-300 hover:bg-pink-700 px-4 text-center"
+          >
+            Login
+          </Link>
+          <Link
+            href="/register"
+            className="bg-pink-600 text-white w-full py-2 rounded shadow hover:shadow-md transition-all duration-300 hover:bg-pink-700 px-4 text-center"
+          >
+            Register
+          </Link>
+        </div>
+      </Modal>
+    </div>
   );
 };
 

@@ -6,12 +6,14 @@ import axios from "axios";
 import { validatedTag } from "@/helpers/validated-tag";
 import InputField from "../../components/ui/InputField";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
   const [fullname, setfullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setusername] = useState("");
+  const router = useRouter();
 
   const myObj = {
     fullname,
@@ -37,6 +39,7 @@ const RegisterForm = () => {
       setPassword("");
       setusername("");
       setfullname("");
+      router.push("/login");
     } catch (error) {
       console.log(error?.response?.data?.message);
       return toast(

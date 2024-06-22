@@ -84,29 +84,31 @@ export async function PATCH(req: NextRequest, { params }) {
       return NextResponse.json({ error: "user not found" }, { status: 404 });
     }
 
-    const updatedFields = {
-      fullname: fullname || user.fullname,
-      username: username || user.username,
-      profile: {
-        mobile: mobile || user.profile.mobile,
-        image: image || user.profile.image,
-        gender: gender || user.profile.gender,
-        address: {
-          street: street || user.profile.address.street,
-          city: city || user.profile.address.city,
-          zipCode: zipCode || user.profile.address.zipCode,
-        },
-        deliveryAddress: {
-          dstreet: dstreet || user.profile.deliveryAddress.dstreet,
-          dcity: dcity || user.profile.deliveryAddress.dcity,
-          dzipCode: dzipCode || user.profile.deliveryAddress.dzipCode,
-        },
-      },
-    };
+
 
     const updateUser = await User.findByIdAndUpdate(
       id,
-      { $set: updatedFields },
+      {
+        $set: {
+          fullname: fullname || user?.fullname,
+          username: username || user?.username,
+          profile: {
+            mobile: mobile || user?.profile?.mobile,
+            image: image || user?.profile?.image,
+            gender: gender || user?.profile?.gender,
+            address: {
+              street: street || user?.profile?.address?.street,
+              city: city || user?.profile?.address?.city,
+              zipCode: zipCode || user?.profile?.address?.zipCode,
+            },
+            deliveryAddress: {
+              dstreet: dstreet || user?.profile?.deliveryAddress?.dstreet,
+              dcity: dcity || user?.profile?.deliveryAddress?.dcity,
+              dzipCode: dzipCode || user?.profile?.deliveryAddress?.dzipCode,
+            },
+          },
+        },
+      },
       { new: true } // return the updated document
     );
 

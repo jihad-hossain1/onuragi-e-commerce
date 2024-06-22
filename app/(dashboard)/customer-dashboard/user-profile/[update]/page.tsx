@@ -9,7 +9,9 @@ const UserProfileUpdatePage = ({ params }) => {
 
   React.useEffect(() => {
     (async () => {
-      const user = await fetch(`/api/v1/users/${id}`);
+      const user = await fetch(`/api/v1/users/${id}`, {
+        cache: "no-store",
+      });
       const data = await user.json();
       if (data) {
         setUser(data);
