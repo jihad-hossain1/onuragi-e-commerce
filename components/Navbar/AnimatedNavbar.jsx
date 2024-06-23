@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HoveredLink, Menu, MenuItem, ProductItem } from "../ui/navbar-menu";
 import { cn } from "@/utils/cn";
 import Search from "./search/Search";
@@ -10,11 +10,16 @@ import { ThemeButton } from "./themeButton/ThemeButton";
 import { SiteLogo } from ".";
 import Link from "next/link";
 import { useCartItems } from "@/hooks/cartsHook";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { RxCross1 } from "react-icons/rx";
+import { RxChevronDown, RxChevronUp } from "react-icons/rx";
+import { useSession } from "next-auth/react";
 
 export function AnimatedNavbar({ products, carts }) {
   // const { cartItems } = useCartItems();
+
   return (
-    <main className="max-w-screen-xl mx-auto p-2">
+    <main className="max-w-screen-xl mx-auto">
       <div className="relative w-full flex items-center justify-between">
         <MobileNav />
         <SiteLogo />
@@ -34,9 +39,95 @@ export function AnimatedNavbar({ products, carts }) {
 }
 
 function MobileNav() {
+  const [active, setActive] = useState(false);
+  const downRef = React.useRef(null);
+  const [open, setOpen] = useState(false);
+  const { status, data } = useSession();
+
+  const admin = data?.user?.role;
+
+  // useEffect(() => {
+  //   if (active) {
+  //     document.body.style.overflow = "hidden";
+  //   } else {
+  //     document.body.style.overflow = "unset";
+  //   }
+  // }, [active]);
+
+  useEffect(() => {
+    const close = (e) => {
+      if (downRef.current && !downRef.current.contains(e.target))
+        setActive(false);
+    };
+    document.addEventListener("mousedown", close);
+    return () => document.removeEventListener("mousedown", close);
+  }, []);
+
   return (
-    <div className="lg:hidden">
-      <button>x</button>
+    <div className="lg:hidden relative">
+      <button onClick={() => setActive(!active)} className="pl-2">
+        <RxHamburgerMenu size={22} />
+      </button>
+      {active && (
+        <div
+          ref={downRef}
+          className="absolute top-0 z-10 h-screen w-[70vw] bg-white  rounded-r-xl overflow-hidden border border-black/[0.2] dark:border-white/[0.2] shadow-xl"
+        >
+          {/* <MobileMenu /> */}
+
+          <main className="relative">
+            <div className="absolute top-3 right-3 z-10 ">
+              <button onClick={() => setActive((prev) => !prev)} className="">
+                <RxCross1 size={22} />
+              </button>
+            </div>
+            <div className="flex flex-col gap-4 p-10 ">
+              <Link href="/">Home</Link>
+              <Link href="/products">Products</Link>
+              <div>
+                <div
+                  onClick={() => setOpen((prev) => !prev)}
+                  className="flex items-center justify-between cursor-pointer"
+                >
+                  <button>Account</button>
+                  {open ? <RxChevronUp /> : <RxChevronDown />}
+                </div>
+                {open && (
+                  <div className="ml-4 mt-3">
+                    {status === "authenticated" ? (
+                      <div className="flex flex-col space-y-2">
+                        {admin == "admin" && (
+                          <Link href={"/dashboard"}>
+                            <p>Dashboard</p>
+                          </Link>
+                        )}
+                        <Link href={"/customer-dashboard/user-profile"}>
+                          <p>Profile</p>
+                        </Link>
+                        <Link href={"/customer-dashboard/cart"}>
+                          <p>Carts</p>
+                        </Link>
+                        <p onClick={() => signOut()}>
+                          <button>Logout</button>
+                        </p>
+                      </div>
+                    ) : (
+                      <>
+                        <p>
+                          <a href="/login">Login</a>
+                        </p>
+                        <p>
+                          <a href="/login/register">Register</a>
+                        </p>
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          </main>
+        </div>
+      )}
     </div>
   );
 }
