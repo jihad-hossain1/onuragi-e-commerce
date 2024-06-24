@@ -265,9 +265,9 @@ const ProductQuestion = ({ questions, productId }) => {
   }
 
   return (
-    <div>
+    <div className="p-2 lg:p-5">
       {/* question form  */}
-      <form action="" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <label htmlFor="">Write your Question here.</label>
         <textarea
           cols={2}
@@ -313,25 +313,29 @@ const ProductQuestion = ({ questions, productId }) => {
                       className="border flex gap-1 items-center border-gray-300 shadow-sm hover:shadow rounded px-2"
                     >
                       <span className="text-xs">Write Reply</span>{" "}
-                      <MdOutlineReply size={22} />
+                      <MdOutlineReply className="text-lg lg:text-xl" />
                     </button>
                   </div>
                 )}
 
                 {/* question section start  */}
                 <div className="flex flex-col gap-2">
-                  <div className="flex gap-3 border-b border-gray-200">
-                    <h4 className="font-semibold bg-pink-50 w-fit rounded shadow px-1 flex  items-center border border-gray-400 text-xs">
+                  <div className="flex items-center gap-3 border-b border-gray-200">
+                    <h4 className="font-semibold  w-fit text-blue-600 text-sm">
                       {question?.user?.name}
                     </h4>
+                    <span className="text-sm">on</span>
                     <p>
-                      <span className="text-sm text-gray-600">
-                        {new Date(question?.createdAt).toLocaleDateString()}
+                      <span className="text-xs lg:text-sm text-gray-600">
+                        {new Date(question?.createdAt).toLocaleDateString(
+                          "en-US",
+                          { day: "numeric", month: "short", year: "numeric" }
+                        )}
                       </span>
                       <span className="ml-2 text-xs text-gray-400">
                         {new Date(question?.createdAt).toLocaleTimeString(
                           "en-US",
-                          { hour: "numeric", minute: "numeric", hour12: true }
+                          { hour: "2-digit", minute: "2-digit", hour12: true }
                         )}
                       </span>
                     </p>
@@ -349,13 +353,13 @@ const ProductQuestion = ({ questions, productId }) => {
                     onClick={() => handleDelete(question?._id)}
                     className="text-red-500"
                   >
-                    <FaTrashArrowUp size={20} />
+                    <FaTrashArrowUp className="text-sm lg:text-xl" />
                   </button>
                   <button
                     onClick={() => handleSetQuestion(question?._id)}
                     className="text-blue-500"
                   >
-                    <PiNotePencilFill size={22} />
+                    <PiNotePencilFill className="text-md lg:text-xl" />
                   </button>
                 </div>
                 {/* question section end  */}
@@ -403,7 +407,10 @@ const ProductQuestion = ({ questions, productId }) => {
                 {tabIndex == index &&
                   question?.replies?.length > 0 &&
                   question?.replies?.map((reply, index: number) => (
-                    <div key={index} className="border p-3 rounded relative">
+                    <div
+                      key={index}
+                      className="border lg:p-3 p-2 rounded relative mt-2"
+                    >
                       <div className="flex flex-col gap-2">
                         <div className="flex gap-3 border-b border-gray-200">
                           <h4 className="font-semibold bg-pink-50 w-fit rounded shadow px-1 flex  items-center border border-gray-400 text-xs">
@@ -438,7 +445,7 @@ const ProductQuestion = ({ questions, productId }) => {
                           onClick={() => handleDeleteReply(reply?._id)}
                           className="text-red-500"
                         >
-                          <FaTrashArrowUp size={20} />
+                          <FaTrashArrowUp className="text-sm lg:text-xl" />
                         </button>
                         <button
                           onClick={() =>
@@ -446,7 +453,7 @@ const ProductQuestion = ({ questions, productId }) => {
                           }
                           className="text-blue-500"
                         >
-                          <PiNotePencilFill size={22} />
+                          <PiNotePencilFill className="text-md lg:text-xl" />
                         </button>
                       </div>
                     </div>

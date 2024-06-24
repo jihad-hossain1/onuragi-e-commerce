@@ -7,14 +7,11 @@ const BannerLink = ({ id }) => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`/products/${id}`);
+    router.push(`/products/${undefined}=${id}`);
   };
   return (
     <div>
-      <button
-        onClick={handleClick}
-        className="uppercase text-sm md:text-xl  hover:border-yellow-600 bg-pink-600 btn"
-      >
+      <button onClick={handleClick} className="uppercase  btn">
         shop now
       </button>
     </div>

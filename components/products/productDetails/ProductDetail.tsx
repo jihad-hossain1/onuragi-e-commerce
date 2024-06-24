@@ -124,9 +124,9 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, details }) => {
   }, [status]);
 
   return (
-    <div className="max-w-screen-xl mx-auto p-6">
+    <div className="max-w-screen-xl mx-auto lg:p-6">
       <div className="flex flex-col lg:flex-row bg-white shadow-md rounded-lg overflow-hidden">
-        <div className="lg:w-1/2 p-6">
+        <div className="lg:w-1/2 p-3 lg:p-6">
           <div className="relative">
             <Image
               src={initialImages[selectedImageIndex]}
@@ -154,7 +154,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, details }) => {
             </div>
           </div>
         </div>
-        <div className="lg:w-1/2 p-6">
+        <div className="lg:w-1/2 p-3 lg:p-6">
           <h1 className="text-2xl font-bold mb-2 uppercase">{product.name}</h1>
           <div className="text-yellow-500 mb-2">
             {product.rating || 0} Ratings

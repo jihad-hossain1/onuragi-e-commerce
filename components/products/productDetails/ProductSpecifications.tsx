@@ -35,7 +35,7 @@ const ProductSpecifications: React.FC<IProps> = ({
   const data = specification;
 
   return (
-    <div className="p-5">
+    <div className=" mt-5 lg:mt-0 lg:p-5">
       <div className="bg-white shadow-md rounded-lg overflow-hidden">
         <div className="border-b">
           <nav className="grid md:grid-cols-4 gap-4">
@@ -52,7 +52,7 @@ const ProductSpecifications: React.FC<IProps> = ({
             ))}
           </nav>
         </div>
-        <div className="p-6">
+        <div className="lg:p-6">
           <div className={tabIndex == 1 ? "block" : "hidden"}>
             <div className="overflow-x-auto">
               <table className="min-w-full bg-white border border-gray-300">
@@ -102,10 +102,10 @@ const ProductSpecifications: React.FC<IProps> = ({
                 </tbody>
               </table>
             </div>
-            <div className="p-4">
+            <div className="lg:p-4 overflow-auto">
               <h2 className="text-2xl font-semibold mb-4">Stock With Size</h2>
               {details?.sizes?.length > 0 ? (
-                <table className="min-w-full border-collapse block md:table">
+                <table className="overflow-x-auto min-w-full border-collapse block md:table">
                   <thead className="block md:table-header-group">
                     <tr className="border border-gray-300 md:border-none block md:table-row">
                       <th className="bg-gray-200 p-2 text-gray-600 font-bold md:border md:border-gray-300 text-center block md:table-cell">

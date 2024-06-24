@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import blurImage from "@/public/blur.jpg";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import Image from "next/image";
@@ -36,25 +37,17 @@ const Slider = () => {
           {banners?.map((banner) => (
             <div key={banner?._id}>
               <div className="rounded-lg relative">
-                <div className="absolute left-0 top-5 md:top-24">
-                  <div className="flex flex-col items-center ml-2 md:ml-28 md:mt-11">
-                    <BannerLink id={banner?.productId} />
-                  </div>
+                <div className="absolute bottom-0 right-0 z-10">
+                  <BannerLink id={banner?.productId} />
                 </div>
                 <Image
                   height={500}
                   width={1920}
-                  className="rounded-lg object-cover  lg:h-[500px]"
+                  className="rounded-lg object-cover  h-[400px] w-full lg:h-[500px]"
                   src={banner?.image}
                   alt="photo"
                 />
               </div>
-              {/* <Image
-                src={banner?.image}
-                alt="banner"
-                width={1920}
-                height={500}
-              /> */}
             </div>
           ))}
         </Carousel>

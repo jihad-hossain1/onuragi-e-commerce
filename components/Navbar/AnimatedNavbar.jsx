@@ -151,7 +151,7 @@ function Navbar({ className, products }) {
                 <ProductItem
                   key={product._id}
                   title={product?.name}
-                  href={`/products/${product?._id}`}
+                  href={`/products/${product?.slug}=${product?._id}`}
                   src={product?.image}
                   description={product?.name}
                 />
