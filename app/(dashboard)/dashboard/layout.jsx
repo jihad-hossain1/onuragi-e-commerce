@@ -1,13 +1,15 @@
 import Sidebar from "@/components/Dashboard/sidebar/Sidebar";
 import React from "react";
+import MobileSidebar from "@/components/Dashboard/sidebar/MobileSidebar";
 
 const DashboardLayout = ({ children }) => {
   return (
-    <div className="grid grid-cols-6 ">
-      <div className="col-span-1">
+    <div className="grid lg:grid-cols-6 ">
+      <div className="lg:col-span-1">
         <Sidebar />
+        <MobileSidebar />
       </div>
-      <div className="col-span-5 bg-pink-50 dark:bg-zinc-800 p-4">
+      <div className="mt-10 lg:mt-0 lg:col-span-5 min-h-screen md:min-h-full  p-4 overflow-auto">
         {children}
       </div>
     </div>

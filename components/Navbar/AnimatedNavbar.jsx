@@ -13,14 +13,14 @@ import { useCartItems } from "@/hooks/cartsHook";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RxCross1 } from "react-icons/rx";
 import { RxChevronDown, RxChevronUp } from "react-icons/rx";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 export function AnimatedNavbar({ products, carts }) {
   // const { cartItems } = useCartItems();
 
   return (
     <main className="max-w-screen-xl mx-auto">
-      <div className="relative w-full flex items-center justify-between">
+      <div className="relative w-full flex items-center justify-between mt-2">
         <MobileNav />
         <SiteLogo />
         <Navbar products={products} className="top-2" />
@@ -31,7 +31,7 @@ export function AnimatedNavbar({ products, carts }) {
 
           <UserAccount />
 
-          <ThemeButton />
+          {/* <ThemeButton /> */}
         </section>
       </div>
     </main>
@@ -46,14 +46,6 @@ function MobileNav() {
 
   const admin = data?.user?.role;
 
-  // useEffect(() => {
-  //   if (active) {
-  //     document.body.style.overflow = "hidden";
-  //   } else {
-  //     document.body.style.overflow = "unset";
-  //   }
-  // }, [active]);
-
   useEffect(() => {
     const close = (e) => {
       if (downRef.current && !downRef.current.contains(e.target))
@@ -63,6 +55,13 @@ function MobileNav() {
     return () => document.removeEventListener("mousedown", close);
   }, []);
 
+  // useEffect(() => {
+  //   if (active) {
+  //     document.body.style.overflow = "hidden";
+  //   } else {
+  //     document.body.style.overflow = "unset";
+  //   }
+  // }, [active]);
   return (
     <div className="lg:hidden relative">
       <button onClick={() => setActive(!active)} className="pl-2">
@@ -112,14 +111,14 @@ function MobileNav() {
                         </p>
                       </div>
                     ) : (
-                      <>
+                      <div className="flex flex-col gap-3">
                         <p>
                           <a href="/login">Login</a>
                         </p>
                         <p>
                           <a href="/login/register">Register</a>
                         </p>
-                      </>
+                      </div>
                     )}
                   </div>
                 )}

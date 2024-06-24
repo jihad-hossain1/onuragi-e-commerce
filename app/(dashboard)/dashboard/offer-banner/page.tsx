@@ -17,6 +17,9 @@ const OfferBannerpage = () => {
 
   return (
     <div>
+      <div className="mb-10 text-center">
+        <h1>Offer Banner</h1>
+      </div>
       <Link className="btn" href={"/dashboard/offer-banner/au-offer-banner"}>
         Add Offer Banner
       </Link>
@@ -41,6 +44,12 @@ const OfferBannerpage = () => {
           )
         )}
       </div>
+
+      {offerBanners?.length === 0 && (
+        <div className="flex flex-col justify-center items-center min-h-[50vh]">
+          <p className="font-semibold text-2xl">No Banner Found</p>
+        </div>
+      )}
     </div>
   );
 };

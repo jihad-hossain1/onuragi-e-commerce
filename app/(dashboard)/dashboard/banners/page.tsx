@@ -7,8 +7,10 @@ const BannerPage = async () => {
   const banners = await fetchBanner();
   return (
     <main className="max-w-screen-xl mx-auto p-2">
-      <h1 className="text-3xl font-bold text-center">Banner Management</h1>
-      <section className="">
+      <div className="mb-10">
+        <h1 className="text-3xl font-bold text-center">Banner Management</h1>
+      </div>
+      <section className="flex fle-col gap-4">
         <div className="">
           <Link href={"/dashboard/banners/au-banner"} className="btn">
             Add Banner
@@ -46,6 +48,12 @@ const BannerPage = async () => {
           )}
         </div>
       </section>
+
+      {banners?.length === 0 && (
+        <div className="flex flex-col justify-center items-center min-h-[50vh]">
+          <p className="font-semibold text-2xl">No Banner Found</p>
+        </div>
+      )}
     </main>
   );
 };

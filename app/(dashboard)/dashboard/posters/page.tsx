@@ -16,12 +16,14 @@ const PosterPage = () => {
   }, []);
   return (
     <main className="max-w-screen-xl mx-auto p-2">
-      <h4 className="text-2xl text-center">Poster Page</h4>
-      <section>
-        <Link href={"/dashboard/posters/au-poster"} className="btn">
-          Add Poster
-        </Link>
+      <div className="mb-10">
+        <h4 className="text-2xl text-center">Poster Page</h4>
+      </div>
+      <Link href={"/dashboard/posters/au-poster"} className="btn">
+        Add Poster
+      </Link>
 
+      <section>
         <div className="mt-10">
           {posters?.map(
             (
@@ -57,6 +59,12 @@ const PosterPage = () => {
           )}
         </div>
       </section>
+
+      {posters?.length === 0 && (
+        <div className="flex flex-col justify-center items-center min-h-[50vh]">
+          <p className="font-semibold text-2xl">No Poster Found</p>
+        </div>
+      )}
     </main>
   );
 };
