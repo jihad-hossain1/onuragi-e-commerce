@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 import { handleAddToCart } from "@/utils/handleAddToCart";
 import { useSession } from "next-auth/react";
 import BuyNow from "../buyNow";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 interface ProductDetailProps {
   product: {
@@ -123,6 +125,22 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, details }) => {
     }
   }, [status]);
 
+  useGSAP(() => {
+    gsap.fromTo(
+      ".tnttxt",
+      {
+        opacity: 0,
+        y: 20,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        delay: 1,
+        stagger: 0.1,
+      }
+    );
+  }, []);
+
   return (
     <div className="max-w-screen-xl mx-auto lg:p-6">
       <div className="flex flex-col lg:flex-row bg-white shadow-md rounded-lg overflow-hidden">
@@ -154,21 +172,25 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, details }) => {
             </div>
           </div>
         </div>
-        <div className="lg:w-1/2 p-3 lg:p-6">
-          <h1 className="text-2xl font-bold mb-2 uppercase">{product.name}</h1>
-          <div className="text-yellow-500 mb-2">
+        <div id="details" className="lg:w-1/2 p-3 lg:p-6 ">
+          <h1 className="tnttxt opacity-0 text-2xl font-bold mb-2 uppercase">
+            {product.name}
+          </h1>
+          <div className="text-yellow-500 mb-2 tnttxt opacity-0">
             {product.rating || 0} Ratings
           </div>
           <div className="text-gray-700 mb-4">
-            <span className="line-through text-gray-400">
+            <span className="line-through text-gray-400 tnttxt opacity-0">
               ৳ {product.price}
             </span>
-            <span className="text-red-500 text-2xl">৳ {currentPrice}</span>
-            <span className="text-green-500 ml-2">
+            <span className="text-red-500 text-2xl tnttxt opacity-0">
+              ৳ {currentPrice}
+            </span>
+            <span className="text-green-500 ml-2 tnttxt opacity-0">
               -{product.discount || 0}%
             </span>
           </div>
-          <div className="mb-4">
+          <div className="mb-4 tnttxt opacity-0">
             <label className="block text-gray-700 mb-2">Size</label>
             <div className="flex space-x-2">
               {availableSizes.map((size) => (
@@ -186,7 +208,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, details }) => {
               ))}
             </div>
           </div>
-          <div className="mb-4">
+          <div className="mb-4 tnttxt opacity-0">
             <div className="flex space-x-2">
               {availableColors.map((color) => (
                 <div
@@ -203,7 +225,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, details }) => {
               ))}
             </div>
           </div>
-          <div className="mb-4">
+          <div className="mb-4 tnttxt opacity-0">
             <label className="block text-gray-700 mb-2">Quantity</label>
             <div className="flex items-center space-x-2">
               <button
@@ -224,7 +246,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, details }) => {
               )}
             </div>
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-4 tnttxt opacity-0">
             <BuyNow
               selectedColor={selectedColor}
               selectedSize={selectedSize}
@@ -241,9 +263,13 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, details }) => {
             <AddToCart id={product._id} style="" />
           </div>
           <div className="mt-6">
-            <p className="text-gray-500">Delivery</p>
-            <p className="text-gray-500">Cash on Delivery Available</p>
-            <p className="text-gray-500">14 days free & easy return</p>
+            <p className="text-gray-500 tnttxt opacity-0">Delivery</p>
+            <p className="text-gray-500 tnttxt opacity-0">
+              Cash on Delivery Available
+            </p>
+            <p className="text-gray-500 tnttxt opacity-0">
+              14 days free & easy return
+            </p>
           </div>
         </div>
       </div>
@@ -487,4 +513,3 @@ export default ProductDetail;
 // };
 
 // export default ProductDetail;
-
