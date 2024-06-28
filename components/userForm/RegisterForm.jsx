@@ -7,6 +7,8 @@ import { validatedTag } from "@/helpers/validated-tag";
 import InputField from "../../components/ui/InputField";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 const RegisterForm = () => {
   const [fullname, setfullname] = useState("");
@@ -47,9 +49,30 @@ const RegisterForm = () => {
       );
     }
   };
+
+  useGSAP(() => {
+    gsap.fromTo(
+      ".textgsap",
+      {
+        opacity: 0,
+        duration: 1,
+        x: -160,
+        // ease: "elastic.inOut",
+        stagger: 0.1,
+      },
+      {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        stagger: 0.1,
+        duration: 1,
+        ease: "elastic.inOut",
+      }
+    );
+  }, []);
   return (
     <div className="max-w-screen-sm mx-auto p-3 mt-20">
-      <h1 className="text-3xl font-bold my-6">Register</h1>
+      <h1 className="text-3xl font-bold my-6 textgsap">Register</h1>
       <form action={handleRegister} className="flex flex-col gap-4 ">
         <InputField
           label="Full Name"
@@ -84,19 +107,19 @@ const RegisterForm = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button className="btn" type="submit">
+        <button className="btn textgsap" type="submit">
           register
         </button>
       </form>
 
-      <div className="flex gap-1 items-center text-sm mt-3">
+      <div className="flex gap-1 items-center text-sm mt-3 textgsap">
         <h4>Already have an account ?</h4>
         <Link href={"/login"} className="text-pink-500">
           Login
         </Link>
       </div>
 
-      <div className="my-6">
+      <div className="my-6 textgsap">
         <Link href="/login" className="btn ">
           Back
         </Link>

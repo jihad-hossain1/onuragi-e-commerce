@@ -51,10 +51,10 @@ const AddToCart = ({
   };
 
   return (
-    <div>
+    <div className="w-full">
       <button
         onClick={() => handleAddToCart(id)}
-        className={`${className} ${style}`}
+        className={`bg-pink-500 w-full text-white max-sm:text-xs py-1`}
       >
         {loading ? "loading..." : "Add to cart"}
       </button>
@@ -74,7 +74,7 @@ const AddToCart = ({
             Login
           </Link>
           <Link
-            href="/register"
+            href="/login/register"
             className="bg-pink-600 text-white w-full py-2 rounded shadow hover:shadow-md transition-all duration-300 hover:bg-pink-700 px-4 text-center"
           >
             Register

@@ -6,8 +6,11 @@ import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import { toast } from "sonner";
 import InputField from "../../components/ui/InputField";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 const UserForm = () => {
+  const { status } = useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setloading] = useState(false);
@@ -47,7 +50,26 @@ const UserForm = () => {
     }
   };
 
-  const { status } = useSession();
+  useGSAP(() => {
+    gsap.fromTo(
+      ".textgsap",
+      {
+        opacity: 0,
+        duration: 1,
+        x: -160,
+        // ease: "elastic.inOut",
+        stagger: 0.1,
+      },
+      {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        stagger: 0.1,
+        duration: 1,
+        ease: "elastic.inOut",
+      }
+    );
+  }, []);
 
   if (status == "loading" && loading)
     return (
@@ -69,7 +91,7 @@ const UserForm = () => {
   return (
     <div className="max-w-[600px] mx-auto min-h-[70vh] mt-20">
       <form action={handleLogin} className="flex flex-col gap-5 ">
-        <h1 className="text-3xl font-bold my-6">Login</h1>
+        <h1 className="text-3xl font-bold my-6 textgsap">Login</h1>
 
         <InputField
           label="Email"
@@ -89,13 +111,13 @@ const UserForm = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button className="btn" type="submit">
+        <button className="btn textgsap" type="submit">
           {loading ? "Loading..." : " login"}
         </button>
       </form>
 
       <div>
-        <div className="flex gap-1 items-center text-sm mt-2">
+        <div className="flex gap-1 items-center text-sm mt-2 textgsap">
           <h4> You have no account ?</h4>
           <Link
             href={"/login/register"}
