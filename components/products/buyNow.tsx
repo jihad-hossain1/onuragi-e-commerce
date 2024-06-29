@@ -38,10 +38,10 @@ const BuyNow = ({
     router.refresh();
   };
   return (
-    <div>
+    <>
       <button
         onClick={handleBuyNow}
-        className="btn w-fit text-xs hover:transition-all duration-500"
+        className="bg-pink-500 text-nowrap w-fit rounded px-6 text-white max-sm:text-xs py-1"
       >
         Buy Now
       </button>
@@ -68,7 +68,7 @@ const BuyNow = ({
           </Link>
         </div>
       </Modal>
-    </div>
+    </>
   );
 };
 

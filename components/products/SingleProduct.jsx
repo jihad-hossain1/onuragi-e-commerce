@@ -30,7 +30,7 @@ const SingleProduct = ({ product }) => {
     );
   }, [product]);
   return (
-    <div className="textgsap group border border-gray-100 rounded-sm shadow-sm hover:shadow max-sm:p-1 md:p-4 relative pb-4">
+    <div className="textgsap group border border-gray-100 rounded-sm shadow-sm hover:shadow max-sm:p-1 md:p-4 relative pb-4 ">
       <a href={`/products/${product?.slug + `=${product?._id}`}`}>
         <Image
           alt="product iamge"
@@ -41,11 +41,11 @@ const SingleProduct = ({ product }) => {
         />
       </a>
       <h4>{product?.name}</h4>
-      <h4 className="">
+      <h4 className="pb-4">
         <span className="">{`${product?.price}.00`}</span>
         <span className="text-xs ml-1">tk.</span>
       </h4>
-      <div className="">
+      <div className="absolute bottom-0 right-0">
         <AddToCart id={product?._id} />
       </div>
     </div>

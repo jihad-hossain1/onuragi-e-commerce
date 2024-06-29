@@ -63,7 +63,7 @@ const AddToCart = ({
     <div className="w-full">
       <button
         onClick={() => handleAddToCart(id)}
-        className={`bg-pink-500 w-full px-6 text-white max-sm:text-xs py-1`}
+        className={`bg-pink-500 w-fit rounded px-6 text-white max-sm:text-xs py-1`}
       >
         {loading ? "loading..." : "Add to cart"}
       </button>
