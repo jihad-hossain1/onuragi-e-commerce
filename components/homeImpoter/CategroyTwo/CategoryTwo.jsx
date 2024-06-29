@@ -3,6 +3,7 @@
 import SingleProduct from "@/components/products/SingleProduct";
 import Container from "@/components/ui/container";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const CategoryTwo = () => {
@@ -41,20 +42,24 @@ const CategoryTwo = () => {
           </div>
         </div>
         <div className="flex flex-col gap-3 py-8">
-          <Image
-            src={poster3?.image}
-            alt={poster3?.title}
-            height={400}
-            width={800}
-            className="w-full rounded lg:h-[500px] border shadow"
-          />
-          <Image
-            src={poster4?.image}
-            alt={poster4?.title}
-            height={400}
-            width={800}
-            className="w-full rounded lg:h-[500px] border shadow"
-          />
+          <Link href={`/products/${undefined}=${poster3?.productId}`}>
+            <Image
+              src={poster3?.image}
+              alt={poster3?.title}
+              height={400}
+              width={800}
+              className="w-full rounded lg:h-[500px] border shadow"
+            />
+          </Link>
+          <Link href={`/products/${undefined}=${poster4?.productId}`}>
+            <Image
+              src={poster4?.image}
+              alt={poster4?.title}
+              height={400}
+              width={800}
+              className="w-full rounded lg:h-[500px] border shadow"
+            />
+          </Link>
         </div>
       </div>
     </Container>

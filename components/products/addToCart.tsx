@@ -36,12 +36,21 @@ const AddToCart = ({
 
       if (response?.error) {
         setLoading(false);
-        toast.error(response?.error);
+        toast.error(response?.error, {
+          position: "top-center",
+          duration: 3000,
+          style: {
+            background: "red",
+          },
+        });
       }
       if (response?.result) {
         validatedTag("cart");
         setLoading(false);
-        toast.success(response?.message);
+        toast.success(response?.message, {
+          position: "top-center",
+          duration: 3000,
+        });
         router.refresh();
       }
     } catch (error) {
@@ -54,7 +63,7 @@ const AddToCart = ({
     <div className="w-full">
       <button
         onClick={() => handleAddToCart(id)}
-        className={`bg-pink-500 w-full text-white max-sm:text-xs py-1`}
+        className={`bg-pink-500 w-full px-6 text-white max-sm:text-xs py-1`}
       >
         {loading ? "loading..." : "Add to cart"}
       </button>

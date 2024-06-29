@@ -28,9 +28,9 @@ const ShopingCart = ({ carts }) => {
       <Sheet>
         <SheetTrigger asChild>
           <div className="relative">
-            <BsBag className="text-[20px] lg:text-[30px] mr-2" />
+            <BsBag className="text-[24px] lg:text-[30px] mr-2" />
             {carts?.length > 0 && (
-              <div className="w-5 h-5 rounded-full bg-red-500 text-white text-xs flex justify-center items-center absolute top-0 right-0 translate-x-1/2 -translate-y-1/2">
+              <div className="w-5 h-5 rounded-full bg-red-500 text-white text-xs flex justify-center items-center absolute md:top-0 md:right-0 max-sm:left-0 max-sm:top-0 max-sm:right-1/2  translate-x-1/2 -translate-y-1/2">
                 {carts?.length}
               </div>
             )}

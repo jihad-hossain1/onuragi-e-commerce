@@ -18,6 +18,7 @@ const ProductDetails = ({ product, questions }) => {
         product={product?.product}
         details={product?.details}
         questions={questions}
+        reviews={product?.reviews}
       />
     </div>
   );

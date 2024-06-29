@@ -2,11 +2,13 @@
 
 import React, { useState } from "react";
 import ProductQuestion from "./question/ProductQuestion";
+import ProductReview from "./review/ProductReview";
 interface IProps {
   details: any;
   specification: any;
   product: any;
   questions: any;
+  reviews: any;
 }
 
 const ProductSpecifications: React.FC<IProps> = ({
@@ -14,6 +16,7 @@ const ProductSpecifications: React.FC<IProps> = ({
   details,
   product,
   questions,
+  reviews,
 }) => {
   const [tabIndex, setTabIndex] = useState(1);
 
@@ -160,6 +163,10 @@ const ProductSpecifications: React.FC<IProps> = ({
           <div className={tabIndex == 2 ? "block" : "hidden"}>
             <h4 className="text-center py-3">Questions</h4>
             <ProductQuestion productId={product?._id} questions={questions} />
+          </div>
+          <div className={tabIndex == 3 ? "block" : "hidden"}>
+            <h4 className="text-center py-3">Reviews</h4>
+            <ProductReview productId={product?._id} reviews={reviews} />
           </div>
         </div>
       </div>
