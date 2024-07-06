@@ -85,7 +85,8 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PATCH(request: NextRequest) {
-  const specId = request.nextUrl.searchParams.get("specId");
+  const { searchParams } = new URL(request.url);
+  const specId = searchParams.get("specId");
   const reqBody = await request.json();
 
   const { care, febric, sleeve, valueAddition, coller_Neck, sideCut } = reqBody;
@@ -139,7 +140,8 @@ export async function PATCH(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
-  const specId = request.nextUrl.searchParams.get("specId");
+   const { searchParams } = new URL(request.url);
+  const specId = searchParams.get("specId");
   try {
     await connectDatabase("product spec");
     const specifications = await ProductSpecification.findById(specId);

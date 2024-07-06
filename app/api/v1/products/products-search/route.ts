@@ -15,7 +15,7 @@ const buildSearchQuery = (searchTerm: string) => {
 // Main handler function for GET request
 export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
-    const searchParams = req.nextUrl.searchParams;
+    const { searchParams } = new URL(req.url);
     const searchTerm = searchParams.get("searchTerm") || "";
 
     await connectDatabase("product");
@@ -32,34 +32,3 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     );
   }
 }
-// import connectDatabase from "@/src/config/mongodbConnection";
-// import Product from "@/src/models/product.models";
-// import { NextRequest, NextResponse } from "next/server";
-
-// export async function GET(req: NextRequest): Promise<NextResponse> {
-//   const searchParams = req.nextUrl.searchParams;
-
-//   const searchTerm = searchParams.get("searchTerm") || "";
-
-//   await connectDatabase("product");
-
-//   // Build search query
-//   const searchQuery = searchTerm
-//     ? {
-//         $or: [
-//           {
-//             name: { $regex: searchTerm, $options: "i" },
-//             slug: { $regex: searchTerm, $options: "i" },
-//             category: { $regex: searchTerm, $options: "i" },
-//           },
-//         ],
-//       }
-//     : {};
-
-//   // Fetch paginated data
-//   const data = await Product.find(searchQuery);
-
-//   return NextResponse.json({
-//     data,
-//   });
-// }

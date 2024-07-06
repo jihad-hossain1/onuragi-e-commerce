@@ -61,7 +61,8 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-  const userId = req.nextUrl.searchParams.get("userId");
+  const { searchParams } = new URL(req.url);
+  const userId = searchParams.get("userId");
 
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     return NextResponse.json({ error: "Invalid user info." }, { status: 400 });

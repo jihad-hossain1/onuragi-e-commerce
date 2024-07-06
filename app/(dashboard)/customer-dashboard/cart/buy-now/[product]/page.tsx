@@ -28,6 +28,7 @@ const BuyNowPage = async ({ params }) => {
             <Payment
               userId={initialData?.user?.id}
               profileInfo={initialData?.profile}
+              total={0}
             />
           </div>
         </div>

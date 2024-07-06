@@ -71,17 +71,36 @@ const userSchema = new Schema(
       {
         products: [
           {
-            productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+            product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
             quantity: Number,
           },
         ],
-        transactionId: {
-          type: String,
+        payInfo: {
+          tid: { type: String },
+          sc: { type: String },
+          method: { type: String },
         },
-        deliveryAddress: {
+        address: {
           street: { type: String },
           city: { type: String },
           zipCode: { type: String },
+        },
+        did: {
+          type: String,
+        },
+        status: {
+          type: String,
+          enum: [
+            "pending",
+            "delivered",
+            "shipped",
+            "returned",
+            "cancelled",
+            "failed",
+            "refunded",
+            "processing",
+          ],
+          default: "pending",
         },
       },
     ],

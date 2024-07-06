@@ -3,7 +3,8 @@ import Product from "@/src/models/product.models";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
-  const searchParams = req.nextUrl.searchParams;
+   const { searchParams } = new URL(req.url);
+
   const page = parseInt(searchParams.get("page") || "1", 10);
   const pageSize = parseInt(searchParams.get("pageSize") || "10", 10);
   const searchTerm = searchParams.get("searchTerm") || "";

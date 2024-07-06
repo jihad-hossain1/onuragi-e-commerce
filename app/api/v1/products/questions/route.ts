@@ -47,7 +47,9 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-  const productID = req.nextUrl.searchParams.get("id");
+   const { searchParams } = new URL(req.url);
+   const productID = searchParams.get("id") || "";
+
   try {
     validateOBJID(productID, "Product Id");
 
@@ -84,33 +86,4 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: error?.message }, { status: 500 });
   }
 }
-// export async function GET(req: NextRequest) {
-//   const productID = req.nextUrl.searchParams.get("id");
-//   try {
-//     // const { productID } = params;
 
-//     validateOBJID(productID, "Product Id");
-
-//     await connectDatabase("product questions");
-
-//     const findProduct = await Product.findOne({ _id: productID });
-
-//     if (findProduct) {
-//       const productQuestions = await ProductQuestion.find({
-//         productID: productID,
-//       })
-//         .sort({ createdAt: "desc" })
-//         .populate("replies");
-
-//       return NextResponse.json({ result: productQuestions }, { status: 200 });
-//     } else {
-//       return NextResponse.json(
-//         { message: "product are not found" },
-//         { status: 400 }
-//       );
-//     }
-//   } catch (error) {
-//     // console.log(error);
-//     return NextResponse.json({ error: error?.message }, { status: 500 });
-//   }
-// }
