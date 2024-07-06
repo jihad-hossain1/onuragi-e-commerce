@@ -111,6 +111,20 @@ export async function POST(req: NextRequest) {
       }
     );
 
+    // decrese product quantity
+    // await Promise.all(
+    //   userCarts.map(async (item) => {
+    //     const product = await Product.findOneAndUpdate(
+    //       { _id: item.product },
+    //       {
+    //         $inc: {
+    //           quantity: -item.quantity,
+    //         },
+    //       }
+    //     );
+    //   })
+    // );
+
     if (!response.acknowledged) {
       return NextResponse.json(
         { error: "Something went wrong." },

@@ -102,6 +102,7 @@ const userSchema = new Schema(
           ],
           default: "pending",
         },
+        ztime: { type: Date, default: Date.now },
       },
     ],
 

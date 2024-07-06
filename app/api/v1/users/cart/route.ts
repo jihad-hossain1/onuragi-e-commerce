@@ -93,13 +93,34 @@ export async function GET(req: NextRequest) {
       })
     );
 
+    // user delivery products
+    const userOrder = user.deliveries;
+
+    const populatedUserOrder = await Promise.all(
+      userOrder.map(async (item) => {
+        const product = await Product.find(
+          { _id: item.products.map((product: any) => product.product) },
+          "name price image"
+        );
+        return {
+          ...item._doc,
+          details: product,
+        };
+      })
+    );
+
     // Calculate the total price
     const totalPrice = populatedCart.reduce((sum, item) => {
       return sum + item.productDetails.price * item.quantity;
     }, 0);
 
     return NextResponse.json(
-      { result: populatedCart, totalPrice: totalPrice },
+      {
+        result: populatedCart,
+        totalPrice: totalPrice,
+        orders: populatedUserOrder,
+        profile: user?.profile,
+      },
       { status: 200 }
     );
   } catch (error) {
