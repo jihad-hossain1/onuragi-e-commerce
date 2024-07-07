@@ -21,6 +21,8 @@ interface ProductDetailProps {
     price: number;
     discount: number;
     quantity: number;
+    defaultColor: string;
+    defaultSize: string;
   };
   images: string[];
   details: {
@@ -262,7 +264,14 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, details }) => {
             >
               Add to Cart
             </button> */}
-            <AddToCart id={product._id} style="" />
+            <AddToCart
+              defaultColor={
+                selectedColor ? selectedColor : product?.defaultColor
+              }
+              defaultSize={selectedSize ? selectedSize : product?.defaultSize}
+              id={product._id}
+              style=""
+            />
           </div>
           <div className="mt-6">
             <p className="text-gray-500 tnttxt opacity-0">Delivery</p>

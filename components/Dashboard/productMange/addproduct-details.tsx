@@ -22,12 +22,15 @@ const AddproductDetails: React.FC<ProductsProps> = ({
   detailId,
   detailValue,
 }) => {
+  console.log("🚀 ~ detailValue:", detailValue);
   const router = useRouter();
   const [loading, setLoading] = React.useState(false);
 
   const [formData, setFormData] = React.useState({
     about: "",
     sizeGuide: "",
+    defaultSize: "",
+    defaultColor: "",
   });
 
   const [sizes, setSizes] = React.useState(detailValue?.sizes || []);
@@ -37,6 +40,8 @@ const AddproductDetails: React.FC<ProductsProps> = ({
       setFormData({
         about: detailValue?.about || "",
         sizeGuide: detailValue?.sizeGuide || "",
+        defaultSize: detailValue?.defaultSize || "",
+        defaultColor: detailValue?.defaultColor || "",
       });
     }
   }, [detailValue]);
@@ -133,6 +138,37 @@ const AddproductDetails: React.FC<ProductsProps> = ({
             rows={5}
             cols={50}
           />
+        </div>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="defaultColor">Default Color</label>
+          <input
+            className="input"
+            placeholder="Enter defaultColor"
+            name="defaultColor"
+            value={formData.defaultColor}
+            onChange={(e) =>
+              setFormData({ ...formData, defaultColor: e.target.value })
+            }
+            id="default"
+            type="text"
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <select
+            className="input"
+            name="defaultSize"
+            value={formData.defaultSize}
+            onChange={(e) =>
+              setFormData({ ...formData, defaultSize: e.target.value })
+            }
+            id="defaultSize"
+          >
+            <option value="">--- Default Size ---</option>
+            <option value="Small">Small</option>
+            <option value="Medium">Medium</option>
+            <option value="Large">Large</option>
+            <option value="Extra Large">Extra Large</option>
+          </select>
         </div>
 
         <AddSizes sizes={sizes} setSizes={setSizes} />

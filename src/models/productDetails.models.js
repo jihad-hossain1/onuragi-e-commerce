@@ -18,6 +18,7 @@ const sizeType = new Schema({
     type: String,
     required: true,
   },
+
   colors: [
     {
       color: {
@@ -63,7 +64,14 @@ const productDetailsSchema = new Schema(
       type: Number,
       required: true,
     },
-
+    defaultColor: {
+      type: String,
+      required: true,
+    },
+    defaultSize: {
+      type: String,
+      required: true,
+    },
     about: {
       type: String,
       required: true,

@@ -46,7 +46,11 @@ const SingleProduct = ({ product }) => {
         <span className="text-xs ml-1">tk.</span>
       </h4>
       <div className="absolute bottom-0 right-0">
-        <AddToCart id={product?._id} />
+        <AddToCart
+          defaultColor={product?.defaultColor}
+          defaultSize={product?.defaultSize}
+          id={product?._id}
+        />
       </div>
     </div>
   );

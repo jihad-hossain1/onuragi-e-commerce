@@ -1,3 +1,4 @@
+import { validateOBJID } from "@/helpers/validetField";
 import connectDatabase from "@/src/config/mongodbConnection";
 import Product from "@/src/models/product.models";
 import User from "@/src/models/user.models";
@@ -5,22 +6,12 @@ import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
-  const { productId, quantity, userId } = await request.json();
+  const { productId, quantity, userId, size, color } = await request.json();
 
   try {
-    if (!mongoose.Types.ObjectId.isValid(productId)) {
-      return NextResponse.json(
-        { error: "Invalid product info." },
-        { status: 400 }
-      );
-    }
+    validateOBJID(productId, "Product ID");
+    validateOBJID(userId, "User ID");
 
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-      return NextResponse.json(
-        { error: "Invalid user info." },
-        { status: 400 }
-      );
-    }
     await connectDatabase("user");
 
     const user = await User.findOne({ _id: userId });
@@ -43,7 +34,7 @@ export async function POST(request: NextRequest) {
         }
       );
     } else {
-      user.carts.push({ product: productId, quantity, userId });
+      user.carts.push({ product: productId, quantity, userId, size, color });
       await user.save();
 
       return NextResponse.json(

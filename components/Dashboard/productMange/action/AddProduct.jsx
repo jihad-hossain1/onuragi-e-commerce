@@ -17,6 +17,8 @@ const AddProduct = ({ categories }) => {
   const [categoryID, setCategory] = useState("");
   const [price, setprice] = useState(0);
   const [slug, setSlug] = useState("");
+  const [defaultColor, setDefaultColor] = useState("");
+  const [defaultSize, setDefaultSize] = useState("");
   const [_photo, setPhoto] = useState("");
   const [image, setimage] = useState(null);
   const [error, setError] = useState("");
@@ -56,6 +58,8 @@ const AddProduct = ({ categories }) => {
           price: parseFloat(price),
           image: _photo,
           slug: slug,
+          defaultColor: defaultColor,
+          defaultSize: defaultSize,
         }),
       });
 
@@ -165,6 +169,30 @@ const AddProduct = ({ categories }) => {
             onChange={(e) => setprice(e.target.value)}
             className="bg-transparent"
           />
+          <div>
+            <Input
+              className="bg-transparent"
+              type="text"
+              placeholder="Enter default Color"
+              name=""
+              value={defaultColor}
+              onChange={(e) => setDefaultColor(e.target.value)}
+              id=""
+            />
+          </div>
+          <select
+            className="input"
+            name="size"
+            value={defaultSize}
+            onChange={(e) => setDefaultSize(e.target.value)}
+            id="size"
+          >
+            <option value="">--- Select Default Size ---</option>
+            <option value="Small">Small</option>
+            <option value="Medium">Medium</option>
+            <option value="Large">Large</option>
+            <option value="Extra Large">Extra Large</option>
+          </select>
 
           <FileUploader
             handleCancelUpload={handleCancelUpload}

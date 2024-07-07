@@ -32,7 +32,15 @@ export async function PUT(req: NextRequest, { params }) {
 
     // if product found then play another role
     if (product) {
-      const { image, name, categoryID, price, slug } = await req.json();
+      const {
+        image,
+        name,
+        categoryID,
+        price,
+        slug,
+        defaultColor,
+        defaultSize,
+      } = await req.json();
 
       if (price == 0) {
         return NextResponse.json(
@@ -84,6 +92,8 @@ export async function PUT(req: NextRequest, { params }) {
             categoryID,
             price: parseFloat(price),
             slug: slug.trim().toLowerCase(),
+            defaultColor,
+            defaultSize,
           },
         }
       );

@@ -32,11 +32,14 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
 
     // Validate the JSON structure
-    const { name, image, categoryID, price, slug } = body;
+    const { name, image, categoryID, price, slug, defaultColor, defaultSize } =
+      body;
 
     // Validate individual fields
     fieldValidate(categoryID, "Category Name");
     validateFieldMaxMin(name, "Product Name", 5, 50);
+    validateFieldMaxMin(defaultColor, "Default Color", 3, 20);
+    validateFieldMaxMin(defaultSize, "Default Size", 3, 20);
     fieldValidate(slug, "Product Slug");
     fieldValidate(price, "Price");
     fieldValidate(image, "Product Image");
@@ -70,6 +73,8 @@ export async function POST(req: NextRequest) {
       categoryID,
       price: priceNumber,
       slug: slug?.trim()?.toLowerCase(),
+      defaultColor,
+      defaultSize,
     });
     const product = await newProduct.save();
 

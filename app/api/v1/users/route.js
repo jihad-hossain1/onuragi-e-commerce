@@ -65,7 +65,6 @@ export async function POST(req) {
 
     const findUnique = roles?.find((role) => role.role == "admin");
 
-    console.log("find user role", findUnique);
 
     // if(user.role !== 'admin')
 

@@ -31,7 +31,8 @@ export async function GET(req: NextRequest, { params }) {
 export async function PATCH(req: NextRequest, { params }) {
   try {
     const { productID } = params;
-    const { about, sizeGuide, sizes, detailId } = await req.json();
+    const { about, sizeGuide, sizes, detailId, defaultSize, defaultColor } =
+      await req.json();
     if (!mongoose.Types.ObjectId.isValid(productID)) {
       return NextResponse.json({ error: "your provide id is not valid" });
     }
@@ -48,6 +49,8 @@ export async function PATCH(req: NextRequest, { params }) {
             about: about || findDetails?.about,
             sizeGuide: sizeGuide || findDetails?.sizeGuide,
             sizes: sizes || findDetails?.sizes,
+            defaultColor: defaultColor || findDetails?.defaultColor,
+            defaultSize: defaultSize || findDetails?.defaultSize,
           },
         },
         { new: true }

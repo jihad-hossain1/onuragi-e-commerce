@@ -1,17 +1,16 @@
+import { fieldValidate, validateFieldMaxMin } from "@/helpers/validetField";
 import connectDatabase from "@/src/config/mongodbConnection";
 import Image from "@/src/models/image.models";
 import Product from "@/src/models/product.models";
 import ProductDetail from "@/src/models/productDetails.models";
 import ProductSpecification from "@/src/models/productSpecification.models";
-import { validateJSON } from "@/utils/validateJSON";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const reqBody = await req.json();
+  const { productID, about, sizeGuide, sizes, defaultColor, defaultSize } =
+    await req.json();
   try {
-    const { productID, about, sizeGuide, sizes } = reqBody;
-
     // check product size with any empty array
     if (sizes?.length == 0) {
       return NextResponse.json(
@@ -21,6 +20,10 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
+
+    validateFieldMaxMin(defaultColor, "default color", 3, 20);
+    validateFieldMaxMin(defaultSize, "default size", 3, 20);
+
     // check productID valid or invalid
     if (!mongoose.Types.ObjectId.isValid(productID)) {
       return NextResponse.json(
@@ -36,7 +39,9 @@ export async function POST(req: NextRequest) {
       (previous, current) => previous + current?.quantity,
       0
     );
+
     await connectDatabase("product details");
+
     //   build new product details
     const newDetails = new ProductDetail({
       productID,
@@ -44,7 +49,10 @@ export async function POST(req: NextRequest) {
       sizeGuide,
       quantity: productQuantity,
       sizes,
+      defaultColor,
+      defaultSize,
     });
+
     const savedDetails = await newDetails.save();
 
     // Update the product with the new specification ID
@@ -68,7 +76,6 @@ export async function POST(req: NextRequest) {
     );
   }
 }
-
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -113,4 +120,3 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: error?.message }, { status: 500 });
   }
 }
-

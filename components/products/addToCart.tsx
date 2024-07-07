@@ -13,11 +13,15 @@ const AddToCart = ({
   id,
   className = "btn w-fit text-xs hover:transition-all duration-500",
   style = "",
+  defaultColor = "",
+  defaultSize = "",
 }) => {
   const { data: session, status } = useSession();
   const [loading, setLoading] = React.useState(false);
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
+  const [size, setSize] = React.useState(defaultSize);
+  const [color, setColor] = React.useState(defaultColor);
 
   const handleAddToCart = async (productId: string) => {
     if (status === "unauthenticated") {
@@ -31,6 +35,8 @@ const AddToCart = ({
         productId: productId,
         quantity: 1,
         userId: session?.user?.id,
+        size: size,
+        color: color,
       });
       setLoading(false);
 

@@ -64,6 +64,8 @@ const userSchema = new Schema(
         product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
         quantity: Number,
         userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+        size: { type: String },
+        color: { type: String },
       },
     ],
 
