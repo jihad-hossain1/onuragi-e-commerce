@@ -159,6 +159,7 @@ const EditProduct = ({ product, categories }) => {
            setimage={setimage}
            handleOnFileUpload={handleOnFileUpload}
            _photo={_photo}
+           updaloding={undefined}
          />
          <h4 className="text-xs text-pink-600">
            {btnDisabled ? btnDisabled?.image : ""}

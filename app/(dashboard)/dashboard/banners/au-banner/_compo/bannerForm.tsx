@@ -152,6 +152,7 @@ const BannerForm = ({ products, id, bannerData }) => {
           handleOnFileUpload={handleOnFileUpload}
           _photo={_photo}
           handleCancelUpload={handleCancelUpload}
+          updaloding={undefined}
         />
 
         <button disabled={loading} type="submit" className="btn">

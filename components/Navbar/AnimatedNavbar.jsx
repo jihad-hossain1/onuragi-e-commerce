@@ -6,20 +6,21 @@ import { cn } from "@/utils/cn";
 import Search from "./search/Search";
 import ShopingCart from "./shopingCart/ShopingCart";
 import UserAccount from "./userAccount/UserAccount";
-import { ThemeButton } from "./themeButton/ThemeButton";
 import { SiteLogo } from ".";
 import Link from "next/link";
-import { useCartItems } from "@/hooks/cartsHook";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RxCross1 } from "react-icons/rx";
 import { RxChevronDown, RxChevronUp } from "react-icons/rx";
 import { signOut, useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
 export function AnimatedNavbar({ products, carts }) {
-  // const { cartItems } = useCartItems();
-
+  const path = usePathname();
+  const paths = ["/login", "/login/register"];
   return (
-    <main className="max-w-screen-xl mx-auto">
+    <main
+      className={paths.includes(path) ? "hidden" : "max-w-screen-xl mx-auto"}
+    >
       <div className="relative w-full flex items-center justify-between mt-2">
         <MobileNav />
         <SiteLogo />
@@ -55,13 +56,7 @@ function MobileNav() {
     return () => document.removeEventListener("mousedown", close);
   }, []);
 
-  // useEffect(() => {
-  //   if (active) {
-  //     document.body.style.overflow = "hidden";
-  //   } else {
-  //     document.body.style.overflow = "unset";
-  //   }
-  // }, [active]);
+
   return (
     <div className="lg:hidden relative">
       <button onClick={() => setActive(!active)} className="pl-2">

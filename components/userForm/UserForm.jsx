@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import InputField from "../../components/ui/InputField";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import Loader from "../loader/Loader";
 
 const UserForm = () => {
   const { status } = useSession();
@@ -19,11 +20,38 @@ const UserForm = () => {
 
   const handleLogin = async () => {
     if (email == "") {
-      return toast("email are required");
+      return toast.error("email are required", {
+        position: "top-center",
+        duration: 2000,
+        style: {
+          background: "#fff",
+          color: "red",
+          padding: "10px",
+          borderRadius: "10px",
+        },
+      });
     } else if (password == "") {
-      return toast("password must be needed");
+      return toast.error("password must be needed", {
+        position: "top-center",
+        duration: 2000,
+        style: {
+          background: "#fff",
+          color: "red",
+          padding: "10px",
+          borderRadius: "10px",
+        },
+      });
     } else if (password?.length < 6) {
-      return toast("password must be 6 character");
+      return toast.error("password must be 6 character", {
+        position: "top-center",
+        duration: 2000,
+        style: {
+          background: "#fff",
+          color: "red",
+          padding: "10px",
+          borderRadius: "10px",
+        },
+      });
     }
 
     try {
@@ -37,7 +65,16 @@ const UserForm = () => {
 
       if (!res?.ok) {
         setloading(false);
-        toast(res?.error);
+        toast.error(res?.error, {
+          position: "top-center",
+          duration: 2000,
+          style: {
+            background: "#fff",
+            color: "red",
+            padding: "10px",
+            borderRadius: "10px",
+          },
+        });
       }
       if (res?.ok) {
         setloading(true);
@@ -45,8 +82,17 @@ const UserForm = () => {
         router.back();
       }
     } catch (error) {
-      toast(error?.message);
-      console.log(error);
+      toast.error(error?.message, {
+        position: "top-center",
+        duration: 2000,
+        style: {
+          background: "#fff",
+          color: "red",
+          padding: "10px",
+          borderRadius: "10px",
+        },
+      });
+      console.error(error);
     }
   };
 
@@ -71,25 +117,10 @@ const UserForm = () => {
     );
   }, []);
 
-  if (status == "loading" && loading)
-    return (
-      <div className="flex flex-col justify-center items-center text-pink-500 text-sm min-h-[70vh]">
-        {"Loading..."}
-      </div>
-    );
+  if (status == "loading" && loading) return <Loader />;
 
-  if (status == "authenticated") {
-    return (
-      <div className="flex flex-col gap-2 items-center min-h-[70vh]">
-        <h4>You are already logged in</h4>
-        <Link href="/" className="btn">
-          Go Back
-        </Link>
-      </div>
-    );
-  }
   return (
-    <div className="max-w-[600px] mx-auto min-h-[70vh] mt-20">
+    <div className="text-white max-sm:w-[390px] w-[500px] mx-auto max-sm:px-5 max-sm:py-8 bg-pink-700 p-20 rounded-xl shadow-[4px_35px_60px_-15px_rgba(0,0,0,0.3)] ">
       <form action={handleLogin} className="flex flex-col gap-5 ">
         <h1 className="text-3xl font-bold my-6 textgsap">Login</h1>
 
@@ -116,22 +147,19 @@ const UserForm = () => {
         </button>
       </form>
 
-      <div>
-        <div className="flex gap-1 items-center text-sm mt-2 textgsap">
-          <h4> You have no account ?</h4>
-          <Link
-            href={"/login/register"}
-            className="font-semibold hover:underline"
-          >
-            register
-          </Link>
-        </div>
-        {/* <button
-          onClick={() => signIn("google")}
-          className="mt-3 border border-green-400 w-full px-3 rounded-lg py-1 text-sm hover:bg-green-500 hover:text-white transition duration-300"
+      <div className="flex gap-1 items-center text-sm mt-2 textgsap">
+        <h4> You have no account ?</h4>
+        <Link
+          href={"/login/register"}
+          className="font-semibold hover:underline"
         >
-          Login by Google
-        </button> */}
+          register
+        </Link>
+      </div>
+      <div className="mt-4">
+        <a href="/" className="btn textgsap">
+          Back to home
+        </a>
       </div>
     </div>
   );

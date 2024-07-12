@@ -225,6 +225,7 @@ useEffect(() => {
             handleOnFileUpload={undefined}
             _photo={undefined}
             handleCancelUpload={undefined}
+            updaloding={undefined}
           />
 
           <button className="btn w-fit" type="submit">

@@ -1,13 +1,17 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import React, { useState } from "react";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const FileUploader = ({
   setimage,
   handleOnFileUpload,
   _photo,
   handleCancelUpload,
+  updaloding,
 }) => {
   const [showPhoto, setShowPhoto] = useState(false);
   return (
@@ -21,12 +25,17 @@ const FileUploader = ({
           onChange={(e) => setimage((prev) => e.target.files[0])}
         />
         <Button
+          disabled={updaloding}
           type="button"
           variant="outline"
           className="bg-green-500"
           onClick={handleOnFileUpload}
         >
-          Upload image
+          {updaloding ? (
+            <AiOutlineLoading3Quarters className="animate-spin" />
+          ) : (
+            "Upload"
+          )}
         </Button>
       </div>
       <button

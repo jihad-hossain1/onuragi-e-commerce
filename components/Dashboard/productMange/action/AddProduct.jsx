@@ -7,23 +7,25 @@ import { validatedTag } from "@/helpers/validated-tag";
 import FileUploader from "@/utils/FileUploader";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { toast } from "sonner";
 
 const AddProduct = ({ categories }) => {
-  const [btnDisabled, setBtnDisabled] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [name, setname] = useState("");
-  const [categoryID, setCategory] = useState("");
-  const [price, setprice] = useState(0);
-  const [slug, setSlug] = useState("");
-  const [defaultColor, setDefaultColor] = useState("");
-  const [defaultSize, setDefaultSize] = useState("");
   const [_photo, setPhoto] = useState("");
   const [image, setimage] = useState(null);
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [updaloding, setUpdaloding] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    categoryID: "",
+    price: 0,
+    slug: "",
+    defaultColor: "",
+    defaultSize: "",
+  });
 
   const handleOnFileUpload = async (e) => {
     e.preventDefault();
@@ -35,71 +37,54 @@ const AddProduct = ({ categories }) => {
       data.append("file", image);
       data.append("upload_preset", "images_preset");
       let api = `https://api.cloudinary.com/v1_1/dqfi9zw3e/image/upload`;
+      setUpdaloding(true);
       const res = await axios.post(api, data);
       let _up = await res?.data?.secure_url;
+      setUpdaloding(false);
       setPhoto(_up);
     } catch (error) {
-      console.log(error);
+      setUpdaloding(false);
+      console.error(error);
     }
   };
 
   const handleAddProduct = async (e) => {
     e.preventDefault();
+
     try {
       setLoading(true);
+
       const res = await fetch("/api/v1/products", {
         method: "POST",
         headers: {
           "Content-Type": "applications/json",
         },
         body: JSON.stringify({
-          name: name,
-          categoryID: categoryID,
-          price: parseFloat(price),
+          ...formData,
+          price: parseFloat(formData?.price),
           image: _photo,
-          slug: slug,
-          defaultColor: defaultColor,
-          defaultSize: defaultSize,
         }),
       });
 
       const result = await res.json();
 
-      console.log(result);
-
       if (result?.error) {
         setLoading(false);
         toast(result?.error);
       }
+
       if (result?.result) {
+        validatedTag("products");
         setLoading(false);
         toast.success("product added Successfull");
-        setname("");
-        setCategory("");
-        setimage("");
-        setprice(0);
-        setIsOpen(false);
         router.refresh();
-        validatedTag("products");
+        setTimeout(() => {
+          setIsOpen(false);
+        }, 1000);
       }
-
-      // if (res.ok) {
-      //   setLoading(false);
-      //   // router.refresh();
-      //   validatedTag("products");
-      //   toast.success("product added Successfull");
-      //   setname("");
-      //   setCategory("");
-      //   setimage("");
-      //   setprice(0);
-      //   // setIsOpen(false);
-      // } else {
-      //   setLoading(false);
-      //   toast.error("error while adding product");
-      // }
     } catch (error) {
       setLoading(false);
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -107,12 +92,6 @@ const AddProduct = ({ categories }) => {
     setPhoto("");
     setimage(null);
   };
-
-  useEffect(() => {
-    if (error) {
-      console.log(error);
-    }
-  }, [error, _photo, image, btnDisabled]);
 
   return (
     <>
@@ -127,12 +106,12 @@ const AddProduct = ({ categories }) => {
 
       <Modal open={isOpen} setOpen={setIsOpen} title={"Add Product"}>
         <form onSubmit={handleAddProduct} className="flex flex-col gap-3">
-          <h4 className="text-xs text-pink-600">{error ? error : ""}</h4>
-
           <h4 className="text-xs">Select Category</h4>
           <select
-            value={categoryID}
-            onChange={(e) => setCategory(e.target.value)}
+            value={formData?.categoryID}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, categoryID: e.target.value }))
+            }
             className="p-2 border"
           >
             <option disabled value={""}>
@@ -144,29 +123,33 @@ const AddProduct = ({ categories }) => {
               </option>
             ))}
           </select>
-          <h4 className="text-xs text-pink-600">
-            {btnDisabled ? btnDisabled?.categoryID : ""}
-          </h4>
+
           <Input
             type="text"
             placeholder="Product name"
-            value={name}
-            onChange={(e) => setname(e.target.value)}
+            value={formData?.name}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, name: e.target.value }))
+            }
             className="bg-transparent"
           />
           <Input
             type="text"
             placeholder="product-slug"
-            value={slug}
-            onChange={(e) => setSlug(e.target.value)}
+            value={formData?.slug}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, slug: e.target.value }))
+            }
             className="bg-transparent"
           />
-          {btnDisabled ? btnDisabled?.name : ""}
+
           <Input
             type="number"
             placeholder="Price"
-            value={price}
-            onChange={(e) => setprice(e.target.value)}
+            value={formData?.price}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, price: e.target.value }))
+            }
             className="bg-transparent"
           />
           <div>
@@ -174,17 +157,22 @@ const AddProduct = ({ categories }) => {
               className="bg-transparent"
               type="text"
               placeholder="Enter default Color"
-              name=""
-              value={defaultColor}
-              onChange={(e) => setDefaultColor(e.target.value)}
+              value={formData?.defaultColor}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  defaultColor: e.target.value,
+                }))
+              }
               id=""
             />
           </div>
           <select
             className="input"
-            name="size"
-            value={defaultSize}
-            onChange={(e) => setDefaultSize(e.target.value)}
+            value={formData?.defaultSize}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, defaultSize: e.target.value }))
+            }
             id="size"
           >
             <option value="">--- Select Default Size ---</option>
@@ -195,24 +183,26 @@ const AddProduct = ({ categories }) => {
           </select>
 
           <FileUploader
+            updaloding={updaloding}
             handleCancelUpload={handleCancelUpload}
             image={image}
             setimage={setimage}
             handleOnFileUpload={handleOnFileUpload}
             _photo={_photo}
           />
-          <h4 className="text-xs text-pink-600">
-            {btnDisabled ? btnDisabled?.image : ""}
-          </h4>
+
           <Button
-            // disabled={btnDisabled}
-            // onClick={handleAddProduct}
+            disabled={loading}
             type="submit"
             size="sm"
             varient="outline"
             className="text-xs bg-pink-600 shadow-sm hover:shadow hover:bg-pink-600/90 uppercase"
           >
-            create
+            {loading ? (
+              <AiOutlineLoading3Quarters className="animate-spin" />
+            ) : (
+              "Add Product"
+            )}
           </Button>
         </form>
       </Modal>

@@ -44,8 +44,18 @@ const RegisterForm = () => {
       router.push("/login");
     } catch (error) {
       console.log(error?.response?.data?.message);
-      return toast(
-        error?.response?.data?.message || error?.response?.data?.error
+      return toast.error(
+        error?.response?.data?.message || error?.response?.data?.error,
+        {
+          position: "top-center",
+          duration: 2000,
+          style: {
+            background: "#fff",
+            color: "red",
+            padding: "10px",
+            borderRadius: "10px",
+          },
+        }
       );
     }
   };
@@ -71,9 +81,9 @@ const RegisterForm = () => {
     );
   }, []);
   return (
-    <div className="max-w-screen-sm mx-auto p-3 mt-20">
+    <div className="text-white max-sm:w-[390px] w-[500px] mx-auto max-sm:px-5 max-sm:py-8 bg-pink-700 p-20 rounded-xl shadow-[4px_35px_60px_-15px_rgba(0,0,0,0.3)] ">
       <h1 className="text-3xl font-bold my-6 textgsap">Register</h1>
-      <form action={handleRegister} className="flex flex-col gap-4 ">
+      <form action={handleRegister} className="flex flex-col gap-1">
         <InputField
           label="Full Name"
           type="text"
@@ -114,7 +124,7 @@ const RegisterForm = () => {
 
       <div className="flex gap-1 items-center text-sm mt-3 textgsap">
         <h4>Already have an account ?</h4>
-        <Link href={"/login"} className="text-pink-500">
+        <Link href={"/login"} className="">
           Login
         </Link>
       </div>

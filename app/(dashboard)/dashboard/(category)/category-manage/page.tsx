@@ -1,20 +1,22 @@
-"use client";
+// "use client";
 
 import UpdateCat from "@/components/Dashboard/Category/updateCat";
 import React from "react";
 import AddCategory from "@/components/Dashboard/Category/AddCategory";
+import { fetchCategories } from "@/utils/categories/fetchCategrories";
 
-const Categorypage = () => {
-  const [categories, setCategories] = React.useState([]);
+const Categorypage = async () => {
+  const categories = await fetchCategories();
+  // const [categories, setCategories] = React.useState([]);
 
-  React.useEffect(() => {
-    const fetchCategories = async () => {
-      const res = await fetch(`/api/v1/category`);
-      const result = await res.json();
-      setCategories(result);
-    };
-    fetchCategories();
-  }, []);
+  // React.useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     const res = await fetch(`/api/v1/category`);
+  //     const result = await res.json();
+  //     setCategories(result);
+  //   };
+  //   fetchCategories();
+  // }, []);
 
   return (
     <div className="p-4">
@@ -34,17 +36,21 @@ const Categorypage = () => {
             </tr>
           </thead>
           <tbody>
-            {categories?.map((category, index) => (
-              <tr key={category?._id} className="hover:bg-gray-50">
-                <td className="px-4 py-2 border-b text-center">{index + 1}</td>
-                <td className="px-4 py-2 border-b text-center">
-                  {category?.name}
-                </td>
-                <td className="px-4 py-2 border-b text-center">
-                  <UpdateCat name={category?.name} _id={category?._id} />
-                </td>
-              </tr>
-            ))}
+            {categories?.map(
+              (category: { _id: string; name: string }, index: number) => (
+                <tr key={category?._id} className="hover:bg-gray-50">
+                  <td className="px-4 py-2 border-b text-center">
+                    {index + 1}
+                  </td>
+                  <td className="px-4 py-2 border-b text-center">
+                    {category?.name}
+                  </td>
+                  <td className="px-4 py-2 border-b text-center">
+                    <UpdateCat name={category?.name} _id={category?._id} />
+                  </td>
+                </tr>
+              )
+            )}
           </tbody>
         </table>
       </div>

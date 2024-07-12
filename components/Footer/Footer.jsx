@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Container from "../ui/container";
 import { SiteLogo } from "../Navbar";
@@ -8,10 +10,15 @@ import {
   FaWhatsapp,
 } from "react-icons/fa6";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Footer = () => {
+  const path = usePathname();
+  const paths = ["/login", "/login/register"];
   return (
-    <main className="text-center text-sm pt-3">
+    <main
+      className={paths.includes(path) ? "hidden" : "max-w-screen-xl mx-auto"}
+    >
       <div className="bg-gray-100/90 dark:bg-zinc-800 border-y border-gray-300 py-10">
         <Container>
           <div className="grid grid-cols-1 gap-4 md:gap-0 md:flex md:justify-between">

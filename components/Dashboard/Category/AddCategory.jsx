@@ -21,7 +21,6 @@ const AddCategory = () => {
     }
 
     const res = await axios.post("/api/v1/category", { name: name });
-    console.log(res);
 
     if (res?.data?.status === 201) {
       router.refresh();
