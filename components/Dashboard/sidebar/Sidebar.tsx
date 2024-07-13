@@ -45,6 +45,10 @@ const Sidebar = () => {
             <IoSettings size={20} />
             <span className="text-sm">Offer Banner</span>
           </Link>
+          <Link href={"/dashboard/orders"} className="flex gap-2 items-center">
+            <IoSettings size={20} />
+            <span className="text-sm">Orders</span>
+          </Link>
         </div>
       </div>
     </React.Fragment>

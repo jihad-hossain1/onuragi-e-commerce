@@ -9,7 +9,7 @@ const ShortBanner = () => {
   const [offerBanners, setOfferBanners] = React.useState([]);
   useEffect(() => {
     const fetchOfferBanners = async () => {
-      const res = await fetch("/api/v1/offerBanner");
+      const res = await fetch("/api/v1/banner/offer-banner");
       const data = await res.json();
       setOfferBanners(data);
     };

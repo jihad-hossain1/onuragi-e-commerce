@@ -7,6 +7,7 @@ import React from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import Link from "next/link";
+import Product from "@/components/products/Product";
 
 const CategoryOne = () => {
   const [products, setProducts] = React.useState([]);
@@ -63,14 +64,14 @@ const CategoryOne = () => {
   return (
     <Container>
       <div className="grid md:grid-cols-2 gap-4 lg:gap-6">
-        <div className="grid gap-4 items-center  md:py-8 max-sm:ml-5 max-sm:mt-12">
+        <div className="grid gap-4 items-center  md:py-8 max-sm:ml-5 max-sm:mt-12 px-3">
           <Link href={`/products/${undefined}=${poster?.productId}`}>
             <Image
               src={poster?.image}
               alt={poster?.title}
               height={400}
               width={800}
-              className="categoryOne w-full rounded lg:h-[500px] border shadow"
+              className="categoryOne lg:w-[500px] lg:h-[500px] "
             />
           </Link>
           <Link href={`/products/${undefined}=${poster2?.productId}`}>
@@ -79,7 +80,7 @@ const CategoryOne = () => {
               alt={poster2?.title}
               height={400}
               width={800}
-              className="categoryOne w-full rounded lg:h-[500px] border shadow"
+              className="categoryOne lg:w-[500px] lg:h-[500px] "
             />
           </Link>
         </div>
@@ -90,7 +91,7 @@ const CategoryOne = () => {
 
           <div className="mt-4 grid grid-cols-2 lg:grid-cols-2 gap-4">
             {filterProducts?.map((product, index) => (
-              <SingleProduct key={index} product={product} />
+              <Product key={index} product={product} />
             ))}
           </div>
         </div>
