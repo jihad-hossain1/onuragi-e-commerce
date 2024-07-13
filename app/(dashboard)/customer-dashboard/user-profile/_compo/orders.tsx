@@ -3,9 +3,24 @@
 import Modal from "@/components/Modal";
 import Image from "next/image";
 import React, { useState } from "react";
+import { changeStatus } from "./change-status";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { useSession } from "next-auth/react";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { validatedTag } from "@/helpers/validated-tag";
+import { getStatusColor } from "@/helpers/getcolor";
 
 const Orders = ({ orders }) => {
+  const router = useRouter();
+  const { data: session } = useSession();
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [orderStatus, setOrderStatus] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [orderInfo, setOrderInfo] = useState({
+    _id: "",
+    status: "",
+  });
 
   const getProducts = (order) => {
     return order?.products?.map((product) => {
@@ -23,6 +38,48 @@ const Orders = ({ orders }) => {
 
   const handleManageClick = (order) => {
     setSelectedOrder(order);
+    setOrderInfo({
+      _id: order?._id,
+      status: order?.status,
+    });
+  };
+
+  const handleStatusChange = async () => {
+    try {
+      setLoading(true);
+      const result = await changeStatus({
+        id: orderInfo._id,
+        status: orderStatus,
+        uid: session?.user?.id,
+      });
+      setLoading(false);
+      if (result?.error) {
+        toast.error(result?.error, {
+          position: "top-right",
+          style: {
+            borderRadius: "10px",
+            background: "#fff",
+            color: "red",
+          },
+        });
+      }
+
+      if (result?.result) {
+        validatedTag("cart");
+        router.refresh();
+        toast.success("Update Successfull", {
+          position: "top-right",
+          style: {
+            borderRadius: "10px",
+            background: "#fff",
+            color: "green",
+          },
+        });
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+    }
   };
 
   return (
@@ -37,8 +94,8 @@ const Orders = ({ orders }) => {
 
       {/* order list */}
       {orders?.length > 0 ? (
-        <div className="w-full overflow-x-scroll">
-          <table className="overflow-x-scroll">
+        <div className="w-full max-sm:overflow-x-scroll">
+          <table className="max-sm:overflow-x-scroll w-full">
             <thead>
               <tr>
                 <th className="px-4 py-2 border-b">No.</th>
@@ -67,7 +124,13 @@ const Orders = ({ orders }) => {
                     )}
                   </td>
                   <td className="px-4 py-2 border-b text-center">
-                    {order?.status}
+                    <span
+                      className={`px-2 text-sm ${getStatusColor(
+                        order?.status
+                      )} rounded py-[2px] shadow text-gray-950`}
+                    >
+                      {order?.status}
+                    </span>
                   </td>
                   <td className="px-4 py-2 border-b text-center">
                     {order?.details?.reduce((acc, pre) => acc + pre.price, 0)}
@@ -103,6 +166,41 @@ const Orders = ({ orders }) => {
           setOpen={setSelectedOrder}
           maxWidth={undefined}
         >
+          <div className="my-2 flex flex-col gap-1">
+            <h4 className="">
+              Status :
+              <span
+                className={`px-2 text-sm ${getStatusColor(
+                  orderInfo?.status
+                )} rounded py-[2px] shadow text-gray-950`}
+              >
+                {orderInfo?.status}
+              </span>
+            </h4>
+            {orderInfo?.status == "pending" && (
+              <div className="flex gap-1">
+                <select
+                  value={orderStatus}
+                  onChange={(e) => setOrderStatus(e.target.value)}
+                  className="w-full border p-2"
+                >
+                  <option value={""}>--- Change ---</option>
+                  <option value="cancelled">Cancel</option>
+                </select>
+                <button
+                  onClick={handleStatusChange}
+                  disabled={loading}
+                  className="text-xs btn"
+                >
+                  {loading ? (
+                    <AiOutlineLoading3Quarters className="animate-spin" />
+                  ) : (
+                    "Change"
+                  )}
+                </button>
+              </div>
+            )}
+          </div>
           <div className="flex flex-col gap-3">
             {getProducts(selectedOrder)?.map((product) => (
               <div
@@ -127,5 +225,7 @@ const Orders = ({ orders }) => {
     </section>
   );
 };
+
+
 
 export default Orders;

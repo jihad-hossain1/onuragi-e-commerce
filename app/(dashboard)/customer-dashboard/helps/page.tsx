@@ -1,7 +1,7 @@
 import Comming from "@/components/Comming";
 import React from "react";
 
-const CustomerDashboardpage = () => {
+const NeedHelpsPage = () => {
   return (
     <div>
       <Comming />
@@ -9,4 +9,4 @@ const CustomerDashboardpage = () => {
   );
 };
 
-export default CustomerDashboardpage;
+export default NeedHelpsPage;

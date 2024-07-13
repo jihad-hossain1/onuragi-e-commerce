@@ -1,8 +1,5 @@
-// "use client";
-
 import React from "react";
 import Profile from "./_compo/profile";
-// import { useSession } from "next-auth/react";
 import { serverAuth } from "@/hooks/serverAuth";
 import { fetchCart } from "@/utils/cart/fetchCart";
 import Orders from "./_compo/orders";
@@ -15,23 +12,9 @@ const ProfilePage = async () => {
     user = await fetchCart(session?.user?.id);
   }
 
-  // }
-  // const { data: session, status } = useSession();
-
-  // const [user, setUser] = React.useState<any>();
-  // React.useEffect(() => {
-  //   (async () => {
-  //     const user = await fetch(`/api/v1/users/${session?.user?.id}`);
-  //     const data = await user.json();
-  //     if (data) {
-  //       setUser(data);
-  //     }
-  //   })();
-  // }, [session?.user?.id]);
-
   return (
-    <main className="max-w-screen-xl mx-auto p-3 grid lg:grid-cols-4 gap-2">
-      <section className="grid  gap-3 lg:col-span-1">
+    <main className="max-w-screen-xl mx-auto p-3 ">
+      <section className="grid  gap-3 ">
         <Profile />
 
         {/* info  */}
@@ -50,6 +33,7 @@ const ProfilePage = async () => {
             <span>{user?.profile?.gender || "no data."}</span>
           </h4>
         </div>
+
         {/* address info  */}
         <div className="bg-gray-100/20 border border-gray-300 shadow-sm p-4 flex flex-col gap-4">
           <h4 className="text-center font-semibold underline">
@@ -90,9 +74,6 @@ const ProfilePage = async () => {
           </h4>
         </div>
       </section>
-
-      {/* order info  */}
-      <Orders orders={user?.orders} />
     </main>
   );
 };

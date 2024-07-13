@@ -133,63 +133,6 @@ const MobileSidebar = () => {
               </motion.li>
             ))}
           </motion.ul>
-          {/* <ul className="flex flex-col gap-6 text-nowrap">
-            <li>
-              <Link
-                href={"/dashboard/product-manage"}
-                className="flex gap-2 items-center"
-              >
-                <IoSettings size={20} />
-                <span className="text-sm">Products</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={"/dashboard/category-manage"}
-                className="flex gap-2 items-center"
-              >
-                <IoSettings size={20} />
-                <span className="text-sm">Category</span>
-              </Link>
-            </li>
-
-            <li>
-              <Link
-                href={"/dashboard/sub-category-manage"}
-                className="flex gap-2 items-center"
-              >
-                <IoSettings size={20} />
-                <span className="text-sm">Sub Category</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={"/dashboard/banners"}
-                className="flex gap-2 items-center"
-              >
-                <IoSettings size={20} />
-                <span className="text-sm">Banner</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={"/dashboard/posters"}
-                className="flex gap-2 items-center"
-              >
-                <IoSettings size={20} />
-                <span className="text-sm">Posters</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={"/dashboard/offer-banner"}
-                className="flex gap-2 items-center"
-              >
-                <IoSettings size={20} />
-                <span className="text-sm">Offer Banner</span>
-              </Link>
-            </li>
-          </ul> */}
         </nav>
       )}
     </div>

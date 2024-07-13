@@ -1,35 +1,16 @@
-// "use client";
-
 import CartQuantity from "@/components/Navbar/shopingCart/CartQuantity";
 import RemoveFromCart from "@/components/Navbar/shopingCart/RemoveFromCart";
 import { serverAuth } from "@/hooks/serverAuth";
 import { fetchCart } from "@/utils/cart/fetchCart";
-// import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import { TbCurrencyTaka } from "react-icons/tb";
 
 const CartPage = async () => {
-  // const [carts, setCarts] = React.useState<any>();
-  // const session = useSession();
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const cart = await fetch(
-  //       `/api/v1/users/cart?userId=${session?.data?.user?.id}`
-  //     );
-  //     const data = await cart.json();
-  //     if (data) {
-  //       setCarts(data);
-  //     }
-  //   })();
-  // }, [session?.data?.user?.id]);
-
-  // console.log(carts);
   const authUser: any = await serverAuth();
   const carts = await fetchCart(authUser?.user?.id);
-  // console.log("🚀 ~ CartPage ~ carts:", carts);
+
   return (
     <main className="max-w-screen-xl mx-auto p-4 min-h-[80vh]">
       <div className="flex flex-col gap-3">
@@ -97,11 +78,13 @@ const CartPage = async () => {
       <div></div>
 
       {carts?.result?.length == 0 && (
-        <div className="flex flex-col gap-3 items-center mt-10">
-          <p className="text-center">No product in cart</p>
-          <Link href="/products" className="btn mt-3 text-xs">
-            Continue shopping
-          </Link>
+        <div className="flex justify-center items-center min-h-[50vh]">
+          <div className="flex flex-col gap-3 items-center">
+            <p className="text-center">No product in cart</p>
+            <Link href="/products" className="btn mt-3 text-xs">
+              Continue shopping
+            </Link>
+          </div>
         </div>
       )}
     </main>

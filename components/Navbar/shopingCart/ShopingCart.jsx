@@ -109,10 +109,10 @@ const ShopingCart = ({ carts }) => {
             {carts?.length > 0 && (
               <SheetFooter className={"mt-4"}>
                 <Link
-                  href="/customer-dashboard/cart/checkout"
+                  href="/customer-dashboard/cart"
                   className="btn text-xs w-fit"
                 >
-                  Checkout
+                  Go to Cart
                 </Link>
               </SheetFooter>
             )}
