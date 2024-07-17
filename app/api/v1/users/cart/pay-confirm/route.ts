@@ -5,6 +5,27 @@ import Product from "@/src/models/product.models";
 import User from "@/src/models/user.models";
 import { NextRequest, NextResponse } from "next/server";
 
+async function generateUniqueID(): Promise<string> {
+  await connectDatabase("Ecommerce");
+  const previousEcom = await EcomDelivery.find({});
+
+  const rememberPreviousItemCodes = previousEcom?.map((order) => order?.did);
+
+  // Extract the numeric part of the IDs and find the maximum number
+  const maxNumber = rememberPreviousItemCodes?.reduce((max, id) => {
+    const num = parseInt(id?.replace("OID", ""), 5);
+    return num > max ? num : max;
+  }, 0);
+
+  // Increment the maximum number by 1
+  const nextNumber = maxNumber + 1;
+
+  // Format the new ID with leading zeros
+  const newID = `OID${nextNumber?.toString()?.padStart(5, "0")}`;
+
+  return newID;
+}
+
 // generate random id
 function generateRandomId() {
   return (
@@ -51,6 +72,7 @@ export async function POST(req: NextRequest) {
       return sum + item.details.price * item.quantity;
     }, 0);
 
+    const newId = await generateUniqueID();
     // saved on EcomDelivery
     const createDelivery = await EcomDelivery.create({
       products: userCarts,
@@ -66,7 +88,7 @@ export async function POST(req: NextRequest) {
         zipCode: user?.profile?.deliveryAddress?.dzipCode,
       },
       totalPrice: totalPrice,
-      did: generateRandomId(),
+      did: newId,
     });
 
     // create order

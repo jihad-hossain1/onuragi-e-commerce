@@ -22,26 +22,22 @@ export async function PATCH(req: NextRequest) {
       );
     }
 
-    const updateUserDeliveryStatus = await User.findByIdAndUpdate(
-      updateOrder?.userId,
-      {
-        $push: {
-          deliveries: {
-            did: updateOrder?.did,
-            status: status,
-          },
-        },
-      },
-      { new: true }
-    );
+    const updateUserDeliveryStatus = await User.findById(updateOrder?.userId);
 
+    const findUserDelivery = updateUserDeliveryStatus?.deliveries?.find(
+      (order: { _id: string; status: string; did: string }) =>
+        order?.did == updateOrder?.did
+    );
     // // update order status
-    if (!updateUserDeliveryStatus) {
+    if (!findUserDelivery) {
       return NextResponse.json(
-        { error: "user are not found" },
+        { error: "user order are not found" },
         { status: 400 }
       );
     }
+
+    findUserDelivery.status = status;
+    await updateUserDeliveryStatus?.save();
 
     return NextResponse.json({ result: "success" }, { status: 200 });
   } catch (error) {

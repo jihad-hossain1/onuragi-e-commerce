@@ -1,5 +1,6 @@
 import { validateOBJID } from "@/helpers/validetField";
 import connectDatabase from "@/src/config/mongodbConnection";
+import EcomDelivery from "@/src/models/ecomdelivery";
 import User from "@/src/models/user.models";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -36,6 +37,14 @@ export async function PATCH(req: NextRequest) {
     if (findOrder?.status == "pending") {
       findOrder.status = status;
       await findUser.save();
+
+      const changeStatusOnEcom = await EcomDelivery.findOne({
+        did: findOrder?.did,
+      });
+
+      changeStatusOnEcom.status = status;
+      await changeStatusOnEcom.save();
+
       return NextResponse.json(
         { message: "order status updated", result: "success" },
         { status: 200 }
