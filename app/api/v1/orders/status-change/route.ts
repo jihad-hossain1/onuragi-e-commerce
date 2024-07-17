@@ -22,27 +22,26 @@ export async function PATCH(req: NextRequest) {
       );
     }
 
-    const updateUser = await User.findOne({ _id: updateOrder?.userId });
+    const updateUserDeliveryStatus = await User.findByIdAndUpdate(
+      updateOrder?.userId,
+      {
+        $push: {
+          deliveries: {
+            did: updateOrder?.did,
+            status: status,
+          },
+        },
+      },
+      { new: true }
+    );
 
-    // update order status
-    if (!updateUser) {
+    // // update order status
+    if (!updateUserDeliveryStatus) {
       return NextResponse.json(
         { error: "user are not found" },
         { status: 400 }
       );
     }
-
-    const findUserOrder = updateUser?.deliveries?.find(updateOrder?.did);
-    console.log("🚀 ~ PATCH ~ findUserOrder:", findUserOrder);
-    findUserOrder.status = status;
-    await findUserOrder.save();
-
-    // if (!updateUser) {
-    //   return NextResponse.json(
-    //     { error: "user are not found" },
-    //     { status: 400 }
-    //   );
-    // }
 
     return NextResponse.json({ result: "success" }, { status: 200 });
   } catch (error) {

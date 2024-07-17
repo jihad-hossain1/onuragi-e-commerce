@@ -9,31 +9,10 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { toast } from "sonner";
 import { changeOrderStatus } from "./server-action";
 
-function getStatusColor(status: string) {
-  switch (status) {
-    case "pending":
-      return "bg-yellow-100";
-    case "delivered":
-      return "bg-green-100";
-    case "shipped":
-      return "bg-blue-100";
-    case "returned":
-      return "bg-orange-100";
-    case "cancelled":
-      return "bg-red-100";
-    case "failed":
-      return "bg-gray-100";
-    case "refunded":
-      return "bg-purple-100";
-    case "processing":
-      return "bg-teal-100";
-    default:
-      return "bg-white";
-  }
-}
+
 
 const MangeOrder = ({ orderInfo }) => {
-  console.log("🚀 ~ MangeOrder ~ orderInfo:", orderInfo);
+  // console.log("🚀 ~ MangeOrder ~ orderInfo:", orderInfo);
   const [myInfo, setMyInfo] = useState(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -63,6 +42,8 @@ const MangeOrder = ({ orderInfo }) => {
         uid: orderInfo?.user?._id,
       });
       setLoading(false);
+      console.log("🚀 ~ handleStatusChange ~ result:", result);
+
       if (result?.error) {
         toast.error(result?.error, {
           position: "top-right",
@@ -76,6 +57,7 @@ const MangeOrder = ({ orderInfo }) => {
 
       if (result?.result) {
         validatedTag("cart");
+        validatedTag("order");
         router.refresh();
         toast.success("Update Successfull", {
           position: "top-right",
@@ -113,6 +95,28 @@ const MangeOrder = ({ orderInfo }) => {
     }
   }, [orderInfo?.status]);
 
+  function getStatusColor(status: string) {
+    switch (status) {
+      case "pending":
+        return "bg-yellow-100";
+      case "delivered":
+        return "bg-green-100";
+      case "shipped":
+        return "bg-blue-100";
+      case "returned":
+        return "bg-orange-100";
+      case "cancelled":
+        return "bg-red-100";
+      case "failed":
+        return "bg-gray-100";
+      case "refunded":
+        return "bg-purple-100";
+      case "processing":
+        return "bg-teal-100";
+      default:
+        return "bg-white";
+    }
+  }
   return (
     <div>
       <div className="flex justify-center my-3">
