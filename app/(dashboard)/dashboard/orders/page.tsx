@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react";
 
 const OrdersPage = () => {
   const [orders, setOrders] = React.useState([]);
-  console.log("🚀 ~ OrdersPage ~ orders:", orders);
   const [page, setPage] = React.useState(1);
   const [pageSize, setPageSize] = React.useState(12);
   const [limit, setLimit] = React.useState(10);

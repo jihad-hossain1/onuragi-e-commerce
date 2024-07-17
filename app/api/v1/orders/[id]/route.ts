@@ -93,6 +93,7 @@ export async function GET(
           payInfo: 1,
           address: 1,
           products: 1,
+          did: 1,
         },
       },
     ]);
