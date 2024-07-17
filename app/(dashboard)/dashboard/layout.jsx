@@ -4,7 +4,7 @@ import MobileSidebar from "@/components/Dashboard/sidebar/MobileSidebar";
 
 const DashboardLayout = ({ children }) => {
   return (
-    <div className="grid lg:grid-cols-6 ">
+    <div className="grid lg:grid-cols-6 container mx-auto">
       <div className="lg:col-span-1">
         <Sidebar />
         <MobileSidebar />

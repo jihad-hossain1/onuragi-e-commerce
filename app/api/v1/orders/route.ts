@@ -1,5 +1,7 @@
 import connectDatabase from "@/src/config/mongodbConnection";
 import EcomDelivery from "@/src/models/ecomdelivery";
+// import Product from "@/src/models/product";
+// import User from "@/src/models/user";
 import { NextRequest, NextResponse } from "next/server";
 import { Document, FilterQuery } from "mongoose";
 
@@ -52,11 +54,73 @@ export async function GET(req: NextRequest) {
   // Fetch total count
   const total = await EcomDelivery.countDocuments(searchQuery);
 
-  // Fetch paginated data
-  const data = await EcomDelivery.find(searchQuery)
-    .sort({ [sortBy]: parsedSortOrder })
-    .skip(skip)
-    .limit(parsedPageSize);
+  // Fetch paginated data with product and user details populated
+  const data = await EcomDelivery.aggregate([
+    { $match: searchQuery },
+    { $sort: { [sortBy]: parsedSortOrder } },
+    { $skip: skip },
+    { $limit: parsedPageSize },
+    {
+      $lookup: {
+        from: "products",
+        localField: "products.product",
+        foreignField: "_id",
+        as: "productDetails",
+      },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "userId",
+        foreignField: "_id",
+        as: "userDetails",
+      },
+    },
+    {
+      $addFields: {
+        products: {
+          $map: {
+            input: "$products",
+            as: "prod",
+            in: {
+              $mergeObjects: [
+                "$$prod",
+                {
+                  $arrayElemAt: [
+                    {
+                      $filter: {
+                        input: "$productDetails",
+                        as: "detail",
+                        cond: { $eq: ["$$detail._id", "$$prod.product"] },
+                      },
+                    },
+                    0,
+                  ],
+                },
+              ],
+            },
+          },
+        },
+        user: {
+          $arrayElemAt: ["$userDetails", 0],
+        },
+      },
+    },
+    {
+      $project: {
+        "user._id": 1,
+        "user.username": 1,
+        "user.email": 1,
+        did: 1,
+        createdAt: 1,
+        totalPrice: 1,
+        status: 1,
+        payInfo: 1,
+        address: 1,
+        products: 1,
+      },
+    },
+  ]);
 
   return NextResponse.json({
     meta: {
