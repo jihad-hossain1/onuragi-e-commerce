@@ -271,6 +271,7 @@ const ProductQuestion = ({ questions, productId }) => {
         <label htmlFor="">Write your Question here.</label>
         <textarea
           cols={2}
+          rows={5}
           className="input"
           name={"content"}
           id={"content"}

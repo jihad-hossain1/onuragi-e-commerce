@@ -3,6 +3,7 @@ import connectDatabase from "@/src/config/mongodbConnection";
 import Image from "@/src/models/image.models";
 import Product from "@/src/models/product.models";
 import ProductDetail from "@/src/models/productDetails.models";
+import ProductReview from "@/src/models/productReview.models";
 import ProductSpecification from "@/src/models/productSpecification.models";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
@@ -102,6 +103,7 @@ export async function GET(req: NextRequest) {
     });
 
     const findImages = await Image.findOne({ productID: product?._id });
+
 
     result = {
       product: product,

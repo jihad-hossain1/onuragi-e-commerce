@@ -16,25 +16,24 @@ const productReviewSchema = new Schema(
     content: {
       type: String,
       required: true,
+      max: 300
     },
     user: {
       type: userType,
       required: true,
     },
-    replies: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Reply",
-      },
-    ],
-    productID: {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    },
+    productId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Product",
       required: [true, "Product id must be required"],
     },
     rating: {
       type: Number,
-      required: true,
+      default: 5
     },
   },
   { timestamps: true }

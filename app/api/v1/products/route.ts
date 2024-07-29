@@ -42,13 +42,8 @@ export async function POST(req: NextRequest) {
     validateFieldMaxMin(defaultSize, "Default Size", 3, 20);
     fieldValidate(slug, "Product Slug");
     fieldValidate(price, "Price");
-    fieldValidate(image, "Product Image");
+    // fieldValidate(image, "Product Image");
 
-    // Ensure price is a number
-    const priceNumber = parseFloat(price);
-    if (isNaN(priceNumber)) {
-      throw new Error("Price must be a valid number.");
-    }
 
     // Connect to the database
     await connectDatabase("product");
@@ -71,7 +66,7 @@ export async function POST(req: NextRequest) {
       name,
       image,
       categoryID,
-      price: priceNumber,
+      price: Number(price),
       slug: slug?.trim()?.toLowerCase(),
       defaultColor,
       defaultSize,

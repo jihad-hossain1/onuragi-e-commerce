@@ -26,26 +26,26 @@ export async function POST(request: NextRequest) {
 
     if (findSameProduct) {
       findSameProduct.quantity += quantity;
-      await user.save();
+      const cart =  await user.save();
       return NextResponse.json(
-        { message: "already in cart", result: "ok" },
+        { message: "already in cart", result: cart.carts },
         {
           status: 200,
         }
       );
     } else {
       user.carts.push({ product: productId, quantity, userId, size, color });
-      await user.save();
+    const cart =  await user.save();
 
       return NextResponse.json(
-        { message: "Product added to cart successfully.", result: "ok" },
+        { message: "Product added to cart successfully.", result: cart.carts },
         {
           status: 200,
         }
       );
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
 
     return NextResponse.json({ error: error }, { status: 500 });
   }

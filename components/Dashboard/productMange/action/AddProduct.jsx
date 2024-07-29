@@ -77,6 +77,18 @@ const AddProduct = ({ categories }) => {
         validatedTag("products");
         setLoading(false);
         toast.success("product added Successfull");
+
+        setFormData({
+          name: "",
+          categoryID: "",
+          price: 0,
+          slug: "",
+          defaultColor: "",
+          defaultSize: ""
+        });
+        setPhoto("");
+        setimage(null);
+        
         router.refresh();
         setTimeout(() => {
           setIsOpen(false);

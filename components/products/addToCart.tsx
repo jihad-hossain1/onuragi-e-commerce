@@ -40,6 +40,8 @@ const AddToCart = ({
       });
       setLoading(false);
 
+      console.log("response",response)
+
       if (response?.error) {
         setLoading(false);
         toast.error(response?.error, {

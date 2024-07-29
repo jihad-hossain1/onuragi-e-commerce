@@ -4,8 +4,7 @@ import React from "react";
 import ProductDetail from "./ProductDetail";
 import ProductSpecifications from "./ProductSpecifications";
 
-const ProductDetails = ({ product, questions }) => {
-  // console.log("🚀 ~ ProductDetails ~ product:", product);
+const ProductDetails = ({ product, questions, reviews }) => {
   return (
     <div>
       <ProductDetail
@@ -18,7 +17,7 @@ const ProductDetails = ({ product, questions }) => {
         product={product?.product}
         details={product?.details}
         questions={questions}
-        reviews={product?.reviews}
+        reviews={reviews}
       />
     </div>
   );
