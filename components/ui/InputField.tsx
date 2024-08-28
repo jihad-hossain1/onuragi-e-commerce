@@ -47,7 +47,7 @@ const InputField: React.FC<InputFieldProps> = ({
       <label
         id="gsaplabel"
         htmlFor={id}
-        className="ml-2 text-lg font-medium text-neutral-50 dark:text-neutral-200"
+        className="ml-2 text-lg font-medium text-pink-600"
       >
         {label}
       </label>

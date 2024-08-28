@@ -120,8 +120,8 @@ const UserForm = () => {
   if (status == "loading" && loading) return <Loader />;
 
   return (
-    <div className="text-white max-sm:w-[390px] w-[500px] mx-auto max-sm:px-5 max-sm:py-8 bg-pink-700 p-20 rounded-xl shadow-[4px_35px_60px_-15px_rgba(0,0,0,0.3)] ">
-      <form action={handleLogin} className="flex flex-col gap-5 ">
+    <div className="text-white max-sm:w-[390px] w-[500px] mx-auto max-sm:px-5 max-sm:py-8 bg-pink-200/90 p-20 rounded-xl shadow-[0px_0px_2px_rgba(0,0,0,0.3)] ">
+      <form action={handleLogin} className="text-pink-600 flex flex-col gap-5 ">
         <h1 className="text-3xl font-bold my-6 textgsap">Login</h1>
 
         <InputField
@@ -147,7 +147,7 @@ const UserForm = () => {
         </button>
       </form>
 
-      <div className="flex gap-1 items-center text-sm mt-2 textgsap">
+      <div className="flex gap-1 items-center text-sm mt-2 textgsap text-pink-600">
         <h4> You have no account ?</h4>
         <Link
           href={"/login/register"}

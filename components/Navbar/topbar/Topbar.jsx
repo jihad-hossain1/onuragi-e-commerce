@@ -24,7 +24,7 @@ const Topbar = () => {
     >
       <section className="max-w-screen-xl m-auto">
         <div className="flex items-center justify-between  lg:px-0 px-2">
-          <h4 className="text-sm ">
+          <h4 className="text-[10px] ">
             You can order custom designs{" "}
             <button onClick={handleCall} className="underline text-blue-500">
               Contact here
@@ -44,7 +44,7 @@ const Language = () => {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className="text-sm flex gap-1 items-center">
+        <DropdownMenuTrigger className="text-[10px] flex gap-1 items-center">
           <span>English</span>
           <FaAngleDown />
         </DropdownMenuTrigger>
@@ -61,7 +61,7 @@ const Currency = () => {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className="text-sm flex gap-1 items-center">
+        <DropdownMenuTrigger className="text-[10px] flex gap-1 items-center">
           <span>BDT</span> <FaAngleDown />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">

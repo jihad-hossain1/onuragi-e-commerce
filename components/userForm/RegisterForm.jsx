@@ -81,8 +81,8 @@ const RegisterForm = () => {
     );
   }, []);
   return (
-    <div className="text-white max-sm:w-[390px] w-[500px] mx-auto max-sm:px-5 max-sm:py-8 bg-pink-700 p-20 rounded-xl shadow-[4px_35px_60px_-15px_rgba(0,0,0,0.3)] ">
-      <h1 className="text-3xl font-bold my-6 textgsap">Register</h1>
+    <div className="text-white max-sm:w-[390px] w-[500px] mx-auto max-sm:px-5 max-sm:py-8 bg-pink-200/90 p-20 rounded-xl shadow-[0px_0px_2px_rgba(0,0,0,0.3)] ">
+      <h1 className="text-3xl font-bold my-6 textgsap text-pink-600">Register</h1>
       <form action={handleRegister} className="flex flex-col gap-1">
         <InputField
           label="Full Name"
@@ -122,7 +122,7 @@ const RegisterForm = () => {
         </button>
       </form>
 
-      <div className="flex gap-1 items-center text-sm mt-3 textgsap">
+      <div className="flex gap-1 items-center text-sm mt-3 textgsap text-pink-600">
         <h4>Already have an account ?</h4>
         <Link href={"/login"} className="">
           Login
