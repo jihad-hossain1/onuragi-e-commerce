@@ -10,6 +10,6 @@ export async function fetchSingleOfferBanner(id: string) {
     const result = await banner.json();
     return result;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }

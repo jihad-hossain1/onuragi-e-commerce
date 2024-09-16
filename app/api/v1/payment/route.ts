@@ -11,7 +11,6 @@ const tran_id = new Object().toString();
 
 export async function POST(req: NextRequest) {
   const { userId } = await req.json();
-  console.log("🚀 ~ POST ~ userId:", userId);
 
   const data = {
     total_amount: 100,
@@ -55,7 +54,6 @@ export async function POST(req: NextRequest) {
     //   let GatewayPageURL = apiResponse.GatewayPageURL;
     //   // NextResponse.redirect(GatewayPageURL);
     //   // NextResponse.redirect(GatewayPageURL);
-    //   console.log("Redirecting to: ", GatewayPageURL);
     // });
 
     return NextResponse.json({ result: findUser }, { status: 200 });

@@ -3,10 +3,8 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import AddToCart from "../addToCart";
-import Link from "next/link";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { handleAddToCart } from "@/utils/handleAddToCart";
 import { useSession } from "next-auth/react";
 import BuyNow from "../buyNow";
 import { useGSAP } from "@gsap/react";
@@ -178,20 +176,20 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, details }) => {
         </div>
         <div id="details" className="lg:w-1/2 p-3 lg:p-6 ">
           <h1 className="tnttxt opacity-0 text-2xl font-bold mb-2 uppercase">
-            {product.name}
+            {product?.name}
           </h1>
           <div className="text-yellow-500 mb-2 tnttxt opacity-0">
-            {product.rating || 0} Ratings
+            {product?.rating || 0} Ratings
           </div>
           <div className="text-gray-700 mb-4">
             <span className="line-through text-gray-400 tnttxt opacity-0">
-              ৳ {product.price}
+              ৳ {product?.price}
             </span>
             <span className="text-red-500 text-2xl tnttxt opacity-0">
               ৳ {currentPrice}
             </span>
             <span className="text-green-500 ml-2 tnttxt opacity-0">
-              -{product.discount || 0}%
+              -{product?.discount || 0}%
             </span>
           </div>
           <div className="mb-4 tnttxt opacity-0">
@@ -199,15 +197,15 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, details }) => {
             <div className="flex space-x-2">
               {availableSizes.map((size) => (
                 <button
-                  key={size.size}
+                  key={size?.size}
                   className={`py-2 px-4 rounded ${
-                    selectedSize === size.size
+                    selectedSize === size?.size
                       ? "border-2 border-pink-500"
                       : "border border-pink-200"
                   }`}
-                  onClick={() => handleSizeSelect(size.size)}
+                  onClick={() => handleSizeSelect(size?.size)}
                 >
-                  {size.size}
+                  {size?.size}
                 </button>
               ))}
             </div>
@@ -216,15 +214,15 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, details }) => {
             <div className="flex space-x-2">
               {availableColors.map((color) => (
                 <div
-                  key={color.name}
-                  onClick={() => handleColorSelect(color.name)}
+                  key={color?.name}
+                  onClick={() => handleColorSelect(color?.name)}
                   className="cursor-pointer flex flex-col gap-1"
                 >
                   <button
-                    style={{ backgroundColor: color.color }}
+                    style={{ backgroundColor: color?.color }}
                     className="py-2 px-4 rounded"
                   ></button>
-                  <button className="text-xs">{color.name}</button>
+                  <button className="text-xs">{color?.name}</button>
                 </div>
               ))}
             </div>
@@ -258,12 +256,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, details }) => {
               currentPrice={currentPrice}
               productId={product._id}
             />
-            {/* <button
-              onClick={handleAddToCartClick}
-              className="py-2 px-4 bg-blue-500 text-white rounded"
-            >
-              Add to Cart
-            </button> */}
+          
             <AddToCart
               defaultColor={
                 selectedColor ? selectedColor : product?.defaultColor

@@ -69,7 +69,6 @@ export async function GET(req: NextRequest) {
 
   const findReviews = await ProductReview.find({ productId: pid }).select('content createdAt rating user')
 
-  console.log("findreviews", findReviews)
 
   return NextResponse.json({ result: findReviews }, { status: 200 });
 }

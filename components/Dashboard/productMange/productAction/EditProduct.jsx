@@ -36,7 +36,7 @@ const EditProduct = ({ product, categories }) => {
        let _up = await res?.data?.secure_url;
        setPhoto(_up);
      } catch (error) {
-       console.log(error);
+
      }
    };
 
@@ -58,7 +58,6 @@ const EditProduct = ({ product, categories }) => {
          toast("product update Successfull");
          router.push("/dashboard/product-manage");
        } else {
-         console.log(res?.response);
          setBtnDisabled(res.data.isValid);
          setError(res?.data?.message);
          toast(res?.data?.message);
@@ -66,7 +65,6 @@ const EditProduct = ({ product, categories }) => {
      } catch (error) {
        setError(error?.response?.data?.message);
        toast(error?.response?.data?.error);
-       console.log(error?.response);
      }
    };
 
@@ -77,7 +75,7 @@ const EditProduct = ({ product, categories }) => {
 
    useEffect(() => {
      if (error) {
-       console.log(error);
+       console.error(error);
      }
    }, [error, _photo, image, btnDisabled]);
 

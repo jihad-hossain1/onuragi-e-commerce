@@ -14,7 +14,6 @@ export async function GET(req: NextRequest, { params }) {
     const productImages = await Image.find({
       productID: productID,
     });
-    console.log("productImages here: ", productImages);
 
     if (productImages) {
       return NextResponse.json({ images: productImages }, { status: 201 });
@@ -25,7 +24,6 @@ export async function GET(req: NextRequest, { params }) {
       );
     }
   } catch (error) {
-    // console.log(error);
     return NextResponse.json({ error: error?.message }, { status: 500 });
   }
 }

@@ -50,15 +50,12 @@ export const options: NextAuthOptions = {
       clientId: process.env.GOOGLE_ID!,
       clientSecret: process.env.GOOGLE_Secret!,
       profile: async (profile: GoogleProfile, tokens: TokenSet) => {
-        console.log("Profile Google: ", profile);
 
         const { email } = profile;
 
         await connectDatabase("user");
 
         let userExist = await User.findOne({ email: email });
-
-        console.log("exist email user ", userExist);
 
         if (!userExist) {
           await connectDatabase("User");
@@ -135,7 +132,6 @@ export const options: NextAuthOptions = {
             return Promise.resolve(null);
           }
         } catch (error) {
-          console.log(error);
         }
       },
     }),

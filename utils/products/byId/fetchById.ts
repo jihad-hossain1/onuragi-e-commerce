@@ -12,9 +12,9 @@ export async function fetchProductById(id: string) {
     if (res.ok) {
       return result;
     } else if (!res.ok) {
-      console.log("failed to fetch data product by id");
+      console.error("failed to fetch data product by id");
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }

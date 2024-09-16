@@ -17,8 +17,6 @@ const UpdateCat = ({ _id, name }) => {
     };
 
     async function submit() {
-        console.log(isName);
-
         try {
             const response = await fetch(`/api/v1/category/${_id}`, {
                 method: "PATCH",
@@ -33,7 +31,6 @@ const UpdateCat = ({ _id, name }) => {
             if (!response.ok) {
                 toast(result?.error);
                 router.refresh()
-                console.log(result)
             }
 
             if (response.ok) {
@@ -43,7 +40,6 @@ const UpdateCat = ({ _id, name }) => {
                 setOpen(false);
             }
         } catch (error: any) {
-            console.log(error)
         }
     }
     return (

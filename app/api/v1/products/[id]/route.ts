@@ -1,8 +1,5 @@
 import connectDatabase from "@/src/config/mongodbConnection";
-import Image from "@/src/models/image.models";
 import Product from "@/src/models/product.models";
-import ProductDetail from "@/src/models/productDetails.models";
-import SubCategory from "@/src/models/subCategory.models";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -101,7 +98,6 @@ export async function PUT(req: NextRequest, { params }) {
       return NextResponse.json(updatedPro, { status: 201 });
     }
   } catch (error) {
-    // console.log(error);
     return NextResponse.json({ error: error?.message }, { status: 500 });
   }
 }

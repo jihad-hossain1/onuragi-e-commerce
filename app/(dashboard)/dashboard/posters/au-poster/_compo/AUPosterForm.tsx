@@ -46,7 +46,6 @@ const AUPosterForm = ({ posterData, id, products }) => {
       setPhoto(_up);
     } catch (error) {
       setLoading(false);
-      console.log(error);
     }
   };
 

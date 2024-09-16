@@ -36,7 +36,7 @@ const AddCategory = () => {
 
   useEffect(() => {
     if (error) {
-      console.log(error);
+      console.error(error);
     }
   }, [error]);
   return (

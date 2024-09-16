@@ -89,7 +89,6 @@ const Payment = ({
     try {
       setLoading(true);
       const image = await fileUpload(showName);
-      console.log("🚀 ~ handlePayment ~ image:", image);
       payment.sc = image;
 
       const response = await payserver({ userId, payment });

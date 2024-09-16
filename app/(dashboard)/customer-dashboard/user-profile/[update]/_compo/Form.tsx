@@ -9,7 +9,7 @@ import { validatedTag } from "@/helpers/validated-tag";
 import Link from "next/link";
 
 const Form = ({ user }) => {
-console.log("🚀 ~ Form ~ user:", user);
+
 
 const [loading, setLoading] = useState(false);
 const router = useRouter();
@@ -26,7 +26,7 @@ const [formData, setFormData] = React.useState({
   dzipCode: "",
   dcity: "",
 });
-// console.log("🚀 ~ Form ~ formData:", formData);
+
 
 const handleChange = (e) => {
   const { name, value } = e.target;
@@ -39,12 +39,9 @@ const handleChange = (e) => {
 const handleSubmit = async (e) => {
   e.preventDefault();
 
-  console.log(formData);
-
   try {
     setLoading(true);
     const res = await serverAction({ ...formData, id: user?._id });
-    // console.log("🚀 ~ handleSubmit ~ res:", res)
     setLoading(false);
 
     if (res?.error) {

@@ -29,7 +29,6 @@ type TQusetion = {
 };
 
 const ProductQuestion = ({ questions, productId }) => {
-  // console.log("🚀 ~ ProductQuestion ~ questions:", questions);
   const [loading, setLoading] = useState(false);
   const [replyLoading, setReplyLoading] = useState(false);
   const [replyEditMode, setReplyEditMode] = useState(false);
@@ -94,7 +93,6 @@ const ProductQuestion = ({ questions, productId }) => {
         }
       }
 
-      // console.log(response);
     } catch (error) {
       setLoading(false);
       console.error(error);
@@ -195,7 +193,6 @@ const ProductQuestion = ({ questions, productId }) => {
     setReplyOpen(true);
     setTabIndex(ind);
     setQuestionId(id);
-    console.log(id);
   }
 
   function handleReplyBoxClose(ind) {

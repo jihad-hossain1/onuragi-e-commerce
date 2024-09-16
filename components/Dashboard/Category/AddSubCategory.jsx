@@ -41,7 +41,7 @@ const AddSubCategory = ({ categories }) => {
 
   useEffect(() => {
     if (error) {
-      console.log(error);
+      console.error(error);
     }
   }, [error]);
 

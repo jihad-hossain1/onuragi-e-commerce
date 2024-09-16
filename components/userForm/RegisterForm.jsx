@@ -33,7 +33,6 @@ const RegisterForm = () => {
           "Go to Login page and login your account with email or username & password",
         action: {
           label: <a href="/login">Login</a>,
-          // onClick: () => console.log("login"),
         },
       });
 
@@ -43,7 +42,6 @@ const RegisterForm = () => {
       setfullname("");
       router.push("/login");
     } catch (error) {
-      console.log(error?.response?.data?.message);
       return toast.error(
         error?.response?.data?.message || error?.response?.data?.error,
         {

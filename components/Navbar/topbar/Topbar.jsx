@@ -11,7 +11,7 @@ import { FaAngleDown } from "react-icons/fa6";
 
 const Topbar = () => {
   const path = usePathname();
-  const paths = ["/login", "/login/register",'/customer-dashboard'];
+  const paths = ["/login", "/login/register",'/customer-dashboard', '/dashboard'];
 
 
   const hiddenPath = paths.some((item) => path.startsWith(item));

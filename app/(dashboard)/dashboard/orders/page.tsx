@@ -12,7 +12,6 @@ const OrdersPage = () => {
   const [to, setTo] = React.useState("");
   const [from, setFrom] = React.useState("");
 
-  console.log(orders)
 
   useEffect(() => {
     const fetchProducts = async () => {

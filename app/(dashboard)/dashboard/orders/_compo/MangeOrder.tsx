@@ -12,7 +12,6 @@ import { changeOrderStatus } from "./server-action";
 
 
 const MangeOrder = ({ orderInfo }) => {
-  // console.log("🚀 ~ MangeOrder ~ orderInfo:", orderInfo);
   const [myInfo, setMyInfo] = useState(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -42,7 +41,6 @@ const MangeOrder = ({ orderInfo }) => {
         uid: orderInfo?.user?._id,
       });
       setLoading(false);
-      console.log("🚀 ~ handleStatusChange ~ result:", result);
 
       if (result?.error) {
         toast.error(result?.error, {

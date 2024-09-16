@@ -5,8 +5,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function PATCH(req: NextRequest, { params }) {
   const { name } = await req.json();
-  
-  console.log("TCL ~ PATCH ~ name:", name);
 
   const id = params.id;
   try {

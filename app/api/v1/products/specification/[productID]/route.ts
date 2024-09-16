@@ -29,7 +29,7 @@ export async function GET(req: NextRequest, { params }) {
       );
     }
   } catch (error) {
-    // console.log(error);
+
     return NextResponse.json({ error: error?.message }, { status: 500 });
   }
 }

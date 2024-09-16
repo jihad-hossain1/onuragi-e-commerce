@@ -14,7 +14,7 @@ import { usePathname } from "next/navigation";
 
 const Footer = () => {
   const path = usePathname();
-  const paths = ["/login", "/login/register",'/customer-dashboard'];
+  const paths = ["/login", "/login/register",'/customer-dashboard', '/dashboard'];
 
 
   const hiddenPath = paths.some((item) => path.startsWith(item));

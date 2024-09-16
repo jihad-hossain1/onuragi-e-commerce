@@ -213,7 +213,6 @@ const UpdateReview=({review})=>{
         }, 1500);
       }
 
-      console.log("update result", result);
     } catch (error) {
       setLoading(false)
       console.error(error?.message)

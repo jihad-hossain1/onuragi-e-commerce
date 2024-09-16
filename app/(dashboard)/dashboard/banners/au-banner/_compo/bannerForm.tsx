@@ -46,7 +46,6 @@ const BannerForm = ({ products, id, bannerData }) => {
       setPhoto(_up);
     } catch (error) {
       setLoading(false);
-      console.log(error);
     }
   };
 

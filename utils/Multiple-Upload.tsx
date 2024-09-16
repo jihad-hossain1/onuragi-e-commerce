@@ -33,17 +33,14 @@ const MultipleImageUploader = ({
                 let image = {
                     image: data?.url,
                 };
-                console.log(image);
                 arr.push(image);
             }
             setmultiLink(arr);
-            console.log(arr);
             setloading(false);
             toast.success("multiple image upload successfull");
             toast.success("check show upload button click");
-            console.log(multiLink);
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 

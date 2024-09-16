@@ -16,7 +16,6 @@ const CartQuantity = ({ quantity, id, productId, userId }) => {
         try {
             setLoading(true)
             const response = await increaseQuantity({ userId, id, productId, quantity });
-            // console.log("🚀 ~ handleIncreaseQuantity ~ response:", response)
             setLoading(false)
 
             if (response?.error) {
@@ -39,7 +38,6 @@ const CartQuantity = ({ quantity, id, productId, userId }) => {
         try {
             setLoading(true)
             const response = await decreaseQuantity({ userId, id, productId, quantity });
-            // console.log("🚀 ~ handleDecreaseQuantity ~ response:", response)
             setLoading(false)
 
             if (response?.error) {

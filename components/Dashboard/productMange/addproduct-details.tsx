@@ -22,7 +22,6 @@ const AddproductDetails: React.FC<ProductsProps> = ({
   detailId,
   detailValue,
 }) => {
-  console.log("🚀 ~ detailValue:", detailValue);
   const router = useRouter();
   const [loading, setLoading] = React.useState(false);
 
@@ -55,8 +54,6 @@ const AddproductDetails: React.FC<ProductsProps> = ({
           sizes: sizes,
           detailId: detailId,
         });
-
-        console.log("response ", response);
 
         setLoading(false);
 

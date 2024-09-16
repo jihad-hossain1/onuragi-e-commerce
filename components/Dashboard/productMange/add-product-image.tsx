@@ -28,12 +28,11 @@ const AddProductImages: React.FC<ProductsProps> = ({ productID }) => {
             if (response.ok) {
                 toast('success,image added successfully');
             } else {
-                console.log(result)
+
                 toast(result.error);
             }
 
         } catch (error: any) {
-            console.log(error)
         }
     }
     return (

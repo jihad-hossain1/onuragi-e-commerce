@@ -12,7 +12,6 @@ export async function POST(req, res) {
 
     // already category exist
     const namedEmpty = reqBody.name.trim();
-    // console.log(`"${namedEmpty}"`);
     await connectDatabase("product Category");
     const categoryExist = await Category.findOne({
       name: reqBody.name,
