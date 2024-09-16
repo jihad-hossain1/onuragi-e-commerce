@@ -5,10 +5,16 @@ import Search from "./search/Search";
 import ShopingCart from "./shopingCart/ShopingCart";
 import UserAccount from "./userAccount/UserAccount";
 import { ThemeButton } from "./themeButton/ThemeButton";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
+  const path = usePathname();
+  const paths = ["/login", "/login/register",'/customer-dashboard'];
+
+
+  const hiddenPath = paths.some((item) => path.startsWith(item));
   return (
-    <main className="max-w-screen-xl p-1 mx-auto">
+    <main className={hiddenPath ? "hidden" : "max-w-screen-xl mx-auto"}>
       <div className="flex items-center gap-4 justify-between">
         {/* logo section */}
         <section>Onuragi</section>

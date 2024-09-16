@@ -11,7 +11,10 @@ import { FaAngleDown } from "react-icons/fa6";
 
 const Topbar = () => {
   const path = usePathname();
-  const paths = ["/login", "/login/register"];
+  const paths = ["/login", "/login/register",'/customer-dashboard'];
+
+
+  const hiddenPath = paths.some((item) => path.startsWith(item));
   const handleCall = () => {
     // This will open the phone dialer with the given number
     window.location.href = `tel:+8801774437263`;
@@ -19,7 +22,7 @@ const Topbar = () => {
   return (
     <main
       className={
-        paths.includes(path) ? "hidden" : "border-b pb-2 py-2 shadow-sm"
+        hiddenPath ? "hidden" : "border-b pb-2 py-2 shadow-sm"
       }
     >
       <section className="max-w-screen-xl m-auto">

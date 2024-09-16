@@ -2,7 +2,6 @@ import React from "react";
 import Profile from "./_compo/profile";
 import { serverAuth } from "@/hooks/serverAuth";
 import { fetchCart } from "@/utils/cart/fetchCart";
-import Orders from "./_compo/orders";
 
 const ProfilePage = async () => {
   const session: any = await serverAuth();
@@ -13,7 +12,7 @@ const ProfilePage = async () => {
   }
 
   return (
-    <main className="max-w-screen-xl mx-auto p-3 ">
+    <main className="max-w-screen-xl mx-auto max-sm:m-0 max-sm:max-w-full p-3 max-sm:p-0">
       <section className="grid  gap-3 ">
         <Profile />
 

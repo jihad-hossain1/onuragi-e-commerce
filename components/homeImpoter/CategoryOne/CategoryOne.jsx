@@ -1,23 +1,32 @@
 "use client";
 
-import SingleProduct from "@/components/products/SingleProduct";
 import Container from "@/components/ui/container";
 import Image from "next/image";
 import React from "react";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
 import Link from "next/link";
 import Product from "@/components/products/Product";
+
+const Skeleton = ({ className }) => (
+  <div className={`animate-pulse bg-gray-300 ${className}`} />
+);
 
 const CategoryOne = () => {
   const [products, setProducts] = React.useState([]);
   const [posters, setPosters] = React.useState([]);
+  const [loadingProducts, setLoadingProducts] = React.useState(true);
+  const [loadingPosters, setLoadingPosters] = React.useState(true);
 
   React.useEffect(() => {
     const fetchProducts = async () => {
-      const res = await fetch("/api/v1/products");
-      const data = await res.json();
-      setProducts(data);
+      try {
+        const res = await fetch("/api/v1/products");
+        const data = await res.json();
+        setProducts(data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      } finally {
+        setLoadingProducts(false);
+      }
     };
 
     fetchProducts();
@@ -25,74 +34,80 @@ const CategoryOne = () => {
 
   React.useEffect(() => {
     const fetchPosters = async () => {
-      const res = await fetch("/api/v1/banner/poster");
-      const data = await res.json();
-      setPosters(data);
+      try {
+        const res = await fetch("/api/v1/banner/poster");
+        const data = await res.json();
+        setPosters(data);
+      } catch (error) {
+        console.error("Error fetching posters:", error);
+      } finally {
+        setLoadingPosters(false);
+      }
     };
 
     fetchPosters();
   }, []);
 
-  useGSAP(() => {
-    gsap.fromTo(
-      ".categoryOne",
-      {
-        opacity: 0,
-        duration: 1,
-        x: -16,
-        y: -26,
-        // ease: "power3.inOut",
-        // stagger: 0.1,
-      },
-      {
-        opacity: 1,
-        // x: 0,
-        // y: 0,
-        stagger: 0.1,
-        duration: 2,
-        ease: "power1.inOut",
-        // delay: 1,
-      }
-    );
-  }, [products]);
 
-  const poster = posters?.[0];
-  const poster2 = posters?.[1];
-
-  const filterProducts = [...products]?.splice(0, 6);
+  const filterProducts = products?.slice(0, 6);
 
   return (
     <Container>
-      <div className="grid md:grid-cols-2 gap-4 lg:gap-6">
-        <div className="grid gap-4 items-center  md:py-8 max-sm:ml-5 max-sm:mt-12 px-3">
-          <Link href={`/products/${undefined}=${poster?.productId}`}>
-            <Image
-              src={poster?.image}
-              alt={poster?.title}
-              height={400}
-              width={800}
-              className="categoryOne lg:w-[500px] lg:h-[500px] "
-            />
-          </Link>
-          <Link href={`/products/${undefined}=${poster2?.productId}`}>
-            <Image
-              src={poster2?.image}
-              alt={poster2?.title}
-              height={400}
-              width={800}
-              className="categoryOne lg:w-[500px] lg:h-[500px] "
-            />
-          </Link>
+      <div className="grid md:grid-cols-2 gap-4 lg:gap-6 max-sm:mt-6">
+        {/* Poster Section */}
+        <div className="grid max-sm:grid-cols-2 sm:grid-cols-3 md:grid-cols-2 gap-4 items-center py-4">
+          {loadingPosters
+            ? Array.from({ length: 4 }).map((_, index) => (
+                <Skeleton
+                  key={index}
+                  className="w-full h-[200px] md:h-[300px] rounded-md"
+                />
+              ))
+            : posters?.map((poster, index) => (
+                <div
+                  key={index}
+                  className="border group relative w-full h-[200px] md:h-[300px] p-0.5 rounded-md overflow-hidden "
+                >
+                  <Image
+                    src={poster?.image}
+                    alt={poster?.title}
+                    height={400}
+                    width={1000}
+                    className=" object-cover w-full h-full rounded-md"
+                    placeholder="blur"
+                    blurDataURL="/path/to/placeholder.jpg"
+                  />
+
+                  {/* Hover "View" Button */}
+                  <div className="group-hover:flex hidden absolute inset-0 z-50 bg-black/30 backdrop-blur-sm items-center justify-center">
+                    <Link
+                      className="text-white px-4 py-2 bg-slate-800/50 border border-pink-400 rounded-md"
+                      href={`/products/${poster?.slug}`}
+                    >
+                      View
+                    </Link>
+                  </div>
+                </div>
+              ))}
         </div>
+
+        {/* Product Section */}
         <div>
           <h4 className="text-xl font-bold border-b border-gray-400 pb-3">
             For Baby
           </h4>
 
-          <div className="mt-4 grid grid-cols-2 lg:grid-cols-2 gap-4">
-            {filterProducts?.map((product, index) => (
-              <Product key={index} product={product} />
-            ))}
+          <div className="mt-4 grid max-sm:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {loadingProducts
+              ? Array.from({ length: 6 }).map((_, index) => (
+                  <Skeleton
+                    key={index}
+                    className="h-[250px] w-full rounded-md"
+                  />
+                ))
+              : filterProducts?.map((product, index) => (
+                  <Product key={index} product={product} />
+                ))}
           </div>
         </div>
       </div>

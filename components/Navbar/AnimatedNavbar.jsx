@@ -16,10 +16,14 @@ import { usePathname } from "next/navigation";
 
 export function AnimatedNavbar({ products, carts }) {
   const path = usePathname();
-  const paths = ["/login", "/login/register"];
+  const paths = ["/login", "/login/register",'/customer-dashboard'];
+
+
+  const hiddenPath = paths.some((item) => path.startsWith(item));
+
   return (
     <main
-      className={paths.includes(path) ? "hidden" : "max-w-screen-xl mx-auto"}
+      className={hiddenPath ? "hidden" : "max-w-screen-xl mx-auto"}
     >
       <div className="relative w-full flex items-center justify-between mt-2">
         <MobileNav />

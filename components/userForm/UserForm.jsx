@@ -1,12 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import { toast } from "sonner";
 import InputField from "../../components/ui/InputField";
-import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import Loader from "../loader/Loader";
 
@@ -17,10 +16,12 @@ const UserForm = () => {
   const [loading, setloading] = useState(false);
 
   const router = useRouter();
+  const formRef = useRef(null);
 
-  const handleLogin = async () => {
-    if (email == "") {
-      return toast.error("email are required", {
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    if (email === "") {
+      return toast.error("Email is required", {
         position: "top-center",
         duration: 2000,
         style: {
@@ -30,8 +31,8 @@ const UserForm = () => {
           borderRadius: "10px",
         },
       });
-    } else if (password == "") {
-      return toast.error("password must be needed", {
+    } else if (password === "") {
+      return toast.error("Password is required", {
         position: "top-center",
         duration: 2000,
         style: {
@@ -42,7 +43,7 @@ const UserForm = () => {
         },
       });
     } else if (password?.length < 6) {
-      return toast.error("password must be 6 character", {
+      return toast.error("Password must be at least 6 characters", {
         position: "top-center",
         duration: 2000,
         style: {
@@ -56,12 +57,7 @@ const UserForm = () => {
 
     try {
       setloading(true);
-
-      const res = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      });
+      const res = await signIn("credentials", { email, password, redirect: false });
 
       if (!res?.ok) {
         setloading(false);
@@ -75,10 +71,9 @@ const UserForm = () => {
             borderRadius: "10px",
           },
         });
-      }
-      if (res?.ok) {
+      } else {
         setloading(true);
-        toast("LOGIN SUCCESSFULL");
+        toast("Login Successful");
         router.back();
       }
     } catch (error) {
@@ -96,32 +91,28 @@ const UserForm = () => {
     }
   };
 
-  useGSAP(() => {
-    gsap.fromTo(
-      ".textgsap",
-      {
-        opacity: 0,
-        duration: 1,
-        x: -160,
-        // ease: "elastic.inOut",
-        stagger: 0.1,
-      },
-      {
-        opacity: 1,
-        x: 0,
-        y: 0,
-        stagger: 0.1,
-        duration: 1,
-        ease: "elastic.inOut",
-      }
+  useEffect(() => {
+    const timeline = gsap.timeline({ defaults: { ease: "power3.out", duration: 1 } });
+    
+    timeline.fromTo(
+      ".textgsap", 
+      { opacity: 0, y: 50 }, 
+      { opacity: 1, y: 0, stagger: 0.2 }
+    );
+    
+    timeline.fromTo(
+      ".btn",
+      { opacity: 0, scale: 0.8 },
+      { opacity: 1, scale: 1, duration: 0.8, ease: "elastic.out(1, 0.75)" },
+      "-=0.5"
     );
   }, []);
 
-  if (status == "loading" && loading) return <Loader />;
+  if (status === "loading" && loading) return <Loader />;
 
   return (
     <div className="text-white max-sm:w-[390px] w-[500px] mx-auto max-sm:px-5 max-sm:py-8 bg-pink-200/90 p-20 rounded-xl shadow-[0px_0px_2px_rgba(0,0,0,0.3)] ">
-      <form action={handleLogin} className="text-pink-600 flex flex-col gap-5 ">
+      <form ref={formRef} onSubmit={handleLogin} className="text-pink-600 flex flex-col gap-5">
         <h1 className="text-3xl font-bold my-6 textgsap">Login</h1>
 
         <InputField
@@ -131,6 +122,7 @@ const UserForm = () => {
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          className="textgsap"
         />
 
         <InputField
@@ -140,20 +132,18 @@ const UserForm = () => {
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          className="textgsap"
         />
 
         <button className="btn textgsap" type="submit">
-          {loading ? "Loading..." : " login"}
+          {loading ? "Loading..." : "Login"}
         </button>
       </form>
 
       <div className="flex gap-1 items-center text-sm mt-2 textgsap text-pink-600">
-        <h4> You have no account ?</h4>
-        <Link
-          href={"/login/register"}
-          className="font-semibold hover:underline"
-        >
-          register
+        <h4>You have no account?</h4>
+        <Link href="/login/register" className="font-semibold hover:underline">
+          Register
         </Link>
       </div>
       <div className="mt-4">

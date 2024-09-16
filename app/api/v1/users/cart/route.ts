@@ -7,10 +7,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   const { productId, quantity, userId, size, color } = await request.json();
+  console.log("🚀 ~ POST ~ { productId, quantity, userId, size, color }:", { productId, quantity, userId, size, color })
 
   try {
-    validateOBJID(productId, "Product ID");
-    validateOBJID(userId, "User ID");
+    // validateOBJID(productId, "Product ID");
+    // validateOBJID(userId, "User ID");
 
     await connectDatabase("user");
 

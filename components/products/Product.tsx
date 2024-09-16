@@ -3,49 +3,40 @@
 import Image from "next/image";
 import React from "react";
 import AddToCart from "./addToCart";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
 
 const Product = ({ product }) => {
-  useGSAP(() => {
-    gsap.fromTo(
-      ".textgsap",
-      {
-        opacity: 0,
-        duration: 1,
-        x: -16,
-        y: -26,
-        ease: "back.out",
-        stagger: 0.1,
-      },
-      {
-        opacity: 1,
-        x: 0,
-        y: 0,
-        stagger: 0.1,
-        duration: 1,
-        ease: "back.inOut",
-        delay: 0.5,
-      }
-    );
-  }, [product]);
   return (
-    <div className="textgsap group border border-gray-100 rounded-sm shadow-sm hover:shadow max-sm:p-1 md:p-4 relative pb-4 ">
-      <a href={`/products/${product?.slug + `=${product?._id}`}`}>
+    <div className="group relative border border-gray-100 rounded-md shadow-sm hover:shadow-lg transition-all duration-300 max-sm:p-1 md:p-4 pb-4 bg-white hover:bg-gray-50">
+      {/* Product Link */}
+      <a href={`/products/${product?.slug}`} className="block relative overflow-hidden">
+        {/* Image with Hover Zoom */}
         <Image
-          alt="product iamge"
+          alt="product image"
           height={300}
           width={400}
-          className="rounded lg:max-h-[300px]"
+          className="rounded-md object-cover w-full h-full lg:max-h-[300px] max-sm:max-h-[200px] transition-transform duration-300 ease-in-out group-hover:scale-105"
           src={product?.image}
         />
+        {/* Hover Overlay */}
+        <div className="absolute inset-0 bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center rounded-md">
+          <span className="text-white text-sm font-semibold">Quick View</span>
+        </div>
       </a>
-      <h4>{product?.name}</h4>
-      <h4 className="pb-4">
-        <span className="">{`${product?.price}.00`}</span>
+
+      {/* Product Info */}
+      <h4 className="text-lg  font-semibold mt-2 max-sm:text-[12px] group-hover:text-blue-600 transition-colors duration-300">
+        {product?.name?.slice(0, 20)}
+      </h4>
+
+      {/* Product Price */}
+      
+
+      {/* Add to Cart Button */}
+      <div className="flex items-center justify-between">
+      <h4 className=" text-gray-600">
+        <span className="text-lg max-sm:text-[12px] font-bold">{`${product?.price}.00`}</span>
         <span className="text-xs ml-1">tk.</span>
       </h4>
-      <div className="absolute bottom-0 right-0">
         <AddToCart
           defaultColor={product?.defaultColor}
           defaultSize={product?.defaultSize}

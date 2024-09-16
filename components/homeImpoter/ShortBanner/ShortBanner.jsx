@@ -1,12 +1,12 @@
 "use client";
 
 import Container from "@/components/ui/container";
-
 import Image from "next/image";
 import React, { useEffect } from "react";
 
 const ShortBanner = () => {
   const [offerBanners, setOfferBanners] = React.useState([]);
+
   useEffect(() => {
     const fetchOfferBanners = async () => {
       const res = await fetch("/api/v1/banner/offer-banner");
@@ -19,24 +19,27 @@ const ShortBanner = () => {
 
   return (
     <Container>
-      <div className="grid md:grid-cols-2 mt-4 md:mt-12 gap-5">
+      <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-4 md:mt-12">
         {offerBanners?.map((offerBanner) => (
           <div
             key={offerBanner?._id}
-            className="bg-pink-100 p-5 lg:p-7 rounded-sm flex justify-between "
+            className="bg-pink-100 p-4 sm:p-6 lg:p-8 rounded-md flex items-center justify-between shadow-md transition-transform transform hover:scale-105 hover:bg-pink-200 hover:shadow-xl duration-300 ease-in-out"
           >
-            <div className="">
-              <h4 className="text-2xl font-semibold text-gray-800">
+            {/* Banner Text */}
+            <div className="max-w-xs">
+              <h4 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-800 transition-colors duration-300 group-hover:text-gray-900">
                 {offerBanner?.title}
               </h4>
-              {/* <h4 className="text-3xl font-semibold text-gray-800">50% OFF</h4> */}
+              {/* Add any additional text or discount info here */}
             </div>
-            <div>
+
+            {/* Banner Image */}
+            <div className="flex-shrink-0 transition-transform duration-300 ease-in-out group-hover:scale-110">
               <Image
-                className="max-h-[100px] max-w-[100px]"
-                alt="photo for banner"
-                width={400}
-                height={300}
+                className="w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] lg:w-[120px] lg:h-[120px] object-cover rounded-md"
+                alt="Banner image"
+                width={120}
+                height={120}
                 src={offerBanner?.image}
               />
             </div>

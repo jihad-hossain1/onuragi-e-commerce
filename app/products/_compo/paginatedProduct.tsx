@@ -1,8 +1,6 @@
 "use client";
 
 import SingleProduct from "@/components/products/SingleProduct";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
 import React, { useEffect } from "react";
 
 const PaginatedProduct = () => {

@@ -8,6 +8,8 @@ import { validatedTag } from '@/helpers/validated-tag'
 import { useRouter } from 'next/navigation'
 import Modal from "../Modal";
 import Link from "next/link";
+import { FaCartArrowDown } from "react-icons/fa";
+import { TbLoaderQuarter } from "react-icons/tb";
 
 const AddToCart = ({
   id,
@@ -24,7 +26,7 @@ const AddToCart = ({
   const [color, setColor] = React.useState(defaultColor);
 
   const handleAddToCart = async (productId: string) => {
-    if (status === "unauthenticated") {
+    if (!session?.user) {
       setOpen(true);
       return;
     }
@@ -40,8 +42,7 @@ const AddToCart = ({
       });
       setLoading(false);
 
-      console.log("response",response)
-
+  
       if (response?.error) {
         setLoading(false);
         toast.error(response?.error, {
@@ -55,9 +56,12 @@ const AddToCart = ({
       if (response?.result) {
         validatedTag("cart");
         setLoading(false);
-        toast.success(response?.message, {
+        toast.success("Product added to cart", {
           position: "top-center",
           duration: 3000,
+          style: {
+            color: "green",
+          }
         });
         router.refresh();
       }
@@ -68,12 +72,12 @@ const AddToCart = ({
   };
 
   return (
-    <div className="w-full">
+    <div>
       <button
         onClick={() => handleAddToCart(id)}
-        className={`bg-pink-500 w-fit rounded px-6 text-white max-sm:text-xs py-1`}
+        className={` rounded px-2 text-pink-600 max-sm:text-xs`}
       >
-        {loading ? "loading..." : "Add to cart"}
+        {loading ? <TbLoaderQuarter className="animate-spin text-xl" /> : <FaCartArrowDown className="text-xl" />}
       </button>
 
       <Modal
