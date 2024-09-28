@@ -61,7 +61,7 @@ const Products: React.FC<ProductsProps> = ({ products, subcategories }) => {
                     {product?.name}
                   </td>
                   <td className="py-3 px-6 text-left  border-b">
-                    {product?.categoryID || "no data"}
+                    {product?.catName || "N/A"}
                   </td>
                   <td className="py-3 px-6 text-left  border-b">
                     {product?.price}

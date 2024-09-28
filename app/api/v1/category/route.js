@@ -1,6 +1,7 @@
 import connectDatabase from "@/src/config/mongodbConnection";
 import Category from "@/src/models/category.models";
 import { NextResponse } from "next/server";
+import { generateUniqueID } from "@/helpers/generateId";
 
 export async function POST(req, res) {
   const reqBody = await req.json();
@@ -20,8 +21,10 @@ export async function POST(req, res) {
       return NextResponse.json({ message: "Category name are already exist" });
     }
 
+    // generate sid
+    const sid = await generateUniqueID(Category, "sid", "CAT");
     // save category
-    const newCategory = new Category({ name: reqBody.name });
+    const newCategory = new Category({ name: reqBody.name, sid: sid });
     const category = await newCategory.save();
 
     // send respon on user

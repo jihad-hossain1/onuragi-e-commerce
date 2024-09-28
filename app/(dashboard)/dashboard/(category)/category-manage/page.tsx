@@ -31,16 +31,20 @@ const Categorypage = async () => {
           <thead className="bg-gray-100">
             <tr>
               <th className="px-4 py-2 border-b">#</th>
+              <th className="px-4 py-2 border-b">SID</th>
               <th className="px-4 py-2 border-b">Name</th>
               <th className="px-4 py-2 border-b">Action</th>
             </tr>
           </thead>
           <tbody>
             {categories?.map(
-              (category: { _id: string; name: string }, index: number) => (
+              (category: { _id: string; name: string, sid: string }, index: number) => (
                 <tr key={category?._id} className="hover:bg-gray-50">
                   <td className="px-4 py-2 border-b text-center">
                     {index + 1}
+                  </td>
+                  <td className="px-4 py-2 border-b text-center">
+                    {category?.sid || "N/A"}
                   </td>
                   <td className="px-4 py-2 border-b text-center">
                     {category?.name}

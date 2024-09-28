@@ -54,8 +54,8 @@ const EditProduct = ({ product, categories }) => {
 
        if (res?.status === 201) {
          router.refresh();
-         validatedTag("product");
          toast("product update Successfull");
+         validatedTag("products");
          router.push("/dashboard/product-manage");
        } else {
          setBtnDisabled(res.data.isValid);

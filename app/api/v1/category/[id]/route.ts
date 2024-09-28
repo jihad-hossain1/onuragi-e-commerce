@@ -1,6 +1,7 @@
+import { generateUniqueID } from "@/helpers/generateId";
 import connectDatabase from "@/src/config/mongodbConnection";
 import Category from "@/src/models/category.models";
-import mongoose, { ObjectId } from "mongoose";
+import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function PATCH(req: NextRequest, { params }) {
@@ -16,6 +17,12 @@ export async function PATCH(req: NextRequest, { params }) {
     }
 
     await connectDatabase("Product Category");
+
+    const check = await Category.findById({ _id: id });
+    if (!check?.sid) {
+      const sid = await generateUniqueID(Category, "sid", "CAT");
+      await Category.findByIdAndUpdate({ _id: id }, { sid: sid });
+    }
 
     const update = await Category.findByIdAndUpdate(
       { _id: id },

@@ -25,6 +25,7 @@ const AddSubCategory = ({ categories }) => {
       name: name,
       categoryID: categoryID,
     });
+    console.log("🚀 ~ handleAddCategory ~ res:", res)
 
     if (res?.data?.status === 201) {
       router.refresh();

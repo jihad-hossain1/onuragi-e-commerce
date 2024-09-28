@@ -1,8 +1,5 @@
 import mongoose, { Schema, models } from "mongoose";
 
-import connectDatabase from "../config/mongodbConnection";
-
-// await connectDatabase("Product Category");
 
 
 const productCategorySchema = new Schema({
@@ -11,12 +8,12 @@ const productCategorySchema = new Schema({
     required: true,
     trim: true,
   },
-  subCategory: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "SubCategory",
-    },
-  ],
+  sid: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+ 
 });
 
 const Category =

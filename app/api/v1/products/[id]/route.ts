@@ -1,5 +1,6 @@
 import connectDatabase from "@/src/config/mongodbConnection";
 import Product from "@/src/models/product.models";
+import SubCategory from "@/src/models/subCategory.models";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -25,6 +26,15 @@ export async function PUT(req: NextRequest, { params }) {
         { message: "product are not found" },
         { status: 400 }
       );
+    }
+
+    const findSubCat = await SubCategory.findById({ _id: product?.categoryID });
+    if(!product?.sCatId){
+      await Product.findByIdAndUpdate({ _id: id }, { sCatId: findSubCat?.sid });
+    }
+
+    if(!product?.catName){
+      await Product.findByIdAndUpdate({ _id: id }, { catName: findSubCat?.name });
     }
 
     // if product found then play another role

@@ -1,8 +1,5 @@
 import mongoose, { Schema, models } from "mongoose";
-import connectDatabase from "../config/mongodbConnection";
 
-
-// await connectDatabase("Product");
 
 const productSchema = new Schema(
   {
@@ -16,6 +13,12 @@ const productSchema = new Schema(
       unique: true,
     },
     image: {
+      type: String,
+    },
+    catName: {
+      type: String,
+    },
+    sCatId: {
       type: String,
     },
     categoryID: {
