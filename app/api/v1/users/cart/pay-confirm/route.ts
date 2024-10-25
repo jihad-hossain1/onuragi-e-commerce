@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
     }
 
     const userCarts = user.carts;
-
+   
     // Populate product details for each cart item
     const populatedCart = await Promise.all(
       userCarts.map(async (item) => {
@@ -150,13 +150,28 @@ export async function POST(req: NextRequest) {
     // );
 
     const mailData: OrderConfirmationMailBodyType = {
-      orderNumber: "",
+      orderNumber: newId,
       orderDate: new Date().toISOString(),
       totalAmount: totalPrice,
-      items: userCarts
+      deliveryAddress: {
+        street: user?.profile?.deliveryAddress?.dstreet,
+        city: user?.profile?.deliveryAddress?.dcity,
+        zipCode: user?.profile?.deliveryAddress?.dzipCode,
+      },
+      paymentMethod: {
+        method: payment?.method,
+        tid: payment?.tid,
+      },
+      items: populatedCart?.map((item)=>({
+        name: item?.details?.name,
+        quantity: item?.quantity,
+        price: item?.details?.price,
+        color: item?.color,
+        size: item?.size
+      }))
     }
 
-    const sendMail = await sendEmails(
+   await sendEmails(
       user?.email,
       "Order Confirmation",
       orderConfirmationMailBody(mailData)

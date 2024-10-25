@@ -87,14 +87,25 @@ export type OrderConfirmationMailBodyType = {
   orderNumber: string;
   orderDate: string;
   totalAmount: number;
+  deliveryAddress?: {
+    street: string;
+    city: string;
+    zipCode: string;
+  }
+  paymentMethod?: {
+    method: string;
+    tid: string;
+  };
   items: {
     name: string;
     quantity: number;
     price: number;
+    color: string;
+    size: string;
   }[]
 };
 
-  export const orderConfirmationMailBody = (data: OrderConfirmationMailBodyType) => {
+export const orderConfirmationMailBody = (data: OrderConfirmationMailBodyType) => {
     return `<!DOCTYPE html>
   <html lang="en">
   <head>
@@ -149,6 +160,21 @@ export type OrderConfirmationMailBodyType = {
               font-size: 12px;
               color: #999;
           }
+          .two-column-table {
+              width: 100%;
+              margin: 20px 0;
+              border-collapse: collapse;
+          }
+          .two-column-table td {
+              vertical-align: top;
+              padding: 10px;
+              border: 1px solid #ddd;
+          }
+          .two-column-table th {
+              text-align: left;
+              font-weight: bold;
+              background-color: #f2f2f2;
+          }
       </style>
   </head>
   <body>
@@ -159,15 +185,60 @@ export type OrderConfirmationMailBodyType = {
               </div>
               <h1 style="color: #333; margin-bottom: 10px;">Order Confirmation</h1>
               <p style="color: #555; font-size: 16px;">Thank you for your order! Below are the details:</p>
+              
+              <table style="width: 100%; margin: 20px 0; border-collapse: collapse; line-height: 1.5">
+                  <tr>
+                      
+                      <td>
+                          <h4 style="text-align: left; margin-top: 20px; font-style: italic; font-weight: bold">Delivery Address:</h4>
+                          <p style="line-height: 1.5; text-align: left"><strong>Street:</strong> ${data?.deliveryAddress?.street || "N/A"}</p>
+                          <p style="line-height: 1.5; text-align: left"><strong>City:</strong> ${data?.deliveryAddress?.city || "N/A"}</p>
+                          <p style="line-height: 1.5; text-align: left"><strong>Zip Code:</strong> ${data?.deliveryAddress?.zipCode || "N/A"}</p>
+                          <h4 style="text-align: left; line-height: 1.5; margin-top: 20px; font-style: italic; font-weight: bold">Payment Method:</h4>
+                          <p style="line-height: 1.5; text-align: left"><strong>Method:</strong> ${data?.paymentMethod?.method || "N/A"}</p>
+                          <p style="line-height: 1.5; text-align: left"><strong>Transaction ID:</strong> ${data?.paymentMethod?.tid || "N/A"}</p>
+                      </td>
+                      <td>
+                          <h4 style="text-align: left; margin-top: 20px; font-style: italic; font-weight: bold">Order Information:</h4>
+                          <p style="text-align: left; line-height: 1.5;"><strong>Order Number:</strong> ${data?.orderNumber}</p>
+                          <p style="text-align: left; line-height: 1.5;"><strong>Order Date:</strong> ${new Date(data?.orderDate).toLocaleDateString()} at ${new Date(data?.orderDate).toLocaleTimeString()}</p>
+                          <p style="text-align: left; line-height: 1.5;"><strong>Total Amount:</strong> ${data?.totalAmount}</p>
+                          <p style="text-align: left; line-height: 1.5;"><strong>Items Ordered:</strong></p>
+                      </td>
+                  </tr>
+              </table>
+              
               <div class="invoice-details">
-                  <p><strong>Order Number:</strong> ${data?.orderNumber}</p>
-                  <p><strong>Order Date:</strong> ${new Date(data?.orderDate).toLocaleDateString()} at ${new Date(data?.orderDate).toLocaleTimeString()} </p>
-                  <p><strong>Total Amount:</strong> ${data?.totalAmount}</p>
-                  <p><strong>Items Ordered:</strong></p>
-                  <ul>
-                      ${data?.items?.map((item: { name: string; price: number; quantity: number; }) => `<li>${item?.name|| "N/A"} - $${item?.price|| "N/A"} (Qty: ${item?.quantity|| "N/A"})</li>`).join('')}
-                  </ul>
+                  <table style="width: 100%;">
+                      <thead>
+                          <tr style="background-color: #f2f2f2; color: #333; font-weight: bold;">
+                              <th>Name</th>
+                              <th>Color</th>
+                              <th>Size</th>
+                              <th>Quantity</th>
+                              <th>Price</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          ${data?.items?.map((item) => `
+                              <tr>
+                                  <td>${item?.name}</td>
+                                  <td>${item?.color}</td>
+                                  <td>${item?.size}</td>
+                                  <td>${item?.quantity}</td>
+                                  <td>${item?.price}</td>
+                              </tr>
+                          `).join("")}
+                      </tbody>
+                      <tfoot>
+                          <tr>
+                              <td colspan="4" style="text-align: right; font-weight: bold;">Total:</td>
+                              <td>${data?.totalAmount}</td>
+                          </tr>
+                      </tfoot>
+                  </table>
               </div>
+              
               <div class="footer">
                   <p>&copy; 2024 Onuragi Handicraft. All rights reserved.</p>
                   <p>Bogura, Bangladesh</p>
@@ -178,3 +249,4 @@ export type OrderConfirmationMailBodyType = {
   </html>
   `;
 };
+

@@ -6,7 +6,7 @@ import { payserver } from "./payserver";
 import { useRouter } from "next/navigation";
 import { validatedTag } from "@/helpers/validated-tag";
 import Image from "next/image";
-import { RiCloseLine, RiFileUploadFill } from "react-icons/ri";
+import { RiCloseLine } from "react-icons/ri";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import axios from "axios";
 
@@ -20,7 +20,6 @@ const Payment = ({
   total: number;
 }) => {
   const [loading, setLoading] = useState(false);
-  const address = profileInfo?.address;
   const dAddress = profileInfo?.deliveryAddress;
   const router = useRouter();
   const [showName, setShowName] = useState<any>();
@@ -139,13 +138,13 @@ const Payment = ({
       {!dAddress ? (
         <div className="flex flex-col justify-center items-center min-h-[40vh]">
           <p className="text-red-500">
-            Delivery Address is not set,{" "}
+            Delivery Address is not set,
             <a
               href="/customer-dashboard/user-profile"
               className="text-blue-500 hover:underline"
             >
               Update it
-            </a>{" "}
+            </a>
           </p>
         </div>
       ) : (

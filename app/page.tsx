@@ -8,8 +8,7 @@ import Tranding from "@/components/homeImpoter/tranding/Tranding";
 // import { fetchBanner } from "@/utils/banner/fetchBanner";
 
 const HomePage = async () => {
-  console.log("HomePage");
-  
+
   return (
     <>
       <Slider />
