@@ -150,7 +150,8 @@ const Payment = ({
         </div>
       ) : (
         <div className="my-4 relative">
-          <div className="text-white absolute rounded shadow-sm top-0 right-0 w-fit bg-green-400 px-4 text-xl">
+          <div className="flex max-sm:flex-col flex-row gap-2">
+          <div className="text-white md:absolute rounded shadow-sm top-0 right-0 md:w-fit text-center max-sm:text-sm bg-green-400 px-4 md:py-[6px] text-xl">
             Pay {total} Tk
           </div>
           <div className="flex flex-grow gap-2">
@@ -160,9 +161,9 @@ const Payment = ({
               onChange={(e) =>
                 setPayment({ ...payment, method: e.target.value })
               }
-              className="p-2 border"
+              className="p-2 border w-full"
             >
-              <option value="">----Select Payment Method-----</option>
+              <option value="">Select Payment Method</option>
               <option className="" value={"bkash"}>
                 Pay with Bkash
               </option>
@@ -173,6 +174,7 @@ const Payment = ({
                 Pay with Nagad
               </option>
             </select>
+          </div>
           </div>
           <div className="py-6">
             <p className="text-center">Please select a payment method</p>

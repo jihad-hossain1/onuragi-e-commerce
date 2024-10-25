@@ -4,7 +4,7 @@ import { serverAuth } from "@/hooks/serverAuth";
 import { fetchCart } from "@/utils/cart/fetchCart";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React from "react";
 import { TbCurrencyTaka } from "react-icons/tb";
 
 const CartPage = async () => {
@@ -12,15 +12,17 @@ const CartPage = async () => {
   const carts = await fetchCart(authUser?.user?.id);
 
   return (
-    <main className="max-w-screen-xl mx-auto p-4 min-h-[80vh]">
+    <main className="p-4 max-sm:p-0 min-h-[80vh]">
+
+      {/* cart list show  */}
       <div className="flex flex-col gap-3">
-        {carts?.result?.map((cart, index: number) => (
+        {carts?.result?.map((cart:any, index: number) => (
           <div
             key={index}
-            className="border bg-slate-50 p-3 rounded shadow-sm hover:shadow flex justify-between gap-3"
+            className="max-sm:text-[12px] border bg-slate-50 p-3 rounded shadow-sm hover:shadow flex justify-between gap-3"
           >
             <div className="flex flex-col gap-2">
-              <h4>{cart?.productDetails?.name}</h4>
+              <h4 className="font-semibold">{cart?.productDetails?.name}</h4>
 
               <h4 className="flex items-center gap-1">
                 <span className="font-semibold text-sm">Price: </span>
@@ -41,6 +43,7 @@ const CartPage = async () => {
                 width={70}
                 height={70}
                 alt="product image"
+                className="max-sm:w-[150px] md:w-[200px] rounded"
               />
               <div>
                 <RemoveFromCart
@@ -54,7 +57,6 @@ const CartPage = async () => {
       </div>
 
       {/* total price */}
-
       {carts?.result?.length > 0 && (
         <div className="flex flex-col gap-3 mt-10">
           <h4>Total items: {carts?.result?.length}</h4>
@@ -75,8 +77,8 @@ const CartPage = async () => {
           </Link>
         </div>
       )}
-      <div></div>
 
+      {/* No found Message  */}
       {carts?.result?.length == 0 && (
         <div className="flex justify-center items-center min-h-[50vh]">
           <div className="flex flex-col gap-3 items-center">
@@ -87,6 +89,7 @@ const CartPage = async () => {
           </div>
         </div>
       )}
+
     </main>
   );
 };

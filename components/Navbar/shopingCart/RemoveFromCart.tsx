@@ -32,9 +32,9 @@ const RemoveFromCart = ({ productId, userId }) => {
         }
     }
     return (
-        <div>
-            <button onClick={handleRemoveFromCart} disabled={loading}>
-                <FaTrash />
+        <div className='mt-1'>
+            <button className='max-sm:text-[10px] max-sm:px-2 max-sm:py-0 flex items-center gap-1 text-pink-50 bg-pink-600 text-xs border rounded p-1' onClick={handleRemoveFromCart} disabled={loading}>
+                <FaTrash /> <span>Remove</span>
             </button>
         </div>
     )
