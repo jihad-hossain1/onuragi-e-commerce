@@ -23,15 +23,16 @@ const CheckoutPage = async () => {
   );
 
   return (
-    <main className="max-w-screen-xl mx-auto p-4 min-h-[80vh]">
-      <h4 className="text-center text-3xl font-semibold py-10">CheckoutPage</h4>
+    <main className="max-sm:p-0 p-4 min-h-[80vh] max-sm:text-[12px]">
 
-      <div className="grid md:grid-cols-2  gap-6">
-        <div className="border shadow-sm bg-slate-50 p-3">
+      {/* carts info:  */}
+      <h4 className="text-center lg:text-3xl font-semibold py-10 max-sm:py-5">CheckoutPage</h4>
+      <div className="flex flex-col">
+        <div className="border shadow-sm p-3">
           <h4 className="text-center font-semibold">Address</h4>
           <AddressBook userInfo={userAddress} />
         </div>
-        <div className="border shadow-sm bg-slate-50 p-3">
+        <div className="border shadow-sm p-3">
           <h4 className="text-center font-semibold">Payment method</h4>
           <Payment
             userId={session?.user?.id}
@@ -46,7 +47,7 @@ const CheckoutPage = async () => {
         {initialCarts?.result?.map((cart: any, index: number) => (
           <div
             key={index}
-            className="border shadow-sm bg-slate-50 p-3 flex justify-between items-center"
+            className="border shadow-sm p-3 flex justify-between items-center"
           >
             <h4>{cart?.productDetails?.name}</h4>
             <p>{cart?.productDetails?.price}</p>
@@ -62,7 +63,9 @@ const CheckoutPage = async () => {
           </div>
         ))}
       </div>
-      <div className="flex justify-end">
+
+      {/* total price:  */}
+      <div className="flex justify-end max-sm:py-4">
         <div>
           <h4 className=" font-semibold">
             Delivery Cost: {quantity >= 5 ? 0 : 120}

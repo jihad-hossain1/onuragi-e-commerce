@@ -1,3 +1,5 @@
+import { orderConfirmationMailBody, OrderConfirmationMailBodyType } from "@/helpers/mail-service/mailBody";
+import { sendEmails } from "@/helpers/mail-service/mailTransporter";
 import { fieldValidate, validateOBJID } from "@/helpers/validetField";
 import connectDatabase from "@/src/config/mongodbConnection";
 import EcomDelivery from "@/src/models/ecomdelivery";
@@ -52,7 +54,7 @@ export async function POST(req: NextRequest) {
     }
 
     const userCarts = user.carts;
-
+   
     // Populate product details for each cart item
     const populatedCart = await Promise.all(
       userCarts.map(async (item) => {
@@ -147,6 +149,34 @@ export async function POST(req: NextRequest) {
     //   })
     // );
 
+    const mailData: OrderConfirmationMailBodyType = {
+      orderNumber: newId,
+      orderDate: new Date().toISOString(),
+      totalAmount: totalPrice,
+      deliveryAddress: {
+        street: user?.profile?.deliveryAddress?.dstreet,
+        city: user?.profile?.deliveryAddress?.dcity,
+        zipCode: user?.profile?.deliveryAddress?.dzipCode,
+      },
+      paymentMethod: {
+        method: payment?.method,
+        tid: payment?.tid,
+      },
+      items: populatedCart?.map((item)=>({
+        name: item?.details?.name,
+        quantity: item?.quantity,
+        price: item?.details?.price,
+        color: item?.color,
+        size: item?.size
+      }))
+    }
+
+   await sendEmails(
+      user?.email,
+      "Order Confirmation",
+      orderConfirmationMailBody(mailData)
+      )
+
     if (!response.acknowledged) {
       return NextResponse.json(
         { error: "Something went wrong." },
@@ -158,7 +188,7 @@ export async function POST(req: NextRequest) {
       { result: order, message: "Payment success." },
       { status: 200 }
     );
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error) {
+    return NextResponse.json({ error: (error as Error).message }, { status: 500 });
   }
 }

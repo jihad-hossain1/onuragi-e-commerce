@@ -6,7 +6,7 @@ import { payserver } from "./payserver";
 import { useRouter } from "next/navigation";
 import { validatedTag } from "@/helpers/validated-tag";
 import Image from "next/image";
-import { RiCloseLine, RiFileUploadFill } from "react-icons/ri";
+import { RiCloseLine } from "react-icons/ri";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import axios from "axios";
 
@@ -20,7 +20,6 @@ const Payment = ({
   total: number;
 }) => {
   const [loading, setLoading] = useState(false);
-  const address = profileInfo?.address;
   const dAddress = profileInfo?.deliveryAddress;
   const router = useRouter();
   const [showName, setShowName] = useState<any>();
@@ -139,18 +138,19 @@ const Payment = ({
       {!dAddress ? (
         <div className="flex flex-col justify-center items-center min-h-[40vh]">
           <p className="text-red-500">
-            Delivery Address is not set,{" "}
+            Delivery Address is not set,
             <a
               href="/customer-dashboard/user-profile"
               className="text-blue-500 hover:underline"
             >
               Update it
-            </a>{" "}
+            </a>
           </p>
         </div>
       ) : (
         <div className="my-4 relative">
-          <div className="text-white absolute rounded shadow-sm top-0 right-0 w-fit bg-green-400 px-4 text-xl">
+          <div className="flex max-sm:flex-col flex-row gap-2">
+          <div className="text-white md:absolute rounded shadow-sm top-0 right-0 md:w-fit text-center max-sm:text-sm bg-green-400 px-4 md:py-[6px] text-xl">
             Pay {total} Tk
           </div>
           <div className="flex flex-grow gap-2">
@@ -160,9 +160,9 @@ const Payment = ({
               onChange={(e) =>
                 setPayment({ ...payment, method: e.target.value })
               }
-              className="p-2 border"
+              className="p-2 border w-full"
             >
-              <option value="">----Select Payment Method-----</option>
+              <option value="">Select Payment Method</option>
               <option className="" value={"bkash"}>
                 Pay with Bkash
               </option>
@@ -173,6 +173,7 @@ const Payment = ({
                 Pay with Nagad
               </option>
             </select>
+          </div>
           </div>
           <div className="py-6">
             <p className="text-center">Please select a payment method</p>
