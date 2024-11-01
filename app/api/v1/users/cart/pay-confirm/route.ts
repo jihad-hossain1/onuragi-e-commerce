@@ -185,7 +185,7 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json(
-      { result: order, message: "Payment success." },
+      { result: order, message: "Payment success.", did: createDelivery?.did },
       { status: 200 }
     );
   } catch (error) {
