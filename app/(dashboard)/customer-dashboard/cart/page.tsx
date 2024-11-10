@@ -35,22 +35,23 @@ const CartPage = async () => {
                 productId={cart?.product}
                 userId={cart?.userId}
               />
-            </div>
-
-            <div>
-              <Image
-                src={cart?.productDetails?.image}
-                width={70}
-                height={70}
-                alt="product image"
-                className="max-sm:w-[150px] md:w-[200px] rounded"
-              />
               <div>
                 <RemoveFromCart
                   productId={cart?.product}
                   userId={cart?.userId}
                 />
               </div>
+            </div>
+
+            <div>
+              <Image
+                src={cart?.productDetails?.image}
+                width={1000}
+                height={70}
+                alt="product image"
+                className="max-sm:w-[150px] md:w-[200px] rounded"
+              />
+              
             </div>
           </div>
         ))}
