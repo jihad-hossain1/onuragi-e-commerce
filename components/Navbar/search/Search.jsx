@@ -3,26 +3,21 @@
 import React from "react";
 import { SlMagnifier } from "react-icons/sl";
 import { debounce } from "lodash";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 const Search = () => {
   const [products, setProducts] = React.useState([]);
   const [searchTerm, setSearchTerm] = React.useState("");
-  const [isOpen, setIsOpen] = React.useState(false);
   const router = useRouter();
 
   // Debounced fetch function
