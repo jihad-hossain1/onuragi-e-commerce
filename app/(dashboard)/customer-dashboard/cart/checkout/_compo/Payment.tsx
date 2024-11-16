@@ -149,6 +149,7 @@ const Payment = ({
         </div>
       ) : (
         <div className="my-4 relative">
+         
           <div className="flex max-sm:flex-col flex-row gap-2">
           <div className="text-white md:absolute rounded shadow-sm top-0 right-0 md:w-fit text-center max-sm:text-sm bg-green-400 px-4 md:py-[6px] text-xl">
             Pay {total} Tk

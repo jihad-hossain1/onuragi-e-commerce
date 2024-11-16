@@ -6,44 +6,8 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import Image from "next/image";
 import BannerLink from "./bannerLink";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
 
-const Slider = () => {
-  const [banners, setBanners] = React.useState([]);
-
-  React.useEffect(() => {
-    const fetchBanner = async () => {
-      const response = await fetch("/api/v1/banner");
-      const data = await response.json();
-      setBanners(data);
-    };
-    fetchBanner();
-  }, []);
-
-  useGSAP(() => {
-    gsap.fromTo(
-      ".gslider",
-      {
-        opacity: 0,
-        duration: 1,
-        x: -16,
-        y: -26,
-
-        // ease: "power3.inOut",
-        stagger: 0.1,
-      },
-      {
-        opacity: 1,
-        x: 0,
-        y: 0,
-        stagger: 0.1,
-        duration: 1,
-        ease: "power1.inOut",
-        delay: 1,
-      }
-    );
-  }, [banners]);
+const Slider = ({ banners = [] }) => {
 
   return (
     <div className="bg-[#f9f9f9] min-h-[200px]">

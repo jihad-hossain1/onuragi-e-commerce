@@ -1,4 +1,5 @@
 import connectDatabase from "@/src/config/mongodbConnection";
+import Category from "@/src/models/category.models";
 import Product from "@/src/models/product.models";
 import SubCategory from "@/src/models/subCategory.models";
 import mongoose from "mongoose";
@@ -29,12 +30,19 @@ export async function PUT(req: NextRequest, { params }) {
     }
 
     const findSubCat = await SubCategory.findById({ _id: product?.categoryID });
+    const findCat = await Category.findById({ _id: findSubCat?.categoryID });
+
     if(!product?.sCatId){
       await Product.findByIdAndUpdate({ _id: id }, { sCatId: findSubCat?.sid });
     }
 
+
     if(!product?.catName){
       await Product.findByIdAndUpdate({ _id: id }, { catName: findSubCat?.name });
+    }
+
+    if(!product?.parentCat){
+      await Product.findByIdAndUpdate({ _id: id }, { parentCat: findCat?.name });
     }
 
     // if product found then play another role

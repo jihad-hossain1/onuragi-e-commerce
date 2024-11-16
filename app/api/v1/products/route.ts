@@ -1,6 +1,8 @@
 import { fieldValidate, validateFieldMaxMin } from "@/helpers/validetField";
 import connectDatabase from "@/src/config/mongodbConnection";
+import Category from "@/src/models/category.models";
 import Product from "@/src/models/product.models";
+import SubCategory from "@/src/models/subCategory.models";
 import { NextRequest, NextResponse } from "next/server";
 
 
@@ -29,12 +31,11 @@ async function generateUniqueID(): Promise<string> {
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
+    const { name, image, categoryID, price, slug, defaultColor, defaultSize } = await req.json();
 
-    // Validate the JSON structure
-    const { name, image, categoryID, price, slug, defaultColor, defaultSize } =
-      body;
+    console.log('🚀 ~ file: route.ts:POST ~ req:', { name, image, categoryID, price, slug, defaultColor, defaultSize })
 
+    
     // Validate individual fields
     fieldValidate(categoryID, "Category Name");
     validateFieldMaxMin(name, "Product Name", 5, 50);
@@ -58,6 +59,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const findCategory = await SubCategory.findById({ _id: categoryID });
+    
     const productID = await generateUniqueID();
 
     // Create and save the new product
@@ -70,7 +73,11 @@ export async function POST(req: NextRequest) {
       slug: slug?.trim()?.toLowerCase(),
       defaultColor,
       defaultSize,
+      parentCat: findCategory.catName,
     });
+
+    console.log('🚀 ~ file: route.ts:POST ~ newProduct:', newProduct)
+   
     const product = await newProduct.save();
 
     return NextResponse.json({ result: product }, { status: 201 });

@@ -4,6 +4,7 @@ import AddressBook from "./_compo/AddressBook";
 import Payment from "./_compo/Payment";
 import { fetchCart } from "@/utils/cart/fetchCart";
 import Image from "next/image";
+import BkashPayment from "./_compo/BkashPayment";
 
 const CheckoutPage = async () => {
   const session: any = await serverAuth();
@@ -34,6 +35,7 @@ const CheckoutPage = async () => {
         </div>
         <div className="border shadow-sm p-3">
           <h4 className="text-center font-semibold">Payment method</h4>
+          <BkashPayment invoiceId={initialCarts?.invoiceId} userId={session?.user?.id} total={initialCarts?.totalPrice} />
           <Payment
             userId={session?.user?.id}
             profileInfo={userAddress}
