@@ -4,9 +4,6 @@ import uploadImageToCDN from "@/utils/uploadImageToCDN";
 import Image from "next/image";
 import React, { FormEvent, useRef, useState } from "react";
 import { toast } from "sonner";
-import { FaImage, FaCloudUploadAlt } from "react-icons/fa";
-import { MdFileUploadOff } from "react-icons/md";
-import { VscLoading } from "react-icons/vsc";
 
 export type ColorType = {
   _id: string;
@@ -217,7 +214,13 @@ const AddSizes: React.FC<Props> = ({ sizes, setSizes }) => {
               type="button"
               className="border p-2 rounded-md text-xl shadow-sm"
             >
-              {imageUploadOpen ? <MdFileUploadOff /> : <FaImage />}
+              {imageUploadOpen ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <path d="M19 9l-5 5V3H9v11L4 9l-1.41 1.41L9 15l.59-.59V3h4v11l5-5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+ : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <path d="M21 3H3c-1.1 0-1.99.89-1.99 2L1 19c0 1.1.89 2 1.99 2h18c1.1 0 1.99-.89 1.99-2V5c0-1.1-.89-2-1.99-2zm-1 14H4v-8h16v8zm-8-4l-2.5-3.5L9 13l4 5 7-9-1.5-2L12 13z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+}
             </button>
             <button onClick={addColor} className="btn w-fit" type="button">
               +
@@ -251,12 +254,18 @@ const AddSizes: React.FC<Props> = ({ sizes, setSizes }) => {
                 >
                   {loading ? (
                     <span className="">
-                      <VscLoading className="animate-spin" />
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <path d="M12 4v4M12 16v4M4 12h4M16 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
                     </span>
                   ) : (
                     <span className="flex gap-2 items-center">
                       <span className="text-xs">Upload</span>{" "}
-                      <FaCloudUploadAlt />
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <path d="M18 15l-3-3h2V6h-4V3l-5 5 5 5v-3h2l3-3zM12 18c-2.21 0-4-1.79-4-4 0-.77.23-1.48.61-2.07C7.72 11.09 6.24 10 4.5 10c-1.57 0-2.94.85-3.62 2.09C.91 12.61.12 13.99 0 15.5c0 2.21 1.79 4 4 4h16c2.21 0 4-1.79 4-4s-1.79-4-4-4c-1.74 0-3.22 1.09-3.61 2.59C16.94 12.85 15.57 12 14 12c-1.43 0-2.72.72-3.39 1.93-.38-.59-.61-1.3-.61-2.02 0-2.21 1.79-4 4-4s4 1.79 4 4c0 2.21-1.79 4-4 4h-4v2h4c2.21 0 4-1.79 4-4 0-1.21-.61-2.29-1.57-3.07C17.5 13.48 16 12 14 12z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
                     </span>
                   )}
                 </button>

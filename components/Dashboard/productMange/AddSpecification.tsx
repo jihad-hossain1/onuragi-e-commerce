@@ -8,7 +8,6 @@ import InputField from "@/components/ui/InputField";
 import { validatedTag } from "@/helpers/validated-tag";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
-import { FaTrash } from "react-icons/fa6";
 import { toast } from "sonner";
 type ProductIDProps = {
   productID: string;
@@ -190,7 +189,10 @@ const AddSpecification: React.FC<ProductIDProps> = ({
           <p key={index} className="text-sm flex items-center gap-4">
             <p>{item}</p>
             <button onClick={removeCare} className="text-pink-600">
-              <FaTrash />
+             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <path d="M3 6h18M9 6v14M15 6v14M5 6l1-2h12l1 2M10 10h4M12 14h2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
             </button>
           </p>
         ))}
@@ -215,7 +217,10 @@ const AddSpecification: React.FC<ProductIDProps> = ({
           <p key={index} className="text-sm flex items-center gap-4">
             <p>{item}</p>
             <button onClick={removeFebric} className="text-pink-600">
-              <FaTrash />
+             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <path d="M3 6h18M9 6v14M15 6v14M5 6l1-2h12l1 2M10 10h4M12 14h2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
             </button>
           </p>
         ))}

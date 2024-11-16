@@ -1,8 +1,6 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { HoveredLink, Menu, MenuItem, ProductItem } from "../ui/navbar-menu";
-import { cn } from "@/utils/cn";
 import Search from "./search/Search";
 import ShopingCart from "./shopingCart/ShopingCart";
 import UserAccount from "./userAccount/UserAccount";
@@ -10,23 +8,8 @@ import { SiteLogo } from ".";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
-import {
-    RxHamburgerMenu,
-    RxCross1,
-    RxChevronDown,
-    RxChevronUp,
-} from "react-icons/rx";
-import {
-    FaHome,
-    FaShoppingCart,
-    FaUserCircle,
-    FaUserAlt,
-    FaSignOutAlt,
-    FaSignInAlt,
-    FaUserPlus,
-} from "react-icons/fa";
 
-export function AnimatedNavbar({ products, carts }) {
+export function AnimatedNavbar({ carts }) {
     const path = usePathname();
     const paths = [
         "/login",
@@ -42,7 +25,9 @@ export function AnimatedNavbar({ products, carts }) {
             <div className='relative w-full flex items-center justify-between mt-2'>
                 <MobileNav />
                 <SiteLogo />
-                <Navbar products={products} className='top-2' />
+                <nav>
+                    <a href='/products'>Products</a>
+                </nav>
                 <section className='flex items-center gap-4'>
                     <Search />
 
@@ -82,7 +67,20 @@ function MobileNav() {
         <div className='lg:hidden relative'>
             {/* Menu Toggle Button */}
             <button onClick={() => setActive(!active)} className='pl-2'>
-                <RxHamburgerMenu size={22} />
+                <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    viewBox='0 0 24 24'
+                    width='24'
+                    height='24'
+                >
+                    <path
+                        d='M4 6h16M4 12h16M4 18h16'
+                        stroke='currentColor'
+                        stroke-width='2'
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                    />
+                </svg>
             </button>
 
             {/* Sliding Menu */}
@@ -96,7 +94,20 @@ function MobileNav() {
                     {/* Close Button */}
                     <div className='absolute top-3 right-3 z-10'>
                         <button onClick={() => setActive((prev) => !prev)}>
-                            <RxCross1 size={22} />
+                            <svg
+                                xmlns='http://www.w3.org/2000/svg'
+                                viewBox='0 0 24 24'
+                                width='24'
+                                height='24'
+                            >
+                                <path
+                                    d='M6 18L18 6M6 6l12 12'
+                                    stroke='currentColor'
+                                    stroke-width='2'
+                                    stroke-linecap='round'
+                                    stroke-linejoin='round'
+                                />
+                            </svg>
                         </button>
                     </div>
 
@@ -107,7 +118,21 @@ function MobileNav() {
                             onClick={handleLinkClick}
                             className='flex items-center gap-2 hover:text-blue-600 transition-transform transform hover:scale-105'
                         >
-                            <FaHome size={20} />
+                            <svg
+                                xmlns='http://www.w3.org/2000/svg'
+                                viewBox='0 0 24 24'
+                                width='24'
+                                height='24'
+                            >
+                                <path
+                                    d='M3 9l9-6 9 6v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9z'
+                                    stroke='currentColor'
+                                    stroke-width='2'
+                                    stroke-linecap='round'
+                                    stroke-linejoin='round'
+                                />
+                            </svg>
+
                             <span>Home</span>
                         </Link>
 
@@ -116,7 +141,35 @@ function MobileNav() {
                             onClick={handleLinkClick}
                             className='flex items-center gap-2 hover:text-blue-600 transition-transform transform hover:scale-105'
                         >
-                            <FaShoppingCart size={20} />
+                            <svg
+                                xmlns='http://www.w3.org/2000/svg'
+                                viewBox='0 0 24 24'
+                                width='24'
+                                height='24'
+                            >
+                                <path
+                                    d='M6 6h15l1 12H7L6 6z'
+                                    stroke='currentColor'
+                                    stroke-width='2'
+                                    stroke-linecap='round'
+                                    stroke-linejoin='round'
+                                />
+                                <circle
+                                    cx='10'
+                                    cy='20'
+                                    r='2'
+                                    stroke='currentColor'
+                                    stroke-width='2'
+                                />
+                                <circle
+                                    cx='18'
+                                    cy='20'
+                                    r='2'
+                                    stroke='currentColor'
+                                    stroke-width='2'
+                                />
+                            </svg>
+
                             <span>Products</span>
                         </Link>
 
@@ -127,10 +180,54 @@ function MobileNav() {
                                 className='flex items-center justify-between cursor-pointer hover:text-blue-600 transition-transform transform hover:scale-105'
                             >
                                 <button className='flex items-center gap-2'>
-                                    <FaUserCircle size={20} />
+                                    <svg
+                                        xmlns='http://www.w3.org/2000/svg'
+                                        viewBox='0 0 24 24'
+                                        width='24'
+                                        height='24'
+                                    >
+                                        <path
+                                            d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'
+                                            stroke='currentColor'
+                                            stroke-width='2'
+                                            stroke-linecap='round'
+                                            stroke-linejoin='round'
+                                        />
+                                    </svg>
+
                                     <span>Account</span>
                                 </button>
-                                {open ? <RxChevronUp /> : <RxChevronDown />}
+                                {open ? (
+                                    <svg
+                                        xmlns='http://www.w3.org/2000/svg'
+                                        viewBox='0 0 24 24'
+                                        width='24'
+                                        height='24'
+                                    >
+                                        <path
+                                            d='M19 15l-7-7-7 7'
+                                            stroke='currentColor'
+                                            stroke-width='2'
+                                            stroke-linecap='round'
+                                            stroke-linejoin='round'
+                                        />
+                                    </svg>
+                                ) : (
+                                    <svg
+                                        xmlns='http://www.w3.org/2000/svg'
+                                        viewBox='0 0 24 24'
+                                        width='24'
+                                        height='24'
+                                    >
+                                        <path
+                                            d='M19 9l-7 7-7-7'
+                                            stroke='currentColor'
+                                            stroke-width='2'
+                                            stroke-linecap='round'
+                                            stroke-linejoin='round'
+                                        />
+                                    </svg>
+                                )}
                             </div>
 
                             {/* Account Dropdown */}
@@ -149,7 +246,21 @@ function MobileNav() {
                                                 onClick={handleLinkClick}
                                                 className='flex items-center gap-2 hover:text-blue-600 transition-transform transform hover:scale-105'
                                             >
-                                                <FaUserAlt size={18} />
+                                                <svg
+                                                    xmlns='http://www.w3.org/2000/svg'
+                                                    viewBox='0 0 24 24'
+                                                    width='24'
+                                                    height='24'
+                                                >
+                                                    <path
+                                                        d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'
+                                                        stroke='currentColor'
+                                                        stroke-width='2'
+                                                        stroke-linecap='round'
+                                                        stroke-linejoin='round'
+                                                    />
+                                                </svg>
+
                                                 <span>Dashboard</span>
                                             </Link>
                                         )}
@@ -158,7 +269,21 @@ function MobileNav() {
                                             onClick={handleLinkClick}
                                             className='flex items-center gap-2 hover:text-blue-600 transition-transform transform hover:scale-105'
                                         >
-                                            <FaUserAlt size={18} />
+                                            <svg
+                                                xmlns='http://www.w3.org/2000/svg'
+                                                viewBox='0 0 24 24'
+                                                width='24'
+                                                height='24'
+                                            >
+                                                <path
+                                                    d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'
+                                                    stroke='currentColor'
+                                                    stroke-width='2'
+                                                    stroke-linecap='round'
+                                                    stroke-linejoin='round'
+                                                />
+                                            </svg>
+
                                             <span>Profile</span>
                                         </Link>
                                         <Link
@@ -166,7 +291,35 @@ function MobileNav() {
                                             onClick={handleLinkClick}
                                             className='flex items-center gap-2 hover:text-blue-600 transition-transform transform hover:scale-105'
                                         >
-                                            <FaShoppingCart size={18} />
+                                            <svg
+                                                xmlns='http://www.w3.org/2000/svg'
+                                                viewBox='0 0 24 24'
+                                                width='24'
+                                                height='24'
+                                            >
+                                                <path
+                                                    d='M6 6h15l1 12H7L6 6z'
+                                                    stroke='currentColor'
+                                                    stroke-width='2'
+                                                    stroke-linecap='round'
+                                                    stroke-linejoin='round'
+                                                />
+                                                <circle
+                                                    cx='10'
+                                                    cy='20'
+                                                    r='2'
+                                                    stroke='currentColor'
+                                                    stroke-width='2'
+                                                />
+                                                <circle
+                                                    cx='18'
+                                                    cy='20'
+                                                    r='2'
+                                                    stroke='currentColor'
+                                                    stroke-width='2'
+                                                />
+                                            </svg>
+
                                             <span>Cart</span>
                                         </Link>
                                         <button
@@ -176,7 +329,21 @@ function MobileNav() {
                                             }}
                                             className='flex items-center gap-2 hover:text-blue-600 transition-transform transform hover:scale-105'
                                         >
-                                            <FaSignOutAlt size={18} />
+                                            <svg
+                                                xmlns='http://www.w3.org/2000/svg'
+                                                viewBox='0 0 24 24'
+                                                width='24'
+                                                height='24'
+                                            >
+                                                <path
+                                                    d='M13 3l7 7-7 7M21 10H9M3 17v-2h6v2H3z'
+                                                    stroke='currentColor'
+                                                    stroke-width='2'
+                                                    stroke-linecap='round'
+                                                    stroke-linejoin='round'
+                                                />
+                                            </svg>
+
                                             <span>Logout</span>
                                         </button>
                                     </div>
@@ -187,7 +354,21 @@ function MobileNav() {
                                             onClick={handleLinkClick}
                                             className='flex items-center gap-2 hover:text-blue-600 transition-transform transform hover:scale-105'
                                         >
-                                            <FaSignInAlt size={18} />
+                                            <svg
+                                                xmlns='http://www.w3.org/2000/svg'
+                                                viewBox='0 0 24 24'
+                                                width='24'
+                                                height='24'
+                                            >
+                                                <path
+                                                    d='M13 17l-7-7 7-7M3 10h18'
+                                                    stroke='currentColor'
+                                                    stroke-width='2'
+                                                    stroke-linecap='round'
+                                                    stroke-linejoin='round'
+                                                />
+                                            </svg>
+
                                             <span>Login</span>
                                         </Link>
                                         <Link
@@ -195,7 +376,21 @@ function MobileNav() {
                                             onClick={handleLinkClick}
                                             className='flex items-center gap-2 hover:text-blue-600 transition-transform transform hover:scale-105'
                                         >
-                                            <FaUserPlus size={18} />
+                                            <svg
+                                                xmlns='http://www.w3.org/2000/svg'
+                                                viewBox='0 0 24 24'
+                                                width='24'
+                                                height='24'
+                                            >
+                                                <path
+                                                    d='M13 3v8h8M17 7h6M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z'
+                                                    stroke='currentColor'
+                                                    stroke-width='2'
+                                                    stroke-linecap='round'
+                                                    stroke-linejoin='round'
+                                                />
+                                            </svg>
+
                                             <span>Register</span>
                                         </Link>
                                     </div>
@@ -205,59 +400,6 @@ function MobileNav() {
                     </div>
                 </main>
             </div>
-        </div>
-    );
-}
-
-function Navbar({ className, products }) {
-    const [active, setActive] = useState(null);
-    return (
-        <div className={cn("max-w-xl mx-auto z-10 lg:block hidden", className)}>
-            <Menu setActive={setActive}>
-                <MenuItem setActive={setActive} active={active} item='SHOP'>
-                    <div className='flex flex-col space-y-4 text-sm'>
-                        <HoveredLink href='/'>Handicraft</HoveredLink>
-                        <HoveredLink href='/'>Baby Dress</HoveredLink>
-                        <HoveredLink href='/'>Women</HoveredLink>
-                        <HoveredLink href='/'>Men</HoveredLink>
-                    </div>
-                </MenuItem>
-                <Link href='/products'>
-                    <MenuItem
-                        setActive={setActive}
-                        active={active}
-                        item='PRODUCTS'
-                    >
-                        <div className='text-sm grid grid-cols-2 gap-10 p-4'>
-                            {products?.map((product) => (
-                                <ProductItem
-                                    key={product._id}
-                                    title={product?.name}
-                                    href={`/products/${product?.slug}=${product?._id}`}
-                                    src={product?.image}
-                                    description={product?.name}
-                                />
-                            ))}
-                        </div>
-                    </MenuItem>
-                </Link>
-                <MenuItem setActive={setActive} active={active} item='BUY'>
-                    <div className='flex flex-col space-y-4 text-sm'>
-                        <HoveredLink href='/products/category'>
-                            Three Pices
-                        </HoveredLink>
-                        <HoveredLink href='/products/category'>
-                            Mura
-                        </HoveredLink>
-                        <HoveredLink href='/products/category'>
-                            Papos
-                        </HoveredLink>
-                        <HoveredLink href='/products/category'>
-                            Handicraft
-                        </HoveredLink>
-                    </div>
-                </MenuItem>
-            </Menu>
         </div>
     );
 }

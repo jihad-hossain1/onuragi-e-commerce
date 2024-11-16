@@ -4,24 +4,45 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
-import { IoHomeOutline } from "react-icons/io5";
-import { RiUserSettingsLine } from "react-icons/ri";
-import { CiShoppingCart } from "react-icons/ci";
-import { BsFillCartCheckFill } from "react-icons/bs";
-import { GoSignOut } from "react-icons/go";
-import { MdOutlineAssignmentReturn } from "react-icons/md";
-import { TfiHelpAlt } from "react-icons/tfi";
-import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import { FaHome } from "react-icons/fa";
+
 
 const navItems = [
-  { href: "/customer-dashboard", label: "Dashboard", icon: <IoHomeOutline size={26} /> },
-  { href: "/customer-dashboard/user-profile", label: "Profile", icon: <RiUserSettingsLine size={26} /> },
-  { href: "/customer-dashboard/cart", label: "Cart", icon: <CiShoppingCart size={26} /> },
-  { href: "/customer-dashboard/orders", label: "My Orders", icon: <BsFillCartCheckFill size={26} /> },
-  { href: "/customer-dashboard/returns", label: "My Returns", icon: <MdOutlineAssignmentReturn size={26} /> },
-  { href: "/customer-dashboard/helps", label: "Need Help", icon: <TfiHelpAlt size={26} /> },
-  { href: "/", label: "Back to Home", icon: <FaHome size={26} /> },
+  {
+    href: "/customer-dashboard", label: "Dashboard", icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+      <path d="M12 3l9 7-1 12H4L3 10l9-7z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  },
+  {
+    href: "/customer-dashboard/user-profile", label: "Profile", icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+      <path d="M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm-1-6h2v2h-2zm-1 4h4v2h-4zM19.07 15c-.14 0-.28-.06-.39-.17l-2.24-2.24a7.926 7.926 0 0 0-3.04 1.28l-1.75 2.97a7.979 7.979 0 0 0-5.3 0l-1.75-2.97a7.926 7.926 0 0 0-3.04-1.28L4.93 14.83c-.11.11-.25.17-.39.17-.55 0-.95-.56-.95-1.06 0-.18.07-.36.19-.5l2.24-2.24a7.978 7.978 0 0 0-1.28-3.04l-2.97-1.75c-.1-.16-.14-.35-.14-.55 0-.55.56-.95 1.06-.95.18 0 .36.07.5.19l2.24 2.24a7.978 7.978 0 0 0 3.04-1.28l1.75-2.97a7.979 7.979 0 0 0 5.3 0l1.75 2.97a7.978 7.978 0 0 0 3.04 1.28l2.24-2.24c.14-.12.32-.19.5-.19.55 0 .95.56.95 1.06 0 .2-.07.4-.19.55l-2.24 2.24a7.978 7.978 0 0 0 1.28 3.04l2.97 1.75c.1.16.14.35.14.55 0 .55-.56.95-1.06.95z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  },
+  {
+    href: "/customer-dashboard/cart", label: "Cart", icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+      <path d="M4 3h2l3 7h10l3-7h2M6 6h12l2 8H4L6 6zm3 10h2v2H9zm6 0h2v2h-2zm-3 0h2v2h-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  },
+  {
+    href: "/customer-dashboard/orders", label: "My Orders", icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+      <path d="M3 3h2l3 7h10l3-7h2M6 6h12l2 8H4L6 6zm3 10h2v2H9zm6 0h2v2h-2zm-3 0h2v2h-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  },
+  {
+    href: "/customer-dashboard/returns", label: "My Returns", icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+      <path d="M10 9v6l5-3-5-3zm4 6V9l-5 3 5 3zM19 2h-4V1h-6v1H5c-1.1 0-1.99.9-1.99 2L3 20c0 1.1.89 2 1.99 2H19c1.1 0 1.99-.9 1.99-2l.01-16c0-1.1-.89-2-1.99-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  },
+  {
+    href: "/customer-dashboard/helps", label: "Need Help", icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+      <path d="M12 3C7.03 3 3 7.03 3 12s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-8h-1c-1.1 0-1.99.9-1.99 2v2h2v-2h.99c1.1 0 1.99-.9 1.99-2 0-1.1-.89-2-1.99-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  },
+  {
+    href: "/", label: "Back to Home", icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+      <path d="M3 9l9-6 9 6v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  },
 ];
 
 const CustomerSidebar = () => {
@@ -44,7 +65,13 @@ const CustomerSidebar = () => {
         onClick={toggleSidebar}
         aria-label={isOpen ? "Close menu" : "Open menu"}
       >
-        {isOpen ? <AiOutlineClose size={28} /> : <AiOutlineMenu size={28} />}
+        {isOpen ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+          <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+          : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        }
       </button>
 
       <aside
@@ -68,8 +95,8 @@ const CustomerSidebar = () => {
               href={href}
               onClick={closeSidebar}
               className={`flex gap-2 items-center pl-3 py-3 rounded transition duration-300 ease-in-out ${path === href
-                  ? "bg-pink-100/35 border-l-4 border-pink-700"
-                  : "hover:bg-pink-100/35 hover:border-l-4 hover:border-pink-700"
+                ? "bg-pink-100/35 border-l-4 border-pink-700"
+                : "hover:bg-pink-100/35 hover:border-l-4 hover:border-pink-700"
                 }`}
               aria-current={path === href ? "page" : undefined}
             >
@@ -85,7 +112,10 @@ const CustomerSidebar = () => {
             }
             className="flex gap-2 items-center pl-3 py-3 rounded transition duration-300 ease-in-out hover:bg-pink-100/35 hover:border-l-4 hover:border-pink-700"
           >
-            <GoSignOut size={26} />
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+              <path d="M13 3v8h8M17 7h6M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+
             <h3 className="text-sm md:text-base">Log Out</h3>
           </button>
         </nav>

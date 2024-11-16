@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import React, { useState } from "react";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const FileUploader = ({
   setimage,
@@ -32,7 +31,11 @@ const FileUploader = ({
           onClick={handleOnFileUpload}
         >
           {updaloding ? (
-            <AiOutlineLoading3Quarters className="animate-spin" />
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+            <path d="M12 2a10 10 0 1 0 10 10 10.01 10.01 0 0 0-10-10zM12 18a8 8 0 1 1 8-8 8.01 8.01 0 0 1-8 8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M16 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          
           ) : (
             "Upload"
           )}

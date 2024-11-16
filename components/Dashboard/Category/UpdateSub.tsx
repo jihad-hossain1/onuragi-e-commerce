@@ -4,7 +4,6 @@ import Modal from '@/components/Modal';
 import { validatedTag } from '@/helpers/validated-tag';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
-import { HiPencilAlt } from "react-icons/hi";
 import { toast } from 'sonner';
 
 const UpdateSub = ({ _id, name }) => {
@@ -45,7 +44,10 @@ const UpdateSub = ({ _id, name }) => {
     return (
         <>
             <button onClick={() => setOpen(!open)} className=''>
-                <HiPencilAlt size={23} />
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <path d="M12 20h9M12 20l-3-3m3 3l-3-3M16.5 3.5l4 4L7 17l-4-4 13.5-9.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
             </button>
 
             <Modal title={'update sub-category'} open={open} setOpen={setOpen} maxWidth={'500px'}>
