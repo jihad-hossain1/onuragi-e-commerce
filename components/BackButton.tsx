@@ -1,10 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import {
-  IoChevronBackCircleSharp,
-  IoChevronBackCircleOutline,
-} from "react-icons/io5";
+
 
 const BackButton = () => {
   const router = useRouter();
@@ -15,8 +12,14 @@ const BackButton = () => {
           onClick={() => router.back()}
           className="border border-blue-300 rounded px-5 py-1 w-fit flex items-center gap-2 group"
         >
-          <IoChevronBackCircleSharp className="hidden group-hover:block transition-all duration-300 ease-in-out" />
-          <IoChevronBackCircleOutline className="block group-hover:hidden transition-all duration-300 ease-in-out" />
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+            <path d="M15 18l-6-6 6-6M3 12a9 9 0 1 1 18 0 9 9 0 0 1-18 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+            <path d="M15 18l-6-6 6-6M3 12a9 9 0 1 1 18 0 9 9 0 0 1-18 0z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+
           <span className="text-sm">Go Back</span>
         </button>
       </div>

@@ -5,7 +5,6 @@ import { validatedTag } from "@/helpers/validated-tag";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { toast } from "sonner";
 import { changeOrderStatus } from "./server-action";
 
@@ -75,14 +74,14 @@ const MangeOrder = ({ orderInfo }) => {
   useEffect(() => {
     if (!myInfo) {
       setFormData({
-        name: "Fahmida Haque Esha" || "",
-        email: "fahmidaesha58@gmail.com" || "",
-        phone: "01777777777" || "",
-        street: "Bogura" || "",
-        city: "Bogura" || "",
-        state: "Bogura Sadar" || "",
-        zipCode: "5800" || "",
-        deliveryCharge: "150" || "",
+        name: "Fahmida Haque Esha",
+        email: "fahmidaesha58@gmail.com",
+        phone: "01777777777",
+        street: "Bogura",
+        city: "Bogura",
+        state: "Bogura Sadar",
+        zipCode: "5800",
+        deliveryCharge: "150",
       });
     }
   }, [myInfo]);
@@ -348,7 +347,10 @@ const MangeOrder = ({ orderInfo }) => {
               disabled={loading}
             >
               {loading ? (
-                <AiOutlineLoading3Quarters className="animate-spin" />
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path d="M12 2a10 10 0 1 0 10 10M12 2a10 10 0 1 1-10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 5"/>
+              </svg>
+              
               ) : (
                 "Update"
               )}

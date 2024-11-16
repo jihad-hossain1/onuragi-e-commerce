@@ -6,8 +6,6 @@ import { payserver } from "./payserver";
 import { useRouter } from "next/navigation";
 import { validatedTag } from "@/helpers/validated-tag";
 import Image from "next/image";
-import { RiCloseLine } from "react-icons/ri";
-import { IoCloudUploadOutline } from "react-icons/io5";
 import axios from "axios";
 
 const Payment = ({
@@ -212,7 +210,10 @@ const Payment = ({
                       </p>
                     </div>
                     <button onClick={handleClearFile}>
-                      <RiCloseLine size={24} />
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
                     </button>
                   </div>
                 ) : (
@@ -220,7 +221,10 @@ const Payment = ({
                     className=" mx-auto flex max-w-[600px] flex-col items-center justify-center space-y-3 rounded-lg border border-gray-200 p-6 bg-white"
                     htmlFor="file5"
                   >
-                    <IoCloudUploadOutline size={60} />
+                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <path d="M12 17v-5M12 12l-3-3 3-3 3 3-3 3zM20 16c0-3.31-2.69-6-6-6-1.74 0-3.29.84-4.29 2.17C8.67 10.34 7.25 9 5.5 9C3.01 9 1 11.01 1 13.5S3.01 18 5.5 18h14c1.66 0 3-1.34 3-3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
                     <div className="space-y-1.5 text-center">
                       <h5 className="whitespace-nowrap text-lg font-medium tracking-tight ">
                         You can upload screen shot on payment

@@ -5,7 +5,6 @@ import { fetchCart } from "@/utils/cart/fetchCart";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { TbCurrencyTaka } from "react-icons/tb";
 
 const CartPage = async () => {
   const authUser: any = await serverAuth();
@@ -16,7 +15,7 @@ const CartPage = async () => {
 
       {/* cart list show  */}
       <div className="flex flex-col gap-3">
-        {carts?.result?.map((cart:any, index: number) => (
+        {carts?.result?.map((cart: any, index: number) => (
           <div
             key={index}
             className="max-sm:text-[12px] border bg-slate-50 p-3 rounded shadow-sm hover:shadow flex justify-between gap-3"
@@ -27,7 +26,10 @@ const CartPage = async () => {
               <h4 className="flex items-center gap-1">
                 <span className="font-semibold text-sm">Price: </span>
                 <span className="text-sm">{cart?.productDetails?.price}</span>
-                <TbCurrencyTaka />
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                  <path d="M12 3v18M3 9h18M6 9l-3 6h18l-3-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+
               </h4>
               <CartQuantity
                 quantity={cart?.quantity}
@@ -51,7 +53,7 @@ const CartPage = async () => {
                 alt="product image"
                 className="max-sm:w-[150px] md:w-[200px] rounded"
               />
-              
+
             </div>
           </div>
         ))}

@@ -1,6 +1,5 @@
 "use client";
 
-import { BsBag } from "react-icons/bs";
 import { Button } from "@/components/ui/button";
 
 import {
@@ -14,7 +13,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useSession } from "next-auth/react";
-import { TbCurrencyTaka } from "react-icons/tb";
 import Link from "next/link";
 import CartQuantity from "./CartQuantity";
 import Image from "next/image";
@@ -28,7 +26,10 @@ const ShopingCart = ({ carts }) => {
       <Sheet>
         <SheetTrigger asChild>
           <div className="relative">
-            <BsBag className="text-[24px] lg:text-[30px] mr-2" />
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <path d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zM8 2v2h8V2H8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
             {carts?.length > 0 && (
               <div className="w-5 h-5 rounded-full bg-red-500 text-white text-xs flex justify-center items-center absolute md:top-0 md:right-0 max-sm:left-0 max-sm:top-0 max-sm:right-1/2  translate-x-1/2 -translate-y-1/2">
                 {carts?.length}
@@ -68,7 +69,10 @@ const ShopingCart = ({ carts }) => {
                         <span className="text-sm">
                           {cart?.productDetails?.price}
                         </span>
-                        <TbCurrencyTaka />
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <path d="M14 2H6c-1.1 0-1.99.89-1.99 2L4 20c0 1.1.89 2 1.99 2h8c1.1 0 1.99-.89 1.99-2V4c0-1.1-.89-2-1.99-2zM8 16h2v2H8zm0-4h2v2H8zm4 4h2v2h-2zm0-4h2v2h-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
                       </h4>
                       <CartQuantity
                         quantity={cart?.quantity}

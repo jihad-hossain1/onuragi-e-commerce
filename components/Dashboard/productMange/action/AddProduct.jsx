@@ -8,7 +8,6 @@ import FileUploader from "@/utils/FileUploader";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { toast } from "sonner";
 
 const AddProduct = ({ categories }) => {
@@ -211,7 +210,10 @@ const AddProduct = ({ categories }) => {
             className="text-xs bg-pink-600 shadow-sm hover:shadow hover:bg-pink-600/90 uppercase"
           >
             {loading ? (
-              <AiOutlineLoading3Quarters className="animate-spin" />
+             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+             <path d="M12 2a10 10 0 1 0 10 10M12 2a10 10 0 1 1-10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 5"/>
+           </svg>
+           
             ) : (
               "Add Product"
             )}

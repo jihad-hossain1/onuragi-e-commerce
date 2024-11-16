@@ -1,4 +1,3 @@
-"use client";
 
 import Image from "next/image";
 import React from "react";
@@ -27,9 +26,6 @@ const Product = ({ product }) => {
       <h4 className="text-lg  font-semibold mt-2 max-sm:text-[12px] group-hover:text-blue-600 transition-colors duration-300">
         {product?.name?.slice(0, 20)}
       </h4>
-
-      {/* Product Price */}
-      
 
       {/* Add to Cart Button */}
       <div className="flex items-center justify-between">

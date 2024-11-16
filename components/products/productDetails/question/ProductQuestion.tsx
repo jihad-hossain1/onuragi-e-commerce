@@ -7,10 +7,7 @@ import { addQuestionServerAction } from "./addServerAction";
 import { validatedTag } from "@/helpers/validated-tag";
 import { useRouter } from "next/navigation";
 import { deleteServerAction } from "./deleteServerAction";
-import { FaTrashArrowUp } from "react-icons/fa6";
-import { PiNotePencilFill } from "react-icons/pi";
 import { updateServerAction } from "./updateServerAction";
-import { MdOutlineReply } from "react-icons/md";
 import { addReplyAction } from "./reply/addReplyAction";
 import { deleteReplyAction } from "./reply/releteReplyAction";
 import { updateReplyAction } from "./reply/updateReplyAction";
@@ -311,7 +308,10 @@ const ProductQuestion = ({ questions, productId }) => {
                       className="border flex gap-1 items-center border-gray-300 shadow-sm hover:shadow rounded px-2"
                     >
                       <span className="text-xs">Write Reply</span>{" "}
-                      <MdOutlineReply className="text-lg lg:text-xl" />
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <path d="M20 7l-7-7-7 7M13 14V3H3v11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
                     </button>
                   </div>
                 )}
@@ -351,13 +351,21 @@ const ProductQuestion = ({ questions, productId }) => {
                     onClick={() => handleDelete(question?._id)}
                     className="text-red-500"
                   >
-                    <FaTrashArrowUp className="text-sm lg:text-xl" />
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <path d="M19 6h-4V2H9v4H5c-1.1 0-1.99.89-1.99 2L3 20c0 1.1.89 2 1.99 2h16c1.1 0 1.99-.89 1.99-2V8c0-1.1-.89-2-1.99-2zM9 2h6v4H9z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M12 13V9M12 9l4 4M12 9l-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
                   </button>
                   <button
                     onClick={() => handleSetQuestion(question?._id)}
                     className="text-blue-500"
                   >
-                    <PiNotePencilFill className="text-md lg:text-xl" />
+                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <path d="M13 2h7a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zM9 12H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M12 2v7M7 12l5 5M16 12l-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
                   </button>
                 </div>
                 {/* question section end  */}
@@ -395,7 +403,10 @@ const ProductQuestion = ({ questions, productId }) => {
                         className="border flex gap-1 items-center border-gray-300 shadow-sm hover:shadow rounded px-2"
                       >
                         <span className="text-xs">Close Reply</span>
-                        <MdOutlineReply size={22} />
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <path d="M20 7l-7-7-7 7M13 14V3H3v11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
                       </button>
                     </div>
                   </form>
@@ -443,7 +454,11 @@ const ProductQuestion = ({ questions, productId }) => {
                           onClick={() => handleDeleteReply(reply?._id)}
                           className="text-red-500"
                         >
-                          <FaTrashArrowUp className="text-sm lg:text-xl" />
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <path d="M19 6h-4V2H9v4H5c-1.1 0-1.99.89-1.99 2L3 20c0 1.1.89 2 1.99 2h16c1.1 0 1.99-.89 1.99-2V8c0-1.1-.89-2-1.99-2zM9 2h6v4H9z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M12 13V9M12 9l4 4M12 9l-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
                         </button>
                         <button
                           onClick={() =>
@@ -451,7 +466,11 @@ const ProductQuestion = ({ questions, productId }) => {
                           }
                           className="text-blue-500"
                         >
-                          <PiNotePencilFill className="text-md lg:text-xl" />
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <path d="M13 2h7a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zM9 12H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M12 2v7M7 12l5 5M16 12l-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
                         </button>
                       </div>
                     </div>

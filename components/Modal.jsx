@@ -1,8 +1,7 @@
 "use client";
 
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
-import { AiOutlineClose } from "react-icons/ai";
+import { Fragment } from "react";;
 
 const Modal = ({ children, title, open, setOpen, maxWidth }) => {
   function closeModal() {
@@ -43,7 +42,10 @@ const Modal = ({ children, title, open, setOpen, maxWidth }) => {
                       className="absolute z-10 right-2 top-0 "
                       onClick={() => setOpen(!open)}
                     >
-                      <AiOutlineClose size={22} />
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
                     </button>
                   </div>
                   <Dialog.Title
