@@ -15,6 +15,9 @@ const productSchema = new Schema(
     image: {
       type: String,
     },
+    parentCat: {
+      type: String,
+    },
     catName: {
       type: String,
     },

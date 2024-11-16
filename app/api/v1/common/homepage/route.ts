@@ -1,33 +1,76 @@
 import connectDatabase from "@/src/config/mongodbConnection";
 import Product from "@/src/models/product.models";
-import { NextRequest, NextResponse } from "next/server";
+import { CATEGORIES, HOMEPAGE } from "@/constant";
+import { NextResponse } from "next/server";
+import Banner from "@/src/models/banner.model";
+import OfferBanner from "@/src/models/offerbanner.model";
 
-// Utility function to extract all search params dynamically
-const getSearchParams = (searchParams: URLSearchParams) => {
-    const params: { [key: string]: string | null } = {};
+// Store the database connection once for all requests
+let isConnected = false;
 
-    searchParams.forEach((value, key) => {
-        params[key] = value;
-    });
+async function getDatabaseConnection() {
+    if (isConnected) return;
+    await connectDatabase("E-Commerce Home");
+    isConnected = true;
+}
 
-    return params;
-};
+async function fetchCategoryProducts(category: string) {
+    return Product.find({ parentCat: category })
+        .sort({ createdAt: -1 })
+        .select("name image price slug")
+        .limit(HOMEPAGE.LIMIT_PRODUCT)
+        .lean();
+}
 
-export async function GET(request: NextRequest) {
-    const { searchParams } = new URL(request.url);
+export async function GET() {
+    try {
+        await getDatabaseConnection(); // Ensure DB connection is established only once
 
-    // Use the dynamic utility function to get all query params
-    const { categories, subcategories, slider_card, baby_card, new_arrival, girls_products, boys_products,products } = getSearchParams(searchParams);
+        // Query all categories concurrently
+        const categories = [
+            CATEGORIES.baby,
+            CATEGORIES.girls,
+            CATEGORIES.women,
+            CATEGORIES.Handicraft,
+            CATEGORIES.boys,
+        ];
+        const categoryQueries = categories.map((category) =>
+            fetchCategoryProducts(category),
+        );
 
-    await connectDatabase("E-Commerce db");
+        // Wait for all queries to resolve
+        const [
+            babyProducts,
+            girlsProducts,
+            womenProducts,
+            handicraft,
+            boysProducts,
+        ] = await Promise.all(categoryQueries);
 
+        const [banner, offerBanner] = await Promise.all([
+            Banner.find({}).sort({ createdAt: -1 }).select("image").limit(HOMEPAGE.LIMIT_SLIDER),
+            OfferBanner.find({}).sort({ createdAt: -1 }).select("image").limit(HOMEPAGE.LIMIT_OFFER_BANNER),
+        ]);
 
-      const [babyProducts, girlsProducts, boysProducts] = await Promise.all([
-        Product.find({ category: "baby" }).select("name image price slug").lean(),
-        Product.find({ category: "girls" }).select("name image price slug").lean(),
-        Product.find({ category: "boys" }).select("name image price slug").lean()
-      ]);
-            
-
-    return NextResponse.json({ result: { babyProducts, girlsProducts, boysProducts } }, { status: 200 });
+        return NextResponse.json(
+            {
+                result: {
+                    babyProducts,
+                    girlsProducts,
+                    womenProducts,
+                    handicraft,
+                    boysProducts,
+                    banner,
+                    offerBanner
+                },
+            },
+            { status: 200 },
+        );
+    } catch (error) {
+        console.error("Error in fetching products:", error); // Log for debugging
+        return NextResponse.json(
+            { error: (error as Error).message },
+            { status: 500 },
+        );
+    }
 }
