@@ -8,7 +8,9 @@ import { fetchSubCategories } from "@/utils/sub-categories/fetchSubCategories";
 
 const SubCategorypage = async () => {
   const categories = await fetchCategories();
+  console.log("🚀 ~ SubCategorypage ~ categories:", categories)
   const subCategories = await fetchSubCategories();
+  console.log("🚀 ~ SubCategorypage ~ subCategories:", subCategories)
 
   return (
     <div className="p-4">
