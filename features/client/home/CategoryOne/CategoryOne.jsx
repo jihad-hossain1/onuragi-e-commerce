@@ -1,7 +1,6 @@
 import Container from "@/components/ui/container";
 import React from "react";
 import Product from "@/components/products/Product";
-import { Skeleton } from "@/components/Skeleton";
 
 const CategoryOne = ({ babyProducts, girlsProducts }) => {
     return (

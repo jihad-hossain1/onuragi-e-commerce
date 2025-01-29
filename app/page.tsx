@@ -1,49 +1,30 @@
 import React from "react";
-// import CategoryOne from "@/components/homeImpoter/CategoryOne/CategoryOne";
-// import CategoryTwo from "@/components/homeImpoter/CategroyTwo/CategoryTwo";
-// import ShortBanner from "@/components/homeImpoter/ShortBanner/ShortBanner";
-// import Slider from "@/components/homeImpoter/Slider";
-// import Banner from "@/components/homeImpoter/banner/Banner";
-// import Tranding from "@/components/homeImpoter/tranding/Tranding";
-
-// async function fetchHomePage() {
-//   try {
-//     const res = await fetch(
-//       `${process.env.NEXT_PUBLIC_API_URL}/api/v1/common/homepage`, {
-//       cache: "no-store",
-//     });
-//     const data = await res.json();
-
-//     if (data?.result) return data?.result;
-
-//     return {
-//       babyProducts: [],
-//       girlsProducts: [],
-//       boysProducts: [],
-//       handicraft: [],
-//       womenProducts: [],
-//       banner: [],
-//     }
-//   } catch (error: any) {
-//     console.error(error?.message);
-//   }
-// }
+import CategoryOne from "@/features/client/home/CategoryOne/CategoryOne";
+import CategoryTwo from "@/features/client/home/CategroyTwo/CategoryTwo";
+import ShortBanner from "@/features/client/home/ShortBanner/ShortBanner";
+import Slider from "@/features/client/home/Slider";
+import Banner from "@/features/client/home/banner/Banner";
+import Tranding from "@/features/client/home/tranding/Tranding";
+import { fetchHomePage } from "@/features/client/home/server-action";
 
 const HomePage = async () => {
-  // const data = await fetchHomePage();
+  const data = await fetchHomePage();
 
   return (
-    <div>
-      <div>
-        homepage
-      </div>
-      {/* <Slider banners={data?.banner} />
-      <CategoryOne babyProducts={data?.babyProducts} girlsProducts={data?.girlsProducts} />
+    <>
+      <Slider banners={data?.banner} />
+      <CategoryOne
+        babyProducts={data?.babyProducts}
+        girlsProducts={data?.girlsProducts}
+      />
       <ShortBanner />
-      <CategoryTwo womenProducts={data?.womenProducts} handicraft={data?.handicraft} />
+      <CategoryTwo
+        womenProducts={data?.womenProducts}
+        handicraft={data?.handicraft}
+      />
       <Banner />
-      <Tranding /> */}
-    </div>
+      <Tranding />
+    </>
   );
 };
 

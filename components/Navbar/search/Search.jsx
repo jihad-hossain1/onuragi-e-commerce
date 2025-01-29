@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/sheet";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { Icons } from "@/components/ui/icons";
 
 const Search = () => {
   const [products, setProducts] = React.useState([]);
@@ -47,10 +48,9 @@ const Search = () => {
     <>
       <Sheet>
         <SheetTrigger asChild>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-  <path d="M10.5 3a7.5 7.5 0 1 0 7.5 7.5 7.51 7.51 0 0 0-7.5-7.5zM10.5 14a3.5 3.5 0 1 1 3.5-3.5 3.51 3.51 0 0 1-3.5 3.5zm6.7 4.1l3.4 3.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-
+          <button>
+            <Icons.search size={20} />
+          </button>
         </SheetTrigger>
         <SheetContent>
           <SheetHeader>

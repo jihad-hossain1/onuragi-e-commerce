@@ -1,13 +1,14 @@
-'use client'
+"use client";
 
-import { useSession } from 'next-auth/react'
-import React from 'react'
-import { toast } from 'sonner'
-import { addToCart } from './cart-serrver-action'
-import { validatedTag } from '@/helpers/validated-tag'
-import { useRouter } from 'next/navigation'
+import { useSession } from "next-auth/react";
+import React from "react";
+import { toast } from "sonner";
+import { addToCart } from "./cart-serrver-action";
+import { validatedTag } from "@/helpers/validated-tag";
+import { useRouter } from "next/navigation";
 import Modal from "../Modal";
 import Link from "next/link";
+import { Icons } from "../ui/icons";
 
 const AddToCart = ({
   id,
@@ -40,7 +41,6 @@ const AddToCart = ({
       });
       setLoading(false);
 
-
       if (response?.error) {
         setLoading(false);
         toast.error(response?.error, {
@@ -59,7 +59,7 @@ const AddToCart = ({
           duration: 3000,
           style: {
             color: "green",
-          }
+          },
         });
         router.refresh();
       }
@@ -75,14 +75,11 @@ const AddToCart = ({
         onClick={() => handleAddToCart(id)}
         className={` rounded px-2 text-pink-600 max-sm:text-xs`}
       >
-        {loading ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-          <path d="M12 2v4M12 18v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M2 12h4M18 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-          : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-            <path d="M7 4V2h10v2M12 14l4-4h-3V3h-2v7H8l4 4z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M1 1h4l2 16h10l2-16h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        }
+        {loading ? (
+          <Icons.loading className="w-5 h-5 animate-spin" strokeColor="gray" />
+        ) : (
+          <Icons.cart className="w-5 h-5" strokeColor="gray" />
+        )}
       </button>
 
       <Modal
@@ -111,4 +108,4 @@ const AddToCart = ({
   );
 };
 
-export default AddToCart
+export default AddToCart;

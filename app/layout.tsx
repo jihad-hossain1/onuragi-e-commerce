@@ -23,11 +23,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en">
       <body className={inter.className}>
         <AuthProvider>
-          {/* <Topbar />
-          <Navbar /> */}
+          <Topbar />
+          <Navbar />
           <div className="min-h-screen">{children}</div>
           <Toaster />
-          {/* <Footer /> */}
+          <Footer />
         </AuthProvider>
       </body>
     </html>
